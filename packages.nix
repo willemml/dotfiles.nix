@@ -43,7 +43,7 @@ let
     rsync
     openssh
     tldr
-    #(import ./python-packages.nix { inherit pkgs; })
+    (import ./python-packages.nix { inherit pkgs; })
   ];
 in
 sharedPackages
