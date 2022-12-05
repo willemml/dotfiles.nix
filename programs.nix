@@ -1,11 +1,34 @@
-{ pkgs, lib, ... }:
+{ lib, config, pkgs, isDarwin, ... }:
 
 {
-  programs.zoxide = {
+  gpg = {
     enable = true;
-    enableZshIntegration = true;
+    homedir = "${config.users.users.willem.home}/.gnupg";
+    settings = {
+      use-agent = true;
+      default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
+    };
   };
-  programs.zsh = {
+
+  git = {
+    enable = true;
+    delta = {
+      enable = true;
+    };
+    signing = {
+      key = "C3DE5DF6198DACBD";
+      signByDefault = true;
+    };
+    extraConfig.init.defaultBranch = "master";
+    extraConfig.core.autocrlf = false;
+    package = pkgs.gitAndTools.gitFull;
+    userName = "willemml";
+    userEmail = "willem@leit.so";
+  };
+
+  emacs.enable = true;
+
+  zsh = {
     enable = true;
     enableCompletion = true;
     enableSyntaxHighlighting = true;
@@ -38,4 +61,3 @@
     ];
   };
 }
-  

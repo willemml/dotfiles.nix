@@ -1,4 +1,4 @@
-{ config, pkgs, lib, currentSystem, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   user = builtins.getEnv "USER";
@@ -32,6 +32,8 @@ in
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
+  programs.gnupg.agent.enable = true;
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
@@ -44,5 +46,5 @@ in
   services.emacs.enable = true;
 
   home-manager.useGlobalPkgs = true;
-  home-manager.users.${user} = import ./home.nix { inherit lib config pkgs currentSystem; };
+  home-manager.users.${user} = import ./home.nix { inherit lib config pkgs; };
 }
