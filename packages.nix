@@ -57,7 +57,6 @@ let
     pv
     wget
     htop
-    tree
     bat
     fd
     ripgrep

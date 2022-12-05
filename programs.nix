@@ -17,6 +17,8 @@
     };
   };
 
+  home-manager.enable = true;
+
   git = {
     enable = true;
     delta = {
@@ -34,6 +36,16 @@
   };
 
   emacs.enable = true;
+
+  zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  exa = {
+    enable = true;
+    enableAliases = true;
+  };
 
   zsh = {
     enable = true;
