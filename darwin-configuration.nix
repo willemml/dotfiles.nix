@@ -3,12 +3,17 @@
 let
   user = builtins.getEnv "USER";
   unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+  cask2nixTarball = fetchTarball https://github.com/matthewbauer/cask2nix/archive/v0.1.tar.gz;
+  nurTarball = fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz";
 in
 {
   imports = [ <home-manager/nix-darwin> ];
 
   # List of packages to be installed in the system profile.
-  environment.systemPackages = [];
+  environment.systemPackages = [
+    pkgs.iterm2
+    pkgs.discord
+  ];
 
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin-configuration.nix";
@@ -23,9 +28,13 @@ in
     '';
   };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import unstableTarball {
-      config = config.nixpkgs.config;
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+      nur = import nurTarball { inherit pkgs; };
     };
   };
   

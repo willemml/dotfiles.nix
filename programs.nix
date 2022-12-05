@@ -1,6 +1,13 @@
 { lib, config, pkgs, isDarwin, ... }:
 
 {
+  direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+    };
+  };
+  
   gpg = {
     enable = true;
     homedir = "${config.users.users.willem.home}/.gnupg";
