@@ -7,6 +7,13 @@ let
     rev = "v1.4.0";
     sha256 = "02zh0zn0yibbgn26r0idcsv8nl7pxlnq545qas0fzj5l70hdgyhh";
   })).default;
+
+  rnix-lsp = (import (pkgs.fetchFromGitHub {
+    owner = "nix-community";
+    repo = "rnix-lsp";
+    rev = "95d40673fe43642e2e1144341e86d0036abd95d9";
+    sha256 = "197s5qi0yqxl84axziq3pcpf5qa9za82siv3ap6v3rcjmndk8jqp";
+  }));
   
   darwinPackages = with pkgs; [
     coreutils
@@ -14,6 +21,11 @@ let
     spoof-mac
     colima
     pinentry_mac
+    iterm2
+  ];
+
+  guiPackages = with pkgs; [
+    discord
   ];
   
   dockerPackages = with pkgs; [
@@ -25,6 +37,7 @@ let
     black
     shellcheck
     plantuml
+    rnix-lsp
     texlive.combined.scheme-full
   ];
   
@@ -51,7 +64,6 @@ let
     jq
     nmap
     unzip
-    yt-dlp
     rsync
     openssh
     tldr
@@ -60,6 +72,7 @@ let
 in
 sharedPackages
 ++ (lib.optionals isDarwin darwinPackages)
+++ guiPackages
 ++ editingPackages
 ++ nodePackages
 ++ dockerPackages
