@@ -7,7 +7,7 @@
       enable = true;
     };
     signing = {
-      gpgPath = "/opt/homebrew/bin/gpg";
+#      gpgPath = "${pkgs.gpg.outPath}";
       key = "C3DE5DF6198DACBD";
       signByDefault = true;
     };
