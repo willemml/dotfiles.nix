@@ -38,6 +38,7 @@ let
     shellcheck
     plantuml
     rnix-lsp
+    clang-tools
     texlive.combined.scheme-full
   ];
   
