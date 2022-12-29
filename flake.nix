@@ -6,12 +6,12 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-22_11";
     };
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }:
+  outputs = { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
     let
       system = "aarch64-darwin";
       

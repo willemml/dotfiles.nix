@@ -1,8 +1,7 @@
-{ lib, config, pkgs, isDarwin, homeDir, ... }:
+{ lib, config, pkgs, ... }:
 
 {
-  imports = [./emacs.nix];
-  
+  programs = {
   direnv = {
     enable = true;
     nix-direnv = {
@@ -12,7 +11,6 @@
   
   gpg = {
     enable = true;
-    homedir = "${homeDir}/.gnupg";
     settings = {
       use-agent = true;
       default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
@@ -23,8 +21,6 @@
     enable = true;
     package = pkgs.jdk;
   };
-
-  home-manager.enable = true;
 
   git = {
     enable = true;
@@ -90,5 +86,6 @@
         file = "p10k.zsh";
       }
     ];
+  };
   };
 }

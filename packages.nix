@@ -72,9 +72,11 @@ let
     (import ./python-packages.nix { inherit pkgs; })
   ];
 in
-sharedPackages
+{
+  home.packages = sharedPackages
 ++ (lib.optionals isDarwin darwinPackages)
 ++ guiPackages
 ++ editingPackages
 ++ nodePackages
-++ dockerPackages
+++ dockerPackages ;
+}

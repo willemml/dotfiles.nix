@@ -1,4 +1,4 @@
-{ pkgs, isDarwin, homeDir, lib, config, inputs, nurNoPkgs, ... }:
+{ config, pkgs, inputs, nurNoPkgs, ... }:
 
 let
   pcfg = config.programs.emacs.init.usePackage;

@@ -4,13 +4,15 @@ let
   inherit (lib.systems.elaborate { system = builtins.currentSystem; }) isLinux isDarwin;
   homeDirectory = config.home.homeDirectory;
 in {
+  imports = [
+    ./emacs.nix
+    ./packages.nix
+    ./programs.nix
+  ];
+
   nixpkgs.config = {
     allowUnfree = true;
   };
-
-  programs = import ./programs.nix {inherit lib config pkgs isDarwin homeDirectory; };
-
-  home.packages = import ./packages.nix { inherit lib config pkgs isDarwin; };
 
   home.language = {
     base = "en_CA.UTF-8";
