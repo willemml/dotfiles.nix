@@ -1,10 +1,10 @@
-{ config, pkgs, inputs, lib, ... }:
+{ config, pkgs, inputs, nurNoPkgs, ... }:
 
 let pcfg = config.programs.emacs.init.usePackage;
 in {
   imports = [
-    pkgs.nur.repos.rycee.hmModules.emacs-init
-    pkgs.nur.repos.rycee.hmModules.emacs-notmuch
+    nurNoPkgs.repos.rycee.hmModules.emacs-init
+    nurNoPkgs.repos.rycee.hmModules.emacs-notmuch
   ];
 
   programs.emacs.init = {

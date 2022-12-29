@@ -3,7 +3,7 @@
 let homeDirectory = config.home.homeDirectory;
 in {
   imports = [
-    #./emacs.nix
+    ./emacs.nix
     ./packages.nix
     ./programs.nix
   ];
