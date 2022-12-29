@@ -1,6 +1,8 @@
 { lib, config, pkgs, isDarwin, homeDir, ... }:
 
 {
+  imports = [./emacs.nix];
+  
   direnv = {
     enable = true;
     nix-direnv = {
@@ -39,8 +41,6 @@
     userName = "willemml";
     userEmail = "willem@leit.so";
   };
-
-  #emacs = import ./emacs.nix { inherit lib config pkgs isDarwin homeDir; };
 
   zoxide = {
     enable = true;
