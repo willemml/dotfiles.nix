@@ -39,6 +39,8 @@ let
     plantuml
     rnix-lsp
     clang-tools
+    graphviz
+    nixfmt
     texlive.combined.scheme-full
   ];
   

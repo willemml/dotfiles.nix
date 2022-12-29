@@ -14,7 +14,7 @@ rec {
       experimental-features = nix-command flakes
     '';
   };
-  
+
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
@@ -41,7 +41,7 @@ rec {
     source = pkgs.writeTextFile {
       name = "gpg-agent-conf";
       text = ''
-        pinentry-program ${pkgs.pinentry_mac.out}/${pkgs.pinentry_mac.binaryPath}
+        pinentry-program pinentry-mac
       '';
     };
   };

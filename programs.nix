@@ -17,6 +17,11 @@
     };
   };
 
+  java = {
+    enable = true;
+    package = pkgs.jdk;
+  };
+
   home-manager.enable = true;
 
   git = {
@@ -35,7 +40,7 @@
     userEmail = "willem@leit.so";
   };
 
-  emacs.enable = true;
+  #emacs = import ./emacs.nix { inherit lib config pkgs isDarwin homeDir; };
 
   zoxide = {
     enable = true;
@@ -54,6 +59,7 @@
     enableVteIntegration = true;
     autocd = true;
     defaultKeymap = "emacs";
+    envExtra = "export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH";
     dirHashes = {
       docs = "$HOME/Documents";
       appsup = "$HOME/Library/Application Support";
@@ -65,6 +71,12 @@
       path = "$HOME/.local/zsh/history";
       extended = true;
       ignoreDups = true;
+    };
+    shellAliases = {
+      em = "emacsclient -c";
+      emt = "emacsclient -c -nw";
+      np = "nix-shell -p";
+      hms = "home-manager switch";
     };
     plugins = with pkgs; [
       {
