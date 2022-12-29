@@ -13,10 +13,7 @@ in {
     ++ [ docker docker-compose ] ++ [
       black
       shellcheck
-      plantuml
       clang-tools
-      graphviz
-      nixfmt
       texlive.combined.scheme-full
     ] ++ [ nodePackages.bash-language-server ] ++ [
       zsh-powerlevel10k
@@ -41,6 +38,5 @@ in {
       rsync
       openssh
       tldr
-      (import ./python-packages.nix { inherit pkgs; })
     ];
 }
