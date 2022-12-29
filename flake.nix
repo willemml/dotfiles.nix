@@ -11,10 +11,11 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
+  outputs =
+    { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
     let
       system = "aarch64-darwin";
-      
+
       pkgs = import nixpkgs-22_11 {
         inherit system;
         overlays = [
@@ -37,15 +38,13 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [
-          ./home.nix
-        ];
+        modules = [ nur.hmModules.nur ./home.nix ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-        extraSpecialArgs = {
-          inherit nurNoPkgs;
-        };
+        #        extraSpecialArgs = {
+        #          inherit nurNoPkgs;
+        #        };
       };
     };
 }

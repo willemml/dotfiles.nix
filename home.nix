@@ -1,17 +1,23 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
-let
-  inherit (lib.systems.elaborate { system = builtins.currentSystem; }) isLinux isDarwin;
-  homeDirectory = config.home.homeDirectory;
+let homeDirectory = config.home.homeDirectory;
 in {
   imports = [
-    ./emacs.nix
+    #./emacs.nix
     ./packages.nix
     ./programs.nix
   ];
 
   nixpkgs.config = {
     allowUnfree = true;
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [ "discord" "unrar" ];
+  };
+
+  home = {
+    username = "willem";
+    homeDirectory = "/Users/willem";
+    stateVersion = "22.11";
   };
 
   home.language = {
@@ -25,7 +31,5 @@ in {
     variant = "colemak";
   };
 
-  home.sessionVariables = {
-    EDITOR = "emacs";
-  };
+  home.sessionVariables = { EDITOR = "emacs"; };
 }
