@@ -542,6 +542,26 @@ in {
           (advice-add #'org-babel-execute:python :before #'my/org-babel-execute:python-session)
         '';
       };
+
+      org-ref = {
+        enable = true;
+        config = ''
+          (setq org-ref-insert-cite-function
+                (lambda ()
+          	(org-cite-insert nil)))
+        '';
+      };
+
+      calibredb = {
+        enable = true;
+        extraPackages = [ pkgs.sqlite ];
+        config = ''
+          (setq calibredb-root-dir "~/Documents/calibre-library")
+          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+          (setq calibredb-library-alist '(("~/Documents/calibre-library")))
+          (setq sql-sqlite-program "${pkgs.sqlite}/bin/sqlite3")
+        '';
+      };
     };
   };
 }

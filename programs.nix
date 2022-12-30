@@ -69,7 +69,9 @@
       };
       shellAliases = {
         em = "emacsclient -c";
-        emt = "emacsclient -c -nw";
+        emw = "emacsclient -c -nw";
+        ew = "emacs -nw";
+        e = "$EDITOR";
         np = "nix-shell -p";
         hms = "home-manager switch";
       };
