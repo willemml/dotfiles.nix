@@ -4,6 +4,7 @@ let homeDirectory = config.home.homeDirectory;
 in {
   imports = [
     ./emacs.nix
+    ./launchd.nix
     ./packages.nix
     ./programs.nix
   ];
@@ -31,5 +32,5 @@ in {
     variant = "colemak";
   };
 
-  home.sessionVariables = { EDITOR = "emacs"; };
+  home.sessionVariables = { EDITOR = "emacsclient -c -nw"; };
 }

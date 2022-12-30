@@ -11,6 +11,7 @@
 
     gpg = {
       enable = true;
+      package = pkgs.gnupg;
       settings = {
         use-agent = true;
         default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
@@ -68,12 +69,13 @@
         ignoreDups = true;
       };
       shellAliases = {
-        em = "emacsclient -c";
-        emw = "emacsclient -c -nw";
-        ew = "emacs -nw";
+        em = "emacs";
+        emw = "emacs -nw";
+        ew = "emacsclient -c";
         e = "$EDITOR";
         np = "nix-shell -p";
         hms = "home-manager switch";
+        cd = "z";
       };
       plugins = with pkgs; [
         {
