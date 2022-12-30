@@ -48,6 +48,57 @@
       enableAliases = true;
     };
 
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      package = pkgs.nixpkgs-unstable.starship;
+      settings = {
+        format =
+          "$os[](fg:#979797 bg:#444444)$directory$git_branch$git_status[](fg:#444444)$fill[](fg:#444444)$cmd_duration[](fg:#979797 bg:#444444)$time$line_break$character";
+        fill = {
+          symbol = "·";
+          style = "fg:#505050";
+        };
+        cmd_duration = {
+          disabled = false;
+          min_time = 1500;
+          style = "fg:#979797 bg:#444444";
+          format = "[ $duration  ]($style)";
+        };
+        os = {
+          disabled = false;
+          style = "fg:#eaeaea bg:#444444";
+          format = "[ $symbol ]($style)";
+          symbols.Macos = "";
+        };
+        directory = {
+          disabled = false;
+          style = "fg:#149dff bg:#444444";
+          format = "[  $path ]($style)";
+          truncation_length = 3;
+          truncation_symbol = "";
+        };
+        git_branch = {
+          disabled = false;
+          symbol = "";
+          style = "fg:#53d306 bg:#444444";
+          format = "[[](fg:#979797 bg:#444444)  $symbol $branch ]($style)";
+        };
+        git_status = {
+          disabled = false;
+          style = "bg:#444444";
+          format =
+            "[[$staged](fg:#cca107 bg:#444444)[$modified](fg:#cca107 bg:#444444)[$untracked](fg:#149dff bg:#444444)[$conflicted](fg:#ed0505 bg:#444444)]($style)";
+        };
+        time = {
+          disabled = false;
+          style = "fg:#4d7573 bg:#444444";
+          format = "[ $time  ]($style)";
+          time_format = "%T";
+        };
+      };
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -76,18 +127,6 @@
         hms = "home-manager switch";
         cd = "z";
       };
-      plugins = with pkgs; [
-        {
-          name = "powerlevel10k";
-          src = pkgs.zsh-powerlevel10k;
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-        }
-        {
-          name = "powerlevel10k-config";
-          src = lib.cleanSource ./p10k-config;
-          file = "p10k.zsh";
-        }
-      ];
     };
   };
 }
