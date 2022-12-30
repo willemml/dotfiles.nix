@@ -3,7 +3,7 @@
 {
   programs = {
     home-manager.enable = true;
-    
+
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
@@ -12,6 +12,7 @@
     gpg = {
       enable = true;
       package = pkgs.gnupg;
+      homedir = "${config.home.homeDirectory}/.gnupg";
       settings = {
         use-agent = true;
         default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
@@ -54,14 +55,12 @@
       enableVteIntegration = true;
       autocd = true;
       defaultKeymap = "emacs";
-      envExtra =
-        "export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH";
-      dirHashes = {
-        docs = "$HOME/Documents";
-        appsup = "$HOME/Library/Application Support";
-        dls = "$HOME/Downloads";
-        ubc = "$HOME/Documents/school/ubc";
-      };
+      envExtra = ''
+        export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH
+        export GPG_TTY=$(tty)
+
+        eval $(gpg-agent --daemon -q 2>/dev/null)
+      '';
       dotDir = ".config/zsh";
       history = {
         path = "$HOME/.local/zsh/history";
@@ -69,10 +68,10 @@
         ignoreDups = true;
       };
       shellAliases = {
-        em = "emacs";
-        emw = "emacs -nw";
+        emw = "emacs";
+        em = "emacs -nw";
         ew = "emacsclient -c";
-        e = "$EDITOR";
+        e = "emacsclient -c -nw";
         np = "nix-shell -p";
         hms = "home-manager switch";
         cd = "z";

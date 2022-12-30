@@ -48,6 +48,8 @@ in {
       (setq initial-major-mode 'fundamental-mode
             initial-scratch-message nil)
 
+      (setenv "PATH" (concat "${config.home.profileDirectory}/bin:" (getenv "PATH")))
+
       ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
       (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -222,7 +224,11 @@ in {
       format-all = {
         enable = true;
         command = [ "format-all-buffer" ];
+        config = ''
+          (setq-default format-all-formatters format-all-default-formatters)
+        '';
         bindLocal.c-mode-map = { "C-c C-y" = "format-all-buffer"; };
+        extraPackages = [ pkgs.black pkgs.shellcheck pkgs.clang-tools ];
       };
 
       tree-sitter = {
@@ -280,6 +286,8 @@ in {
           "(javascript-mode . lsp)"
         ];
         bind = { "C-c C-y" = "my/format-document"; };
+
+        extraPackages = [ pkgs.nodePackages.bash-language-server ];
       };
 
       lsp-ui = {
@@ -330,6 +338,10 @@ in {
         enable = true;
         extraConfig = ''
           :mode "\\.nix\\'"
+        '';
+        config = ''
+          (setq nix-nixfmt-bin "${pkgs.nixfmt}/bin/nixfmt")
+          (setq nix-executable "/nix/var/nix/profiles/default/bin/nix")
         '';
         bindLocal.nix-mode-map = { "C-c C-y" = "nix-format-buffer"; };
 
@@ -415,6 +427,8 @@ in {
           "C-c C-y" = "my/indent-org-block-automatically";
           "<mouse-1>" = "my/follow-org-link";
         };
+
+        extraPackages = [ pkgs.texlive.combined.scheme-full ];
       };
 
       htmlize.enable = true;
