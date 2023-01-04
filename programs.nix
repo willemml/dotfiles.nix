@@ -54,7 +54,7 @@
       package = pkgs.nixpkgs-unstable.starship;
       settings = {
         format =
-          "$os[](fg:#979797 bg:#444444)$directory$git_branch$git_status[](fg:#444444)$fill[](fg:#444444)$cmd_duration[](fg:#979797 bg:#444444)$time$line_break$character";
+          "$os[](fg:#979797 bg:#444444)$directory$git_branch$git_status[](fg:#444444)$fill[](fg:#444444)$cmd_duration$time$line_break$character";
         fill = {
           symbol = "·";
           style = "fg:#505050";
@@ -63,7 +63,7 @@
           disabled = false;
           min_time = 1500;
           style = "fg:#979797 bg:#444444";
-          format = "[ $duration  ]($style)";
+          format = "[ $duration  ]($style)";
         };
         os = {
           disabled = false;
@@ -126,6 +126,7 @@
         np = "nix-shell -p";
         hms = "home-manager switch";
         cd = "z";
+        l = "ls -1";
       };
     };
   };
