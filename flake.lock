@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-willem": {
+      "locked": {
+        "lastModified": 1672791794,
+        "narHash": "sha256-mqGPpGmwap0Wfsf3o2b6qHJW1w2kk/I6cGCGIU+3t6o=",
+        "ref": "master",
+        "rev": "9813adc7f7c0edd738c6bdd8431439688bb0cb3d",
+        "revCount": 439706,
+        "type": "git",
+        "url": "file:///Users/willem/dev/nixpkgs"
+      },
+      "original": {
+        "ref": "master",
+        "type": "git",
+        "url": "file:///Users/willem/dev/nixpkgs"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1672325070,
@@ -73,6 +89,7 @@
         "home-manager": "home-manager",
         "nixpkgs-22_11": "nixpkgs-22_11",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-willem": "nixpkgs-willem",
         "nur": "nur"
       }
     },

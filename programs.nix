@@ -31,8 +31,11 @@
         key = "C3DE5DF6198DACBD";
         signByDefault = true;
       };
-      extraConfig.init.defaultBranch = "master";
-      extraConfig.core.autocrlf = false;
+      extraConfig = {
+        init.defaultBranch = "master";
+        core.autocrlf = false;
+        push.autoSetupRemote = true;
+      };
       package = pkgs.gitAndTools.gitFull;
       userName = "willemml";
       userEmail = "willem@leit.so";
