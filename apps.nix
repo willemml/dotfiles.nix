@@ -1,21 +1,28 @@
-{ config, lib, pkgs, ... }:
-let
-  appEnv = pkgs.buildEnv {
-    name = "home-manager-applications";
-    paths = config.home.packages;
-    pathsToLink = "/Applications";
+{ config, lib, pkgs, mkIf, ... }:
+
+# see https://github.com/nix-community/home-manager/issues/1341
+
+{
+  disabledModules = [ "targets/darwin/linkapps.nix" ];
+  
+  home.activation = lib.mkIf pkgs.stdenv.isDarwin {
+    copyApplications = let
+      apps = pkgs.buildEnv {
+        name = "home-manager-applications";
+        paths = config.home.packages;
+        pathsToLink = "/Applications";
+      };
+    in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      baseDir="$HOME/Applications/Home Manager Apps"
+      if [ -d "$baseDir" ]; then
+        rm -rf "$baseDir"
+      fi
+      mkdir -p "$baseDir"
+      for appFile in ${apps}/Applications/*; do
+        target="$baseDir/$(basename "$appFile")"
+        $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
+        $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
+      done
+    '';
   };
-in {
-  home.activation.addApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    # Install MacOS applications to the user environment.
-    HM_APPS="$HOME/Applications/Home Manager Apps"
-    # Reset current state
-    [ -e "$HM_APPS" ] && $DRY_RUN_CMD rm -r "$HM_APPS"
-    $DRY_RUN_CMD mkdir -p "$HM_APPS"
-    # .app dirs need to be actual directories for Finder to detect them as Apps.
-    # In the env of Apps we build, the .apps are symlinks. We pass all of them as
-    # arguments to cp and make it dereference those using -H
-    $DRY_RUN_CMD cp --archive -H --dereference ${appEnv}/Applications/* "$HM_APPS"
-    $DRY_RUN_CMD chmod +w -R "$HM_APPS"
-  '';
 }

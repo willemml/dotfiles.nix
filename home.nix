@@ -2,7 +2,7 @@
 
 let
   homeDirectory = config.home.homeDirectory;
-  emacsCommand = [ "emacsclient" "-c" "-nw" ];
+  emacsCommand = "emacsclient -c -nw";
 in {
   imports =
     [ ./emacs.nix ./launchd.nix ./packages.nix ./programs.nix ./apps.nix ];

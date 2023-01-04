@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgsCustom, ... }:
 
 {
   home.packages = with pkgs;
@@ -10,7 +10,7 @@
       pinentry_mac
       iterm2
       (pkgs.callPackage ./spotify-mac.nix { })
-    ] ++ [ discord ] ++ [ docker docker-compose ] ++ [
+    ] ++ [ discord pkgsCustom.vlc ] ++ [ docker docker-compose ] ++ [
       zsh-powerlevel10k
       comma
       automake

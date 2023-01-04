@@ -2,6 +2,8 @@
   description = "Willem's Home Manager configuration";
 
   inputs = {
+    nixpkgs-willem.url = "git+file:///Users/willem/dev/nixpkgs";
+    #nixpkgs-willem.url = "github:willemml/nixpkgs/master";
     nixpkgs-22_11.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -12,7 +14,7 @@
   };
 
   outputs =
-    { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
+    { self, nixpkgs-willem, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
     let
       system = "aarch64-darwin";
 
@@ -26,6 +28,10 @@
             };
           })
         ];
+      };
+
+      pkgsCustom = import nixpkgs-willem {
+        inherit system;
       };
 
       nurNoPkgs = import nur {
@@ -42,9 +48,7 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-        extraSpecialArgs = {
-          inherit nurNoPkgs;
-        };
+        extraSpecialArgs = { inherit nurNoPkgs pkgsCustom; };
       };
     };
 }
