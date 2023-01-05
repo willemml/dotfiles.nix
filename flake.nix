@@ -2,8 +2,7 @@
   description = "Willem's Home Manager configuration";
 
   inputs = {
-    nixpkgs-willem.url = "git+file:///Users/willem/dev/nixpkgs";
-    #nixpkgs-willem.url = "github:willemml/nixpkgs/master";
+    nixpkgs-willem.url = "github:willemml/nixpkgs/master";
     nixpkgs-22_11.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {

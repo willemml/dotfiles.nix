@@ -2,15 +2,9 @@
 
 {
   home.packages = with pkgs;
-    [
-      coreutils
-      gnused
-      spoof-mac
-      colima
-      pinentry_mac
-      iterm2
-      (pkgs.callPackage ./spotify-mac.nix { })
-    ] ++ [ discord pkgsCustom.vlc ] ++ [ docker docker-compose ] ++ [
+    [ coreutils gnused spoof-mac colima pinentry_mac iterm2 ]
+    ++ [ discord pkgsCustom.vlc pkgsCustom.qbittorrent ]
+    ++ [ docker docker-compose ] ++ [
       zsh-powerlevel10k
       comma
       automake

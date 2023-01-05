@@ -1,4 +1,4 @@
-{ config, lib, pkgs, mkIf, ... }:
+{ config, lib, pkgs, ... }:
 
 # see https://github.com/nix-community/home-manager/issues/1341
 

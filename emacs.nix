@@ -668,6 +668,13 @@ in {
         enable = true;
         bind = { "C-c '" = "separedit"; };
       };
+
+      editorconfig = {
+        enable = true;
+        config = ''
+          (editorconfig-mode 1)
+        '';
+      };
     };
   };
 }
