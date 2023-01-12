@@ -36,6 +36,7 @@
         core.autocrlf = false;
         push.autoSetupRemote = true;
       };
+      lfs.enable = true;
       package = pkgs.gitAndTools.gitFull;
       userName = "willemml";
       userEmail = "willem@leit.so";

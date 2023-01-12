@@ -10,7 +10,7 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [ "discord" "unrar" ];
+      builtins.elem (lib.getName pkg) [ "discord" "unrar" "zoom" ];
   };
 
   home = {
@@ -42,5 +42,6 @@ in {
   home.file.".config/nix/nix.conf".text = ''
     allow-dirty = true
     experimental-features = flakes nix-command
+    builders-use-substitutes = true
   '';
 }

@@ -2,10 +2,17 @@
 
 {
   home.packages = with pkgs;
-    [ coreutils gnused spoof-mac colima pinentry_mac iterm2 ]
-    ++ [ discord pkgsCustom.vlc pkgsCustom.qbittorrent ]
+    [
+      coreutils
+      gnused
+      spoof-mac
+      colima
+      pinentry_mac
+      iterm2
+      zoom-us
+      karabiner-elements
+    ] ++ [ discord pkgsCustom.vlc pkgsCustom.qbittorrent ]
     ++ [ docker docker-compose ] ++ [
-      zsh-powerlevel10k
       comma
       automake
       autoconf
@@ -27,5 +34,6 @@
       rsync
       openssh
       tldr
+      nix-review
     ];
 }

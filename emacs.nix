@@ -74,6 +74,9 @@ in {
       (line-number-mode)
       (column-number-mode)
 
+      ;; Soft wrap lines
+      (visual-line-mode)
+
       ;; Use one space to end sentences.
       (setq sentence-end-double-space nil)
 
@@ -397,7 +400,7 @@ in {
 
             (setq org-publish-project-alist
              '(("Root"
-          	  :base-directory "~/Documents/org-roam/"
+          	  :base-directory "~/Documents/org/roam/"
           	  :publishing-function org-html-publish-to-html
           	  :publishing-directory "~/public_html"
           	  :section-numbers nil
@@ -413,10 +416,7 @@ in {
             (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
             (setq org-html-section)
         '';
-        hook = [
-          "(org-mode . auto-fill-mode)"
-          "(org-babel-after-execute . org-redisplay-inline-images)"
-        ];
+        hook = [ "(org-babel-after-execute . org-redisplay-inline-images)" ];
 
         bind = {
           "C-c n c" = "org-id-get-create";
@@ -425,7 +425,7 @@ in {
         bindLocal.org-mode-map = {
           "C-c C-o" = "my/follow-org-link";
           "C-c C-y" = "my/indent-org-block-automatically";
-          "<mouse-1>" = "my/follow-org-link";
+          "<mouse-2>" = "my/follow-org-link";
         };
 
         extraPackages = [ pkgs.texlive.combined.scheme-full ];
@@ -435,73 +435,6 @@ in {
       emacsql-sqlite.enable = true;
 
       org-contrib.enable = true;
-
-      org-roam = {
-        enable = true;
-        extraConfig = ''
-          :preface
-          (defun my/org-roam-node-insert-immediate (arg &rest args)
-            "Insert a link to a new node ARG with ARGS without capturing anything."
-            (interactive "P")
-            (let ((args (cons arg args))
-                  (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                            '(:immediate-finish t)))))
-              (apply #'org-roam-node-insert args)))
-
-
-          (defun my/org-roam-filter-by-tag (tag-name)
-            "Filter org notes by tag TAG-NAME."
-            (lambda (node)
-              (member tag-name (org-roam-node-tags node))))
-
-          (defun my/org-roam-list-notes-by-tag (tag-name)
-            "List all org notes with the tag TAG-NAME."
-            (mapcar #'org-roam-node-file
-                    (seq-filter
-                     (my/org-roam-filter-by-tag tag-name)
-                     (org-roam-node-list))))
-
-          (defun my/refresh-agenda-list ()
-            "Refresh the list of files to search for agenda entries."
-            (interactive)
-            (setq org-agenda-files
-                  (delete-dups
-                   (my/org-roam-list-notes-by-tag "todo"))))
-        '';
-        bind = {
-          "C-c n l" = "org-roam-buffer-toggle";
-          "C-c n f" = "org-roam-node-find";
-          "C-c n d" = "org-roam-dailies-map";
-        };
-        bindLocal.org-mode-map = {
-          "C-c n t" = "org-roam-tag-add";
-          "C-c n n" = "org-roam-alias-add";
-          "C-c n i" = "org-roam-node-insert";
-          "C-c n I" = "my/org-roam-node-insert-immediate";
-        };
-        command = [ "org-roam-db-sync" ];
-        defines = [ "org-roam-v2-ack" ];
-        init = ''
-          (setq org-roam-directory (file-truename "~/Documents/org-roam"))
-          (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
-          (setq org-roam-v2-ack t)
-          (setq org-roam-completion-everywhere t)
-          (setq org-roam-capture-templates '(("d" "default" plain "%?" :target (file+head "%<%Y%m%d%H%M%S>-''${slug}.org" "#+title: ''${title}\n") :unnarrowed t)))
-        '';
-
-        hook = [ "(emacs-startup . org-roam-db-sync)" ];
-
-        config = ''
-          (org-roam-db-autosync-mode)
-          ;; Build the agenda list the first time for the session
-          (my/refresh-agenda-list)
-        '';
-      };
-
-      org-roam-ui = {
-        enable = true;
-        after = [ "org-roam" ];
-      };
 
       plantuml-mode = {
         enable = true;
@@ -673,6 +606,33 @@ in {
         enable = true;
         config = ''
           (editorconfig-mode 1)
+        '';
+      };
+
+      org-download = {
+        enable = true;
+        init = ''
+          (require 'org-download)
+          (setq-default org-download-image-dir "~/Documents/org/images")
+        '';
+        hook = [ "(dired-mode-hook . org-download-enable)" ];
+        extraPackages = [ pkgs.pngpaste ];
+      };
+
+      exec-path-from-shell = {
+        enable = true;
+
+        init = ''
+          (dolist (var '("SSH_AUTH_SOCK" "LANG" "LC_CTYPE" "LC_MESSAGES" "NIX_SSL_CERT_FILE" "NIX_PROFILES" "JAVA_HOME" "GNUPGHOME"))
+            (add-to-list 'exec-path-from-shell-variables var))
+
+          (when (memq window-system '(mac ns x))
+            (exec-path-from-shell-initialize))
+
+          (when (daemonp)
+            (exec-path-from-shell-initialize))
+
+          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
         '';
       };
     };
