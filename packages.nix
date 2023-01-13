@@ -11,6 +11,7 @@
       iterm2
       zoom-us
       karabiner-elements
+      (pkgs.callPackage ./spotify-mac.nix { inherit config lib pkgs; })
     ] ++ [ discord pkgsCustom.vlc pkgsCustom.qbittorrent ]
     ++ [ docker docker-compose ] ++ [
       comma

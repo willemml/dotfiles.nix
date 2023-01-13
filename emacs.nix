@@ -390,31 +390,64 @@ in {
           	(my/org-force-open-current-window)))
         '';
         init = ''
-            (setq org-src-window-setup 'current-window)
-            (setq org-confirm-babel-evaluate nil)
-            (setq org-src-fontify-natively t)
-            (setq org-src-tab-acts-natively t)
-            (setq org-src-preserve-indentation t)
+          (defvar my/org-dir "~/Documents/org/")
 
-            (setq org-export-with-tags nil)
+          (require 'oc)
 
-            (setq org-publish-project-alist
-             '(("Root"
-          	  :base-directory "~/Documents/org/roam/"
-          	  :publishing-function org-html-publish-to-html
-          	  :publishing-directory "~/public_html"
-          	  :section-numbers nil
-          	  :with-author nil
-          	  :with-creator t
-          	  :with-toc t
-          	  :time-stamp-file nil)))
+          (setq org-src-window-setup 'current-window)
+          (setq org-confirm-babel-evaluate nil)
+          (setq org-src-fontify-natively t)
+          (setq org-src-tab-acts-natively t)
+          (setq org-src-preserve-indentation t)
 
-            ;; Configure HTML export
-            (setq org-html-validation-link nil)
-            (setq org-html-head-include-scripts nil)
-            (setq org-html-head-include-default-style nil)
-            (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-            (setq org-html-section)
+          (setq org-export-with-tags nil)
+
+          (setq org-publish-project-alist
+                '(("root"
+                   :base-directory (expand-file-name my/org-dir)
+                   :publishing-function org-html-publish-to-html
+                   :publishing-directory (expand-file-name "~/public_html")
+                   :section-numbers nil
+
+                   :with-author nil
+                   :with-creator t
+                   :with-toc t
+                   :time-stamp-file nil)))
+
+          ;; Configure HTML export
+          (setq org-html-validation-link nil)
+          (setq org-html-head-include-scripts nil)
+          (setq org-html-head-include-default-style nil)
+          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+          (setq org-html-section)
+
+          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
+
+          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
+
+          (setq bibtex-completion-pdf-open-function
+                (lambda (fpath)
+                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
+
+          (defun org-export-latex-no-toc (depth)
+            (when depth
+              (format "%% Org-mode is exporting headings to %s levels.\n"
+                      depth)))
+          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+
+          (add-to-list 'org-latex-classes
+                       '("apa6"
+                         "\\documentclass{apa6}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+          (setq org-latex-pdf-process
+                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
+          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
         '';
         hook = [ "(org-babel-after-execute . org-redisplay-inline-images)" ];
 
@@ -487,15 +520,6 @@ in {
               (when (not (eq session-name "none"))
                 (org-babel-python-initiate-session session-name))))
           (advice-add #'org-babel-execute:python :before #'my/org-babel-execute:python-session)
-        '';
-      };
-
-      org-ref = {
-        enable = true;
-        config = ''
-          (setq org-ref-insert-cite-function
-                (lambda ()
-          	(org-cite-insert nil)))
         '';
       };
 
@@ -620,10 +644,10 @@ in {
       };
 
       exec-path-from-shell = {
-        enable = true;
+        enable = false;
 
         init = ''
-          (dolist (var '("SSH_AUTH_SOCK" "LANG" "LC_CTYPE" "LC_MESSAGES" "NIX_SSL_CERT_FILE" "NIX_PROFILES" "JAVA_HOME" "GNUPGHOME"))
+          (dolist (var '("LANG" "LC_CTYPE" "LC_MESSAGES" "NIX_SSL_CERT_FILE" "NIX_PROFILES" "JAVA_HOME" "GNUPGHOME"))
             (add-to-list 'exec-path-from-shell-variables var))
 
           (when (memq window-system '(mac ns x))
@@ -634,6 +658,54 @@ in {
 
           (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
         '';
+      };
+
+      ivy-bibtext = {
+        enable = true;
+        init = ''
+          (autoload 'ivy-bibtex "ivy-bibtex" "" t)
+
+          ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+          ;; ignores the order of regexp tokens when searching for matching candidates.
+          (setq ivy-re-builders-alist
+                '((ivy-bibtex . ivy--regex-ignore-order)
+                  (t . ivy--regex-plus)))
+
+          (setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
+          (setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
+          (setq bibtex-completion-pdf-field "file")
+        '';
+
+        hook = [
+          ''(Tex . (lambda () (define-key Tex-mode-map "C-ch" 'ivy-bibtex)))''
+        ];
+      };
+
+      org-ref = {
+        enable = true;
+
+        init = ''
+          (setq org-ref-insert-cite-function
+                (lambda ()
+          	(org-cite-insert nil)))
+          (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
+        '';
+      };
+
+      pdf-tools = {
+        enable = true;
+
+        init = ''
+          (pdf-tools-install)
+
+          (setq-default pdf-view-display-size 'fit-width)
+
+          (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+
+          (setq pdf-annot-activate-created-annotations t)
+        '';
+
+        extraPackages = [ pkgs.poppler pkgs.automake ];
       };
     };
   };
