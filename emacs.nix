@@ -13,6 +13,7 @@ in {
     usePackageVerbose = false;
 
     earlyInit = ''
+                                        ; -*-emacs-lisp-*-
       ;; Disable Toolbar
       (tool-bar-mode -1)
       ;; Disable scrollbar
@@ -35,6 +36,7 @@ in {
       (setq warning-minimum-level 'error)
     '';
     prelude = ''
+                                        ; -*-emacs-lisp-*-
       ;; Disable startup message.
       (setq inhibit-startup-screen t
             inhibit-startup-echo-area-message (user-login-name))
@@ -311,6 +313,7 @@ in {
       lsp-java = {
         enable = true;
         init = ''
+                                        ; -*-emacs-lisp-*-
           (setq lsp-java-format-settings-url
            "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
           (setq lsp-java-format-settings-profile
@@ -359,6 +362,7 @@ in {
       org = {
         enable = true;
         extraConfig = ''
+                                        ; -*-emacs-lisp-*-
           :preface
           (defun my/indent-org-block-automatically ()
             "Indent the current org code block."
@@ -390,66 +394,89 @@ in {
           	(my/org-force-open-current-window)))
         '';
         init = ''
-          (defvar my/org-dir "~/Documents/org/")
+                                        ; -*-emacs-lisp-*-
+(defvar my/org-dir "~/Documents/org/")
 
-          (require 'oc)
+(require 'oc)
+(require 'oc-basic)
+(require 'oc-csl)
+(require 'oc-natbib)
 
-          (setq org-src-window-setup 'current-window)
-          (setq org-confirm-babel-evaluate nil)
-          (setq org-src-fontify-natively t)
-          (setq org-src-tab-acts-natively t)
-          (setq org-src-preserve-indentation t)
+(setq org-src-window-setup 'current-window)
+(setq org-confirm-babel-evaluate nil)
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-src-preserve-indentation t)
 
-          (setq org-export-with-tags nil)
+(setq org-export-with-tags nil)
 
-          (setq org-publish-project-alist
-                '(("root"
-                   :base-directory (expand-file-name my/org-dir)
-                   :publishing-function org-html-publish-to-html
-                   :publishing-directory (expand-file-name "~/public_html")
-                   :section-numbers nil
+(setq org-publish-project-alist
+      '(("root"
+         :base-directory (expand-file-name my/org-dir)
+         :publishing-function org-html-publish-to-html
+         :publishing-directory (expand-file-name "~/public_html")
+         :section-numbers nil
 
-                   :with-author nil
-                   :with-creator t
-                   :with-toc t
-                   :time-stamp-file nil)))
+         :with-author nil
+         :with-creator t
+         :with-toc t
+         :time-stamp-file nil)))
 
-          ;; Configure HTML export
-          (setq org-html-validation-link nil)
-          (setq org-html-head-include-scripts nil)
-          (setq org-html-head-include-default-style nil)
-          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-          (setq org-html-section)
+;; Configure HTML export
+(setq org-html-validation-link nil)
+(setq org-html-head-include-scripts nil)
+(setq org-html-head-include-default-style nil)
+(setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+(setq org-html-section)
 
-          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
+(setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
 
-          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
+(setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
 
-          (setq bibtex-completion-pdf-open-function
-                (lambda (fpath)
-                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
+(setq org-cite-export-processors '((t basic)))
 
-          (defun org-export-latex-no-toc (depth)
-            (when depth
-              (format "%% Org-mode is exporting headings to %s levels.\n"
-                      depth)))
-          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+(setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
 
-          (add-to-list 'org-latex-classes
-                       '("apa6"
-                         "\\documentclass{apa6}"
-                         ("\\section{%s}" . "\\section*{%s}")
-                         ("\\subsection{%s}" . "\\subsection*{%s}")
-                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(setq bibtex-completion-pdf-open-function
+      (lambda (fpath)
+        (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
 
-          (setq org-latex-pdf-process
-                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+(defun org-export-latex-no-toc (depth)
+  (when depth
+    (format "%% Org-mode is exporting headings to %s levels.\n"
+            depth)))
+(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
 
-          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
+(add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+
+(require 'ox-latex)
+
+(add-to-list 'org-latex-classes
+             '("apa6"
+               "\\documentclass{apa6}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(add-to-list 'org-latex-classes
+             '("mla"
+               "\\documentclass{mla}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
         '';
-        hook = [ "(org-babel-after-execute . org-redisplay-inline-images)" ];
+        hook = [
+          "(org-babel-after-execute . org-redisplay-inline-images)"
+          "(org-mode . visual-line-mode)"
+        ];
 
         bind = {
           "C-c n c" = "org-id-get-create";
@@ -513,6 +540,7 @@ in {
         ];
         after = [ "org" ];
         config = ''
+                                        ; -*-emacs-lisp-*-
           (setq org-babel-python-command "${pkgs.python310}/bin/python3.10")
           (setq-default python-indent-guess-indent-offset-verbose nil)
           (defun my/org-babel-execute:python-session (body params)
@@ -527,6 +555,7 @@ in {
         enable = true;
         extraPackages = [ pkgs.sqlite ];
         config = ''
+                                        ; -*-emacs-lisp-*-
           (setq calibredb-root-dir "~/Documents/calibre-library")
           (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
           (setq calibredb-library-alist '(("~/Documents/calibre-library")))
@@ -537,6 +566,7 @@ in {
       meow = {
         enable = true;
         config = ''
+                                        ; -*-emacs-lisp-*-
           (defun meow-setup ()
             (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
             (meow-motion-overwrite-define-key
@@ -624,6 +654,7 @@ in {
       separedit = {
         enable = true;
         bind = { "C-c '" = "separedit"; };
+        hook = [ "(separedit-buffer-creation . normal-mode)" ];
       };
 
       editorconfig = {
@@ -647,6 +678,7 @@ in {
         enable = false;
 
         init = ''
+                                        ; -*-emacs-lisp-*-
           (dolist (var '("LANG" "LC_CTYPE" "LC_MESSAGES" "NIX_SSL_CERT_FILE" "NIX_PROFILES" "JAVA_HOME" "GNUPGHOME"))
             (add-to-list 'exec-path-from-shell-variables var))
 
@@ -660,11 +692,10 @@ in {
         '';
       };
 
-      ivy-bibtext = {
+      ivy-bibtex = {
         enable = true;
         init = ''
-          (autoload 'ivy-bibtex "ivy-bibtex" "" t)
-
+                                        ; -*-emacs-lisp-*-
           ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
           ;; ignores the order of regexp tokens when searching for matching candidates.
           (setq ivy-re-builders-alist
@@ -675,32 +706,34 @@ in {
           (setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
           (setq bibtex-completion-pdf-field "file")
         '';
-
-        hook = [
-          ''(Tex . (lambda () (define-key Tex-mode-map "C-ch" 'ivy-bibtex)))''
-        ];
       };
 
       org-ref = {
         enable = true;
 
         init = ''
+                                        ; -*-emacs-lisp-*-
           (setq org-ref-insert-cite-function
                 (lambda ()
-          	(org-cite-insert nil)))
+                  (org-cite-insert nil)))
+
           (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
+
+          (setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
+
+          (require 'org-ref)
+          (require 'org-ref-ivy)
         '';
+
+        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
       };
 
       pdf-tools = {
         enable = true;
 
         init = ''
-          (pdf-tools-install)
-
+                                        ; -*-emacs-lisp-*-
           (setq-default pdf-view-display-size 'fit-width)
-
-          (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
 
           (setq pdf-annot-activate-created-annotations t)
         '';
