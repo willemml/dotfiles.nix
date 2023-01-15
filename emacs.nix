@@ -147,6 +147,7 @@ in {
       yasnippet = {
         enable = true;
         config = ''
+          (setq yas-snippet-dirs '("~/Documents/org/snippets"))
           (yas-global-mode 1)
         '';
       };
@@ -401,6 +402,7 @@ in {
 (require 'oc-basic)
 (require 'oc-csl)
 (require 'oc-natbib)
+(require 'ox-latex)
 
 (setq org-src-window-setup 'current-window)
 (setq org-confirm-babel-evaluate nil)
@@ -437,6 +439,8 @@ in {
 
 (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
 
+(setq org-cite-csl-styles-dir "~/Zotero/styles")
+
 (setq bibtex-completion-pdf-open-function
       (lambda (fpath)
         (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
@@ -451,8 +455,6 @@ in {
       '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
 
 (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
-
-(require 'ox-latex)
 
 (add-to-list 'org-latex-classes
              '("apa6"
@@ -727,6 +729,8 @@ in {
 
         bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
       };
+
+      citeproc.enable = true;
 
       pdf-tools = {
         enable = true;
