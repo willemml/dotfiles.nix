@@ -546,7 +546,7 @@ in {
 (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
 '';
 
-        extraPackages = [ pkgs.octave ];
+        extraPackages = [ pkgs.octave pkgs.texinfo4 ];
       };
 
       ob-python = {
