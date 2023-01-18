@@ -494,7 +494,6 @@ in {
       };
 
       htmlize.enable = true;
-      emacsql-sqlite.enable = true;
 
       org-contrib.enable = true;
 
@@ -567,6 +566,93 @@ in {
         '';
       };
 
+      auctex = {
+        enable = true;
+
+        init = ''
+                                        ; -*-emacs-lisp-*-
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+'';
+      };
+
+      company-math = {
+        enable = true;
+
+        init = ''
+                                        ; -*-emacs-lisp-*-
+(add-to-list 'company-backends 'company-math-symbols-unicode)
+'';
+
+      org-download = {
+        enable = true;
+        init = ''
+          (require 'org-download)
+          (setq-default org-download-image-dir "~/Documents/org/images")
+        '';
+        hook = [ "(dired-mode-hook . org-download-enable)" ];
+        extraPackages = [ pkgs.pngpaste ];
+      };
+
+      #
+      # Start bibtex cite/ref section
+      #
+
+      ivy-bibtex = {
+        enable = true;
+        init = ''
+                                        ; -*-emacs-lisp-*-
+;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+;; ignores the order of regexp tokens when searching for matching candidates.
+(setq ivy-re-builders-alist
+      '((ivy-bibtex . ivy--regex-ignore-order)
+        (t . ivy--regex-plus)))
+
+(setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
+(setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
+(setq bibtex-completion-pdf-field "file")
+        '';
+      };
+
+      org-ref = {
+        enable = true;
+
+        init = ''
+                                        ; -*-emacs-lisp-*-
+(setq org-ref-insert-cite-function
+      (lambda ()
+        (org-cite-insert nil)))
+
+(setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
+
+(setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
+
+(require 'org-ref)
+(require 'org-ref-ivy)
+        '';
+
+        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
+      };
+
+      citeproc.enable = true;
+
+      pdf-tools = {
+        enable = true;
+
+        init = ''
+                                        ; -*-emacs-lisp-*-
+(setq-default pdf-view-display-size 'fit-width)
+
+(setq pdf-annot-activate-created-annotations t)
+        '';
+
+        extraPackages = [ pkgs.poppler pkgs.automake ];
+      };
+
+      #
+      # End bibtex cite/ref section
+      #
+
       calibredb = {
         enable = true;
         extraPackages = [ pkgs.sqlite ];
@@ -576,6 +662,19 @@ in {
           (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
           (setq calibredb-library-alist '(("~/Documents/calibre-library")))
           (setq sql-sqlite-program "${pkgs.sqlite}/bin/sqlite3")
+        '';
+      };
+
+      separedit = {
+        enable = true;
+        bind = { "C-c '" = "separedit"; };
+        hook = [ "(separedit-buffer-creation . normal-mode)" ];
+      };
+
+      editorconfig = {
+        enable = true;
+        config = ''
+          (editorconfig-mode 1)
         '';
       };
 
@@ -667,80 +766,6 @@ in {
 
 (meow-setup)
         '';
-      };
-
-      separedit = {
-        enable = true;
-        bind = { "C-c '" = "separedit"; };
-        hook = [ "(separedit-buffer-creation . normal-mode)" ];
-      };
-
-      editorconfig = {
-        enable = true;
-        config = ''
-          (editorconfig-mode 1)
-        '';
-      };
-
-      org-download = {
-        enable = true;
-        init = ''
-          (require 'org-download)
-          (setq-default org-download-image-dir "~/Documents/org/images")
-        '';
-        hook = [ "(dired-mode-hook . org-download-enable)" ];
-        extraPackages = [ pkgs.pngpaste ];
-      };
-
-      ivy-bibtex = {
-        enable = true;
-        init = ''
-                                        ; -*-emacs-lisp-*-
-;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-;; ignores the order of regexp tokens when searching for matching candidates.
-(setq ivy-re-builders-alist
-      '((ivy-bibtex . ivy--regex-ignore-order)
-        (t . ivy--regex-plus)))
-
-(setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
-(setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
-(setq bibtex-completion-pdf-field "file")
-        '';
-      };
-
-      org-ref = {
-        enable = true;
-
-        init = ''
-                                        ; -*-emacs-lisp-*-
-(setq org-ref-insert-cite-function
-      (lambda ()
-        (org-cite-insert nil)))
-
-(setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
-
-(setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
-
-(require 'org-ref)
-(require 'org-ref-ivy)
-        '';
-
-        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
-      };
-
-      citeproc.enable = true;
-
-      pdf-tools = {
-        enable = true;
-
-        init = ''
-                                        ; -*-emacs-lisp-*-
-(setq-default pdf-view-display-size 'fit-width)
-
-(setq pdf-annot-activate-created-annotations t)
-        '';
-
-        extraPackages = [ pkgs.poppler pkgs.automake ];
       };
     };
   };
