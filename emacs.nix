@@ -395,84 +395,84 @@ in {
           	(my/org-force-open-current-window)))
         '';
         init = ''
-                                        ; -*-emacs-lisp-*-
-(defvar my/org-dir "~/Documents/org/")
+                                                  ; -*-emacs-lisp-*-
+          (defvar my/org-dir "~/Documents/org/")
 
-(require 'oc)
-(require 'oc-basic)
-(require 'oc-csl)
-(require 'oc-natbib)
-(require 'ox-latex)
+          (require 'oc)
+          (require 'oc-basic)
+          (require 'oc-csl)
+          (require 'oc-natbib)
+          (require 'ox-latex)
 
-(setq org-src-window-setup 'current-window)
-(setq org-confirm-babel-evaluate nil)
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-(setq org-src-preserve-indentation t)
+          (setq org-src-window-setup 'current-window)
+          (setq org-confirm-babel-evaluate nil)
+          (setq org-src-fontify-natively t)
+          (setq org-src-tab-acts-natively t)
+          (setq org-src-preserve-indentation t)
 
-(setq org-export-with-tags nil)
+          (setq org-export-with-tags nil)
 
-(setq org-publish-project-alist
-      '(("root"
-         :base-directory (expand-file-name my/org-dir)
-         :publishing-function org-html-publish-to-html
-         :publishing-directory (expand-file-name "~/public_html")
-         :section-numbers nil
+          (setq org-publish-project-alist
+                '(("root"
+                   :base-directory (expand-file-name my/org-dir)
+                   :publishing-function org-html-publish-to-html
+                   :publishing-directory (expand-file-name "~/public_html")
+                   :section-numbers nil
 
-         :with-author nil
-         :with-creator t
-         :with-toc t
-         :time-stamp-file nil)))
+                   :with-author nil
+                   :with-creator t
+                   :with-toc t
+                   :time-stamp-file nil)))
 
-;; Configure HTML export
-(setq org-html-validation-link nil)
-(setq org-html-head-include-scripts nil)
-(setq org-html-head-include-default-style nil)
-(setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-(setq org-html-section)
+          ;; Configure HTML export
+          (setq org-html-validation-link nil)
+          (setq org-html-head-include-scripts nil)
+          (setq org-html-head-include-default-style nil)
+          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+          (setq org-html-section)
 
-(setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
+          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
 
-(setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
+          (setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
 
-(setq org-cite-export-processors '((t basic)))
+          (setq org-cite-export-processors '((t basic)))
 
-(setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
+          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
 
-(setq org-cite-csl-styles-dir "~/Zotero/styles")
+          (setq org-cite-csl-styles-dir "~/Zotero/styles")
 
-(setq bibtex-completion-pdf-open-function
-      (lambda (fpath)
-        (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
+          (setq bibtex-completion-pdf-open-function
+                (lambda (fpath)
+                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
 
-(defun org-export-latex-no-toc (depth)
-  (when depth
-    (format "%% Org-mode is exporting headings to %s levels.\n"
-            depth)))
-(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+          (defun org-export-latex-no-toc (depth)
+            (when depth
+              (format "%% Org-mode is exporting headings to %s levels.\n"
+                      depth)))
+          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
 
-(setq org-latex-pdf-process
-      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+          (setq org-latex-pdf-process
+                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
 
-(add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
 
-(add-to-list 'org-latex-classes
-             '("apa6"
-               "\\documentclass{apa6}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (add-to-list 'org-latex-classes
+                       '("apa6"
+                         "\\documentclass{apa6}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-(add-to-list 'org-latex-classes
-             '("mla"
-               "\\documentclass{mla}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (add-to-list 'org-latex-classes
+                       '("mla"
+                         "\\documentclass{mla}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
         '';
         hook = [
@@ -494,6 +494,21 @@ in {
       };
 
       htmlize.enable = true;
+
+      gnuplot = {
+        enable = true;
+        init = ''
+(require 'gnuplot)
+
+(autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)
+(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
+(setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
+
+(require 'gnuplot-context)
+        '';
+
+        extraPackages = [ pkgs.gnuplot ];
+      };
 
       org-contrib.enable = true;
 
@@ -534,16 +549,21 @@ in {
         after = [ "org" ];
       };
 
+      ob-gnuplot = {
+        enable = true;
+        after = [ "org" ];
+      };
+
       ob-matlab = {
         enable = true;
         after = [ "org" ];
 
         init = ''
-                                        ; -*-emacs-lisp-*-
+                                                  ; -*-emacs-lisp-*-
 
-(setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
-(setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
-'';
+          (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
+          (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
+        '';
 
         extraPackages = [ pkgs.octave pkgs.texinfo4 ];
       };
@@ -566,23 +586,39 @@ in {
         '';
       };
 
-      auctex = {
+      latex = {
         enable = true;
-
+        package = epkgs: epkgs.auctex;
+        hook = [''
+          (LaTeX-mode
+           . (lambda ()
+               (turn-on-reftex)))
+        ''];
         init = ''
-                                        ; -*-emacs-lisp-*-
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-'';
+          (setq TeX-PDF-mode t
+                TeX-auto-save t
+                TeX-parse-self t)
+        '';
       };
 
       company-math = {
         enable = true;
 
+        after = [ "company" ];
+
         init = ''
-                                        ; -*-emacs-lisp-*-
-(add-to-list 'company-backends 'company-math-symbols-unicode)
-'';
+                                                  ; -*-emacs-lisp-*-
+          (add-to-list 'company-backends 'company-math-symbols-unicode)
+        '';
+      };
+
+      cdlatex = {
+        enable = true;
+        after = [ "latex" ];
+        init = ''
+          (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)
+        '';
+      };
 
       org-download = {
         enable = true;
@@ -601,16 +637,16 @@ in {
       ivy-bibtex = {
         enable = true;
         init = ''
-                                        ; -*-emacs-lisp-*-
-;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-;; ignores the order of regexp tokens when searching for matching candidates.
-(setq ivy-re-builders-alist
-      '((ivy-bibtex . ivy--regex-ignore-order)
-        (t . ivy--regex-plus)))
+                                                  ; -*-emacs-lisp-*-
+          ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+          ;; ignores the order of regexp tokens when searching for matching candidates.
+          (setq ivy-re-builders-alist
+                '((ivy-bibtex . ivy--regex-ignore-order)
+                  (t . ivy--regex-plus)))
 
-(setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
-(setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
-(setq bibtex-completion-pdf-field "file")
+          (setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
+          (setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
+          (setq bibtex-completion-pdf-field "file")
         '';
       };
 
@@ -618,17 +654,17 @@ in {
         enable = true;
 
         init = ''
-                                        ; -*-emacs-lisp-*-
-(setq org-ref-insert-cite-function
-      (lambda ()
-        (org-cite-insert nil)))
+                                                  ; -*-emacs-lisp-*-
+          (setq org-ref-insert-cite-function
+                (lambda ()
+                  (org-cite-insert nil)))
 
-(setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
+          (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
 
-(setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
+          (setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
 
-(require 'org-ref)
-(require 'org-ref-ivy)
+          (require 'org-ref)
+          (require 'org-ref-ivy)
         '';
 
         bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
@@ -640,10 +676,10 @@ in {
         enable = true;
 
         init = ''
-                                        ; -*-emacs-lisp-*-
-(setq-default pdf-view-display-size 'fit-width)
+                                                  ; -*-emacs-lisp-*-
+          (setq-default pdf-view-display-size 'fit-width)
 
-(setq pdf-annot-activate-created-annotations t)
+          (setq pdf-annot-activate-created-annotations t)
         '';
 
         extraPackages = [ pkgs.poppler pkgs.automake ];
@@ -679,92 +715,92 @@ in {
       };
 
       meow = {
-        enable = true;
+        enable = false;
         init = ''
-                                        ; -*-emacs-lisp-*-
-(defun meow-setup ()
-  (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
-  (meow-motion-overwrite-define-key
-   ;; Use e to move up, n to move down.
-   ;; Since special modes usually use n to move down, we only overwrite e here.
-   '("e" . meow-prev)
-   '("<escape>" . ignore))
-  (meow-leader-define-key
-   '("?" . meow-cheatsheet)
-   ;; To execute the originally e in MOTION state, use SPC e.
-   '("e" . "H-e")
-   '("1" . meow-digit-argument)
-   '("2" . meow-digit-argument)
-   '("3" . meow-digit-argument)
-   '("4" . meow-digit-argument)
-   '("5" . meow-digit-argument)
-   '("6" . meow-digit-argument)
-   '("7" . meow-digit-argument)
-   '("8" . meow-digit-argument)
-   '("9" . meow-digit-argument)
-   '("0" . meow-digit-argument))
-  (meow-normal-define-key
-   '("0" . meow-expand-0)
-   '("1" . meow-expand-1)
-   '("2" . meow-expand-2)
-   '("3" . meow-expand-3)
-   '("4" . meow-expand-4)
-   '("5" . meow-expand-5)
-   '("6" . meow-expand-6)
-   '("7" . meow-expand-7)
-   '("8" . meow-expand-8)
-   '("9" . meow-expand-9)
-   '("-" . negative-argument)
-   '(";" . meow-reverse)
-   '("," . meow-inner-of-thing)
-   '("." . meow-bounds-of-thing)
-   '("[" . meow-beginning-of-thing)
-   '("]" . meow-end-of-thing)
-   '("/" . meow-visit)
-   '("a" . meow-append)
-   '("A" . meow-open-below)
-   '("b" . meow-back-word)
-   '("B" . meow-back-symbol)
-   '("c" . meow-change)
-   '("d" . meow-delete)
-   '("e" . meow-prev)
-   '("E" . meow-prev-expand)
-   '("f" . meow-find)
-   '("g" . meow-cancel-selection)
-   '("G" . meow-grab)
-   '("h" . meow-left)
-   '("H" . meow-left-expand)
-   '("i" . meow-right)
-   '("I" . meow-right-expand)
-   '("j" . meow-join)
-   '("k" . meow-kill)
-   '("l" . meow-line)
-   '("L" . meow-goto-line)
-   '("m" . meow-mark-word)
-   '("M" . meow-mark-symbol)
-   '("n" . meow-next)
-   '("N" . meow-next-expand)
-   '("o" . meow-block)
-   '("O" . meow-to-block)
-   '("p" . meow-yank)
-   '("q" . meow-quit)
-   '("r" . meow-replace)
-   '("s" . meow-insert)
-   '("S" . meow-open-above)
-   '("t" . meow-till)
-   '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
-   '("v" . meow-search)
-   '("w" . meow-next-word)
-   '("W" . meow-next-symbol)
-   '("x" . meow-delete)
-   '("X" . meow-backward-delete)
-   '("y" . meow-save)
-   '("z" . meow-pop-selection)
-   '("'" . repeat)
-   '("<escape>" . ignore)))
+                                                  ; -*-emacs-lisp-*-
+          (defun meow-setup ()
+            (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
+            (meow-motion-overwrite-define-key
+             ;; Use e to move up, n to move down.
+             ;; Since special modes usually use n to move down, we only overwrite e here.
+             '("e" . meow-prev)
+             '("<escape>" . ignore))
+            (meow-leader-define-key
+             '("?" . meow-cheatsheet)
+             ;; To execute the originally e in MOTION state, use SPC e.
+             '("e" . "H-e")
+             '("1" . meow-digit-argument)
+             '("2" . meow-digit-argument)
+             '("3" . meow-digit-argument)
+             '("4" . meow-digit-argument)
+             '("5" . meow-digit-argument)
+             '("6" . meow-digit-argument)
+             '("7" . meow-digit-argument)
+             '("8" . meow-digit-argument)
+             '("9" . meow-digit-argument)
+             '("0" . meow-digit-argument))
+            (meow-normal-define-key
+             '("0" . meow-expand-0)
+             '("1" . meow-expand-1)
+             '("2" . meow-expand-2)
+             '("3" . meow-expand-3)
+             '("4" . meow-expand-4)
+             '("5" . meow-expand-5)
+             '("6" . meow-expand-6)
+             '("7" . meow-expand-7)
+             '("8" . meow-expand-8)
+             '("9" . meow-expand-9)
+             '("-" . negative-argument)
+             '(";" . meow-reverse)
+             '("," . meow-inner-of-thing)
+             '("." . meow-bounds-of-thing)
+             '("[" . meow-beginning-of-thing)
+             '("]" . meow-end-of-thing)
+             '("/" . meow-visit)
+             '("a" . meow-append)
+             '("A" . meow-open-below)
+             '("b" . meow-back-word)
+             '("B" . meow-back-symbol)
+             '("c" . meow-change)
+             '("d" . meow-delete)
+             '("e" . meow-prev)
+             '("E" . meow-prev-expand)
+             '("f" . meow-find)
+             '("g" . meow-cancel-selection)
+             '("G" . meow-grab)
+             '("h" . meow-left)
+             '("H" . meow-left-expand)
+             '("i" . meow-right)
+             '("I" . meow-right-expand)
+             '("j" . meow-join)
+             '("k" . meow-kill)
+             '("l" . meow-line)
+             '("L" . meow-goto-line)
+             '("m" . meow-mark-word)
+             '("M" . meow-mark-symbol)
+             '("n" . meow-next)
+             '("N" . meow-next-expand)
+             '("o" . meow-block)
+             '("O" . meow-to-block)
+             '("p" . meow-yank)
+             '("q" . meow-quit)
+             '("r" . meow-replace)
+             '("s" . meow-insert)
+             '("S" . meow-open-above)
+             '("t" . meow-till)
+             '("u" . meow-undo)
+             '("U" . meow-undo-in-selection)
+             '("v" . meow-search)
+             '("w" . meow-next-word)
+             '("W" . meow-next-symbol)
+             '("x" . meow-delete)
+             '("X" . meow-backward-delete)
+             '("y" . meow-save)
+             '("z" . meow-pop-selection)
+             '("'" . repeat)
+             '("<escape>" . ignore)))
 
-(meow-setup)
+          (meow-setup)
         '';
       };
     };
