@@ -395,85 +395,86 @@ in {
           	(my/org-force-open-current-window)))
         '';
         init = ''
-                                                  ; -*-emacs-lisp-*-
-          (defvar my/org-dir "~/Documents/org/")
+                                        ; -*-emacs-lisp-*-
+(defvar my/org-dir "~/Documents/org/")
 
-          (require 'oc)
-          (require 'oc-basic)
-          (require 'oc-csl)
-          (require 'oc-natbib)
-          (require 'ox-latex)
+(require 'oc)
+(require 'oc-basic)
+(require 'oc-csl)
+(require 'oc-natbib)
+(require 'ox-latex)
 
-          (setq org-src-window-setup 'current-window)
-          (setq org-confirm-babel-evaluate nil)
-          (setq org-src-fontify-natively t)
-          (setq org-src-tab-acts-natively t)
-          (setq org-src-preserve-indentation t)
+(setq org-src-window-setup 'current-window)
+(setq org-confirm-babel-evaluate nil)
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-src-preserve-indentation t)
 
-          (setq org-export-with-tags nil)
+(setq org-export-with-tags nil)
 
-          (setq org-publish-project-alist
-                '(("root"
-                   :base-directory (expand-file-name my/org-dir)
-                   :publishing-function org-html-publish-to-html
-                   :publishing-directory (expand-file-name "~/public_html")
-                   :section-numbers nil
+(setq org-publish-project-alist
+      '(("root"
+         :base-directory (expand-file-name my/org-dir)
+         :publishing-function org-html-publish-to-html
+         :publishing-directory (expand-file-name "~/public_html")
+         :section-numbers nil
 
-                   :with-author nil
-                   :with-creator t
-                   :with-toc t
-                   :time-stamp-file nil)))
+         :with-author nil
+         :with-creator t
+         :with-toc t
+         :time-stamp-file nil)))
 
-          ;; Configure HTML export
-          (setq org-html-validation-link nil)
-          (setq org-html-head-include-scripts nil)
-          (setq org-html-head-include-default-style nil)
-          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-          (setq org-html-section)
+;; Configure HTML export
+(setq org-html-validation-link nil)
+(setq org-html-head-include-scripts nil)
+(setq org-html-head-include-default-style nil)
+(setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+(setq org-html-section)
 
-          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
+(setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
 
-          (setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
+(setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
 
-          (setq org-cite-export-processors '((t basic)))
+(setq org-cite-export-processors '((t basic)))
 
-          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
+(setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
 
-          (setq org-cite-csl-styles-dir "~/Zotero/styles")
+(setq org-cite-csl-styles-dir "~/Zotero/styles")
 
-          (setq bibtex-completion-pdf-open-function
-                (lambda (fpath)
-                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
+(setq bibtex-completion-pdf-open-function
+      (lambda (fpath)
+        (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
 
-          (defun org-export-latex-no-toc (depth)
-            (when depth
-              (format "%% Org-mode is exporting headings to %s levels.\n"
-                      depth)))
-          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+(defun org-export-latex-no-toc (depth)
+  (when depth
+    (format "%% Org-mode is exporting headings to %s levels.\n"
+            depth)))
+(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
 
-          (setq org-latex-pdf-process
-                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
 
-          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+(add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
 
-          (add-to-list 'org-latex-classes
-                       '("apa6"
-                         "\\documentclass{apa6}"
-                         ("\\section{%s}" . "\\section*{%s}")
-                         ("\\subsection{%s}" . "\\subsection*{%s}")
-                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("apa6"
+               "\\documentclass{apa6}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-          (add-to-list 'org-latex-classes
-                       '("mla"
-                         "\\documentclass{mla}"
-                         ("\\section{%s}" . "\\section*{%s}")
-                         ("\\subsection{%s}" . "\\subsection*{%s}")
-                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("mla"
+               "\\documentclass{mla}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(setq org-agenda-files '("~/Documents/org" "~/Documents/org/ubc"))
         '';
         hook = [
           "(org-babel-after-execute . org-redisplay-inline-images)"

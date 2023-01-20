@@ -26,6 +26,7 @@
       htop
       bat
       fd
+      gawk
       ripgrep
       jq
       nmap
