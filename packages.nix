@@ -3,39 +3,40 @@
 {
   home.packages = with pkgs;
     [
+      colima
       coreutils
       gnused
-      spoof-mac
-      colima
-      pinentry_mac
       iterm2
-      zoom-us
       karabiner-elements
+      pinentry_mac
+      spoof-mac
+      zoom-us
       (pkgs.callPackage ./spotify-mac.nix { inherit config lib pkgs; })
     ] ++ [ discord pkgsCustom.vlc pkgsCustom.qbittorrent ]
     ++ [ docker docker-compose ] ++ [
-      comma
-      automake
       autoconf
-      cmake
+      automake
       bash
-      rustup
-      curl
-      pv
-      wget
-      htop
       bat
+      cmake
+      comma
+      curl
       fd
       gawk
-      ripgrep
+      htop
       jq
+      nix-review
       nmap
-      unzip
+      openssh
+      pv
+      ripgrep
+      rsync
+      rustup
+      tldr
       unp
       unrar
-      rsync
-      openssh
-      tldr
-      nix-review
+      unzip
+      wget
+      yq
     ];
 }

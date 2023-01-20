@@ -2,26 +2,14 @@
 
 {
   programs = {
-    home-manager.enable = true;
-
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
     };
 
-    gpg = {
+    exa = {
       enable = true;
-      package = pkgs.gnupg;
-      homedir = "${config.home.homeDirectory}/.gnupg";
-      settings = {
-        use-agent = true;
-        default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
-      };
-    };
-
-    java = {
-      enable = true;
-      package = pkgs.jdk;
+      enableAliases = true;
     };
 
     git = {
@@ -42,14 +30,19 @@
       userEmail = "willem@leit.so";
     };
 
-    zoxide = {
+    gpg = {
       enable = true;
-      enableZshIntegration = true;
+      package = pkgs.gnupg;
+      homedir = "${config.home.homeDirectory}/.gnupg";
+      settings = {
+        use-agent = true;
+        default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
+      };
     };
 
-    exa = {
+    java = {
       enable = true;
-      enableAliases = true;
+      package = pkgs.jdk;
     };
 
     starship = {
@@ -103,6 +96,11 @@
       };
     };
 
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -113,7 +111,6 @@
       envExtra = ''
         export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH
         export GPG_TTY=$(tty)
-
         eval $(gpg-agent --daemon -q 2>/dev/null)
       '';
       dotDir = ".config/zsh";
@@ -133,5 +130,8 @@
         l = "ls -1";
       };
     };
+
+    home-manager.enable = true;
+
   };
 }
