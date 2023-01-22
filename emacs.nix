@@ -30,7 +30,7 @@ in {
       (setq native-comp-async-report-warnings-errors nil)
       (setq warning-minimum-level 'error)
     '';
-    
+
     prelude = ''
                                         ; -*-emacs-lisp-*-
       ;; Disable startup message.
@@ -110,43 +110,51 @@ in {
     '';
 
     usePackage = {
-      dracula-theme = {
+      calibredb = {
         enable = true;
+        extraPackages = [ pkgs.sqlite ];
         config = ''
-          (load-theme 'dracula t)
+                                        ; -*-emacs-lisp-*-
+          (setq calibredb-root-dir "~/Documents/calibre-library")
+          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+          (setq calibredb-library-alist '(("~/Documents/calibre-library")))
+          (setq sql-sqlite-program "${pkgs.sqlite}/bin/sqlite3")
         '';
       };
 
-      yasnippet = {
+      cdlatex = {
         enable = true;
-        config = ''
-          (setq yas-snippet-dirs '("~/Documents/org/snippets"))
-          (yas-global-mode 1)
+        after = [ "latex" ];
+        init = ''
+          (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)
         '';
       };
 
-      yasnippet-snippets = {
+      citeproc.enable = true;
+
+      company = {
         enable = true;
-        config = ''
-          (yas-reload-all)
+        defines = [ "comapny-text-icons-margin" ];
+        init = ''
+          ;; Align company-mode tooltips to the right hand side
+          (setq company-tooltip-align-annotations t)
+          ;; Display number of completions before and after current suggestions
+          ;; in company-mode
+          (setq company-tooltip-offset-display 'lines)
+          ;; Display text icon of type in company popup
+          (setq company-format-margin-function #'company-text-icons-margin)
         '';
+        hook =
+          [ "(sh-mode . company-mode)" "(emacs-lisp-mode . company-mode)" ];
       };
 
-      ivy = {
+      company-math = {
         enable = true;
-        command = [ "ivy-mode" ];
-        extraConfig = ''
-          :custom
-          (ivy-use-virtual-buffers t)
-          (enable-recursive-minibuffers t)
+        after = [ "company" ];
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (add-to-list 'company-backends 'company-math-symbols-unicode)
         '';
-        bind = { "C-c C-r" = "ivy-resume"; };
-        hook = [ "(after-init . ivy-mode)" ];
-      };
-
-      swiper = {
-        enable = true;
-        bind = { "C-s" = "swiper"; };
       };
 
       counsel = {
@@ -171,31 +179,21 @@ in {
         };
       };
 
-      company = {
+      edit-indirect.enable = true;
+
+      editorconfig = {
         enable = true;
-        defines = [ "comapny-text-icons-margin" ];
-        init = ''
-          ;; Align company-mode tooltips to the right hand side
-          (setq company-tooltip-align-annotations t)
-          ;; Display number of completions before and after current suggestions
-          ;; in company-mode
-          (setq company-tooltip-offset-display 'lines)
-          ;; Display text icon of type in company popup
-          (setq company-format-margin-function #'company-text-icons-margin)
+        config = ''
+          (editorconfig-mode 1)
         '';
-        hook =
-          [ "(sh-mode . company-mode)" "(emacs-lisp-mode . company-mode)" ];
       };
 
-      rust-mode = {
+      flycheck = {
         enable = true;
-        bindLocal.rust-mode-map = {
-          "C-c C-y" = "lsp-format-buffer";
-          "C-c C-c" = "rust-run-clippy";
-          "C-c C-r" = "rust-run";
-          "C-c C-t" = "rust-test";
-          "C-c C-o" = "rust-compile";
-        };
+        hook = [ "(after-init . global-flycheck-mode)" ];
+        config = ''
+          (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+        '';
       };
 
       format-all = {
@@ -208,21 +206,88 @@ in {
         extraPackages = [ pkgs.black pkgs.shellcheck pkgs.clang-tools ];
       };
 
-      tree-sitter = {
+      gnuplot = {
         enable = true;
         init = ''
-          (setq tree-sitter-major-mode-language-alist '((arduino-mode . c)))
+          (require 'gnuplot)
+          (autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)
+          (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
+          (setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
+          (require 'gnuplot-context)
         '';
-        hook = [
-          "(rust-mode . tree-sitter-hl-mode)"
-          "(python-mode . tree-sitter-hl-mode)"
-          "(c-mode . tree-sitter-hl-mode)"
-          "(shell-mode . tree-sitter-hl-mode)"
-          "(javascript-mode . tree-sitter-hl-mode)"
-        ];
+        extraPackages = [ pkgs.gnuplot ];
       };
 
-      tree-sitter-langs.enable = true;
+      graphviz-dot-mode = {
+        enable = true;
+        bindLocal.graphviz-dot-mode-map = {
+          "C-c C-y" = "graphviz-dot-indent-graph";
+        };
+        extraPackages = [ pkgs.graphviz ];
+      };
+
+      htmlize.enable = true;
+
+      ivy = {
+        enable = true;
+        command = [ "ivy-mode" ];
+        extraConfig = ''
+          :custom
+          (ivy-use-virtual-buffers t)
+          (enable-recursive-minibuffers t)
+        '';
+        bind = { "C-c C-r" = "ivy-resume"; };
+        hook = [ "(after-init . ivy-mode)" ];
+      };
+
+      ivy-bibtex = {
+        enable = true;
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+          ;; ignores the order of regexp tokens when searching for matching candidates.
+          (setq ivy-re-builders-alist
+                '((ivy-bibtex . ivy--regex-ignore-order)
+                  (t . ivy--regex-plus)))
+          (setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
+          (setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
+          (setq bibtex-completion-pdf-field "file")
+        '';
+      };
+
+      latex = {
+        enable = true;
+        package = epkgs: epkgs.auctex;
+        hook = [''
+          (LaTeX-mode
+           . (lambda ()
+               (turn-on-reftex)))
+        ''];
+        init = ''
+          (setq TeX-PDF-mode t
+                TeX-auto-save t
+                TeX-parse-self t)
+        '';
+      };
+
+      lsp-ivy = {
+        enable = true;
+        command = [ "lsp-ivy-workspace-symbol" ];
+      };
+
+      lsp-java = {
+        enable = true;
+        init = ''
+                                        ; -*-emacs-lisp-*-
+          (setq lsp-java-format-settings-url
+           "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+          (setq lsp-java-format-settings-profile
+           "GoogleStyle")
+          (setq lsp-java-jdt-download-url
+           "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
+        '';
+        hook = [ "(java-mode . lsp)" ];
+      };
 
       lsp-mode = {
         enable = true;
@@ -266,383 +331,14 @@ in {
         extraPackages = [ pkgs.nodePackages.bash-language-server ];
       };
 
-      lsp-ui = {
-        enable = true;
-        command = [ "lsp-ui-mode" ];
-      };
-
-      lsp-ivy = {
-        enable = true;
-        command = [ "lsp-ivy-workspace-symbol" ];
-      };
-
       lsp-treemacs = {
         enable = true;
         command = [ "lsp-treemacs-errors-lisp" ];
       };
 
-      lsp-java = {
+      lsp-ui = {
         enable = true;
-        init = ''
-                                        ; -*-emacs-lisp-*-
-          (setq lsp-java-format-settings-url
-           "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-          (setq lsp-java-format-settings-profile
-           "GoogleStyle")
-          (setq lsp-java-jdt-download-url
-           "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
-        '';
-        hook = [ "(java-mode . lsp)" ];
-      };
-
-      flycheck = {
-        enable = true;
-        hook = [ "(after-init . global-flycheck-mode)" ];
-        config = ''
-          (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-        '';
-      };
-
-      arduino-mode = {
-        enable = true;
-        config = ''
-          (require 'flycheck-arduino)
-          (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
-        '';
-        init = ''
-          (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
-        '';
-      };
-
-      nix-mode = {
-        enable = true;
-        extraConfig = ''
-          :mode "\\.nix\\'"
-        '';
-        config = ''
-          (setq nix-nixfmt-bin "${pkgs.nixfmt}/bin/nixfmt")
-          (setq nix-executable "/nix/var/nix/profiles/default/bin/nix")
-        '';
-        bindLocal.nix-mode-map = { "C-c C-y" = "nix-format-buffer"; };
-        extraPackages = [ pkgs.nixfmt ];
-      };
-
-      edit-indirect.enable = true;
-
-      org = {
-        enable = true;
-        extraConfig = ''
-                                        ; -*-emacs-lisp-*-
-          :preface
-          (defun my/indent-org-block-automatically ()
-            "Indent the current org code block."
-            (interactive)
-            (when (org-in-src-block-p)
-          	(org-edit-special)
-              (indent-region (point-min) (point-max))
-              (org-edit-src-exit)))
-          (defun my/org-force-open-current-window ()
-            "Open a link using 'org-open-at-point' in current window."
-            (interactive)
-            (let ((org-link-frame-setup
-          		 (quote
-          		  ((vm . vm-visit-folder)
-          		   (vm-imap . vm-visit-imap-folder)
-          		   (gnus. gnus)
-          		   (file . find-file)
-          		   (wl . wl)))
-          		 ))
-          	(org-open-at-point)))
-          (defun my/follow-org-link (arg)
-            "Follow a link in orgmode If ARG is given.
-          Opens in new window otherwise opens in current window."
-            (interactive "P")
-            (if arg
-          	  (org-open-at-point)
-          	(my/org-force-open-current-window)))
-        '';
-        init = ''
-                                        ; -*-emacs-lisp-*-
-(defvar my/org-dir "~/Documents/org/")
-(require 'oc)
-(require 'oc-basic)
-(require 'oc-csl)
-(require 'oc-natbib)
-(require 'ox-latex)
-(setq org-src-window-setup 'current-window)
-(setq org-confirm-babel-evaluate nil)
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-(setq org-src-preserve-indentation t)
-(setq org-export-with-tags nil)
-(setq org-publish-project-alist
-      '(("root"
-         :base-directory (expand-file-name my/org-dir)
-         :publishing-function org-html-publish-to-html
-         :publishing-directory (expand-file-name "~/public_html")
-         :section-numbers nil
-         :with-author nil
-         :with-creator t
-         :with-toc t
-         :time-stamp-file nil)))
-;; Configure HTML export
-(setq org-html-validation-link nil)
-(setq org-html-head-include-scripts nil)
-(setq org-html-head-include-default-style nil)
-(setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-(setq org-html-section)
-(setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
-(setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
-(setq org-cite-export-processors '((t basic)))
-(setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
-(setq org-cite-csl-styles-dir "~/Zotero/styles")
-(setq bibtex-completion-pdf-open-function
-      (lambda (fpath)
-        (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
-(defun org-export-latex-no-toc (depth)
-  (when depth
-    (format "%% Org-mode is exporting headings to %s levels.\n"
-            depth)))
-(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-(setq org-latex-pdf-process
-      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
-(add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
-(add-to-list 'org-latex-classes
-             '("apa6"
-               "\\documentclass{apa6}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("mla"
-               "\\documentclass{mla}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(setq org-agenda-files '("~/Documents/org" "~/Documents/org/ubc"))
-        '';
-        hook = [
-          "(org-babel-after-execute . org-redisplay-inline-images)"
-          "(org-mode . visual-line-mode)"
-        ];
-        bind = {
-          "C-c n c" = "org-id-get-create";
-          "C-c n a" = "org-agenda";
-        };
-        bindLocal.org-mode-map = {
-          "C-c C-o" = "my/follow-org-link";
-          "C-c C-y" = "my/indent-org-block-automatically";
-          "<mouse-2>" = "my/follow-org-link";
-        };
-        extraPackages = [ pkgs.texlive.combined.scheme-full ];
-      };
-
-      htmlize.enable = true;
-
-      gnuplot = {
-        enable = true;
-        init = ''
-(require 'gnuplot)
-(autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)
-(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
-(setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
-(require 'gnuplot-context)
-        '';
-        extraPackages = [ pkgs.gnuplot ];
-      };
-
-      org-contrib.enable = true;
-
-      plantuml-mode = {
-        enable = true;
-        init = ''
-          (setq plantuml-executable-path "${pkgs.plantuml}/bin/plantuml")
-          (setq plantuml-default-exec-mode 'executable)
-        '';
-        extraPackages = [ pkgs.plantuml ];
-      };
-
-      graphviz-dot-mode = {
-        enable = true;
-        bindLocal.graphviz-dot-mode-map = {
-          "C-c C-y" = "graphviz-dot-indent-graph";
-        };
-        extraPackages = [ pkgs.graphviz ];
-      };
-
-      ob-dot = {
-        enable = true;
-        after = [ "org" ];
-      };
-
-      ob-shell = {
-        enable = true;
-        after = [ "org" ];
-      };
-
-      ob-calc = {
-        enable = true;
-        after = [ "org" ];
-      };
-
-      ob-emacs-lisp = {
-        enable = true;
-        after = [ "org" ];
-      };
-
-      ob-gnuplot = {
-        enable = true;
-        after = [ "org" ];
-      };
-
-      ob-matlab = {
-        enable = true;
-        after = [ "org" ];
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
-          (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
-        '';
-        extraPackages = [ pkgs.octave pkgs.texinfo4 ];
-      };
-
-      ob-python = {
-        enable = true;
-        extraPackages = [
-          (pkgs.python310.withPackages (p: with p; [ matplotlib latexify-py ]))
-        ];
-        after = [ "org" ];
-        config = ''
-                                        ; -*-emacs-lisp-*-
-          (setq org-babel-python-command "${pkgs.python310}/bin/python3.10")
-          (setq-default python-indent-guess-indent-offset-verbose nil)
-          (defun my/org-babel-execute:python-session (body params)
-            (let ((session-name (cdr (assq :session params))))
-              (when (not (eq session-name "none"))
-                (org-babel-python-initiate-session session-name))))
-          (advice-add #'org-babel-execute:python :before #'my/org-babel-execute:python-session)
-        '';
-      };
-
-      latex = {
-        enable = true;
-        package = epkgs: epkgs.auctex;
-        hook = [''
-          (LaTeX-mode
-           . (lambda ()
-               (turn-on-reftex)))
-        ''];
-        init = ''
-          (setq TeX-PDF-mode t
-                TeX-auto-save t
-                TeX-parse-self t)
-        '';
-      };
-
-      company-math = {
-        enable = true;
-        after = [ "company" ];
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          (add-to-list 'company-backends 'company-math-symbols-unicode)
-        '';
-      };
-
-      cdlatex = {
-        enable = true;
-        after = [ "latex" ];
-        init = ''
-          (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)
-        '';
-      };
-
-      org-download = {
-        enable = true;
-        init = ''
-          (require 'org-download)
-          (setq-default org-download-image-dir "~/Documents/org/images")
-        '';
-        hook = [ "(dired-mode-hook . org-download-enable)" ];
-        extraPackages = [ pkgs.pngpaste ];
-      };
-
-      #
-      # Start bibtex cite/ref section
-      #
-
-      ivy-bibtex = {
-        enable = true;
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-          ;; ignores the order of regexp tokens when searching for matching candidates.
-          (setq ivy-re-builders-alist
-                '((ivy-bibtex . ivy--regex-ignore-order)
-                  (t . ivy--regex-plus)))
-          (setq ivy-bibtex-bibliography '("~/Documents/org/zotero.bib"))
-          (setq reftex-default-bibliography '("~/Documents/org/zotero.bib"))
-          (setq bibtex-completion-pdf-field "file")
-        '';
-      };
-
-      org-ref = {
-        enable = true;
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          (setq org-ref-insert-cite-function
-                (lambda ()
-                  (org-cite-insert nil)))
-          (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
-          (setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
-          (require 'org-ref)
-          (require 'org-ref-ivy)
-        '';
-        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
-      };
-
-      citeproc.enable = true;
-
-      pdf-tools = {
-        enable = true;
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          (setq-default pdf-view-display-size 'fit-width)
-          (setq pdf-annot-activate-created-annotations t)
-        '';
-        extraPackages = [ pkgs.poppler pkgs.automake ];
-      };
-
-      #
-      # End bibtex cite/ref section
-      #
-
-      calibredb = {
-        enable = true;
-        extraPackages = [ pkgs.sqlite ];
-        config = ''
-                                        ; -*-emacs-lisp-*-
-          (setq calibredb-root-dir "~/Documents/calibre-library")
-          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-          (setq calibredb-library-alist '(("~/Documents/calibre-library")))
-          (setq sql-sqlite-program "${pkgs.sqlite}/bin/sqlite3")
-        '';
-      };
-
-      separedit = {
-        enable = true;
-        bind = { "C-c '" = "separedit"; };
-        hook = [ "(separedit-buffer-creation . normal-mode)" ];
-      };
-
-      editorconfig = {
-        enable = true;
-        config = ''
-          (editorconfig-mode 1)
-        '';
+        command = [ "lsp-ui-mode" ];
       };
 
       meow = {
@@ -733,6 +429,309 @@ in {
           (meow-setup)
         '';
       };
+
+      nix-mode = {
+        enable = true;
+        extraConfig = ''
+          :mode "\\.nix\\'"
+        '';
+        config = ''
+          (setq nix-nixfmt-bin "${pkgs.nixfmt}/bin/nixfmt")
+          (setq nix-executable "/nix/var/nix/profiles/default/bin/nix")
+        '';
+        bindLocal.nix-mode-map = { "C-c C-y" = "nix-format-buffer"; };
+        extraPackages = [ pkgs.nixfmt ];
+      };
+
+      ob-calc = {
+        enable = true;
+        after = [ "org" ];
+      };
+
+      ob-dot = {
+        enable = true;
+        after = [ "org" ];
+      };
+
+      ob-emacs-lisp = {
+        enable = true;
+        after = [ "org" ];
+      };
+
+      ob-gnuplot = {
+        enable = true;
+        after = [ "org" ];
+      };
+
+      ob-matlab = {
+        enable = true;
+        after = [ "org" ];
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
+          (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
+        '';
+        extraPackages = [ pkgs.octave pkgs.texinfo4 ];
+      };
+
+      ob-python = {
+        enable = true;
+        extraPackages = [
+          (pkgs.python310.withPackages (p: with p; [ matplotlib latexify-py ]))
+        ];
+        after = [ "org" ];
+        config = ''
+                                        ; -*-emacs-lisp-*-
+          (setq org-babel-python-command "${pkgs.python310}/bin/python3.10")
+          (setq-default python-indent-guess-indent-offset-verbose nil)
+          (defun my/org-babel-execute:python-session (body params)
+            (let ((session-name (cdr (assq :session params))))
+              (when (not (eq session-name "none"))
+                (org-babel-python-initiate-session session-name))))
+          (advice-add #'org-babel-execute:python :before #'my/org-babel-execute:python-session)
+        '';
+      };
+
+      ob-shell = {
+        enable = true;
+        after = [ "org" ];
+      };
+
+      org = {
+        enable = true;
+        extraConfig = ''
+                                        ; -*-emacs-lisp-*-
+          :preface
+          (defun my/indent-org-block-automatically ()
+            "Indent the current org code block."
+            (interactive)
+            (when (org-in-src-block-p)
+          	(org-edit-special)
+              (indent-region (point-min) (point-max))
+              (org-edit-src-exit)))
+          (defun my/org-force-open-current-window ()
+            "Open a link using 'org-open-at-point' in current window."
+            (interactive)
+            (let ((org-link-frame-setup
+          		 (quote
+          		  ((vm . vm-visit-folder)
+          		   (vm-imap . vm-visit-imap-folder)
+          		   (gnus. gnus)
+          		   (file . find-file)
+          		   (wl . wl)))
+          		 ))
+          	(org-open-at-point)))
+          (defun my/follow-org-link (arg)
+            "Follow a link in orgmode If ARG is given.
+          Opens in new window otherwise opens in current window."
+            (interactive "P")
+            (if arg
+          	  (org-open-at-point)
+          	(my/org-force-open-current-window)))
+        '';
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (defvar my/org-dir "~/Documents/org/")
+          (require 'oc)
+          (require 'oc-basic)
+          (require 'oc-csl)
+          (require 'oc-natbib)
+          (require 'ox-latex)
+          (setq org-src-window-setup 'current-window)
+          (setq org-confirm-babel-evaluate nil)
+          (setq org-src-fontify-natively t)
+          (setq org-src-tab-acts-natively t)
+          (setq org-src-preserve-indentation t)
+          (setq org-export-with-tags nil)
+          (setq org-publish-project-alist
+                '(("root"
+                   :base-directory (expand-file-name my/org-dir)
+                   :publishing-function org-html-publish-to-html
+                   :publishing-directory (expand-file-name "~/public_html")
+                   :section-numbers nil
+                   :with-author nil
+                   :with-creator t
+                   :with-toc t
+                   :time-stamp-file nil)))
+          ;; Configure HTML export
+          (setq org-html-validation-link nil)
+          (setq org-html-head-include-scripts nil)
+          (setq org-html-head-include-default-style nil)
+          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+          (setq org-html-section)
+          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
+          (setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
+          (setq org-cite-export-processors '((t basic)))
+          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
+          (setq org-cite-csl-styles-dir "~/Zotero/styles")
+          (setq bibtex-completion-pdf-open-function
+                (lambda (fpath)
+                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
+          (defun org-export-latex-no-toc (depth)
+            (when depth
+              (format "%% Org-mode is exporting headings to %s levels.\n"
+                      depth)))
+          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+          (setq org-latex-pdf-process
+                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+          (add-to-list 'org-latex-classes
+                       '("apa6"
+                         "\\documentclass{apa6}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (add-to-list 'org-latex-classes
+                       '("mla"
+                         "\\documentclass{mla}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (setq org-agenda-files '("~/Documents/org" "~/Documents/org/ubc"))
+        '';
+        hook = [
+          "(org-babel-after-execute . org-redisplay-inline-images)"
+          "(org-mode . visual-line-mode)"
+        ];
+        bind = {
+          "C-c n c" = "org-id-get-create";
+          "C-c n a" = "org-agenda";
+        };
+        bindLocal.org-mode-map = {
+          "C-c C-o" = "my/follow-org-link";
+          "C-c C-y" = "my/indent-org-block-automatically";
+          "<mouse-2>" = "my/follow-org-link";
+        };
+        extraPackages = [ pkgs.texlive.combined.scheme-full ];
+      };
+
+      org-contrib.enable = true;
+
+      org-download = {
+        enable = true;
+        init = ''
+          (require 'org-download)
+          (setq-default org-download-image-dir "~/Documents/org/images")
+        '';
+        hook = [ "(dired-mode-hook . org-download-enable)" ];
+        extraPackages = [ pkgs.pngpaste ];
+      };
+
+      org-ref = {
+        enable = true;
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (setq org-ref-insert-cite-function
+                (lambda ()
+                  (org-cite-insert nil)))
+          (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
+          (setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
+          (require 'org-ref)
+          (require 'org-ref-ivy)
+        '';
+        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
+      };
+
+      pdf-tools = {
+        enable = true;
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (setq-default pdf-view-display-size 'fit-width)
+          (setq pdf-annot-activate-created-annotations t)
+        '';
+        extraPackages = [ pkgs.poppler pkgs.automake ];
+      };
+
+      #
+      plantuml-mode = {
+        enable = true;
+        init = ''
+          (setq plantuml-executable-path "${pkgs.plantuml}/bin/plantuml")
+          (setq plantuml-default-exec-mode 'executable)
+        '';
+        extraPackages = [ pkgs.plantuml ];
+      };
+      #
+
+      rust-mode = {
+        enable = true;
+        bindLocal.rust-mode-map = {
+          "C-c C-y" = "lsp-format-buffer";
+          "C-c C-c" = "rust-run-clippy";
+          "C-c C-r" = "rust-run";
+          "C-c C-t" = "rust-test";
+          "C-c C-o" = "rust-compile";
+        };
+      };
+
+      separedit = {
+        enable = true;
+        bind = { "C-c '" = "separedit"; };
+        hook = [ "(separedit-buffer-creation . normal-mode)" ];
+        init = ''
+                                                  ; -*-emacs-lisp-*-
+          (setq separedit-preserve-string-indentation t)
+        '';
+      };
+
+      swiper = {
+        enable = true;
+        bind = { "C-s" = "swiper"; };
+      };
+
+      tree-sitter = {
+        enable = true;
+        init = ''
+          (setq tree-sitter-major-mode-language-alist '((arduino-mode . c)))
+        '';
+        hook = [
+          "(rust-mode . tree-sitter-hl-mode)"
+          "(python-mode . tree-sitter-hl-mode)"
+          "(c-mode . tree-sitter-hl-mode)"
+          "(shell-mode . tree-sitter-hl-mode)"
+          "(javascript-mode . tree-sitter-hl-mode)"
+        ];
+      };
+
+      tree-sitter-langs.enable = true;
+
+      yasnippet = {
+        enable = true;
+        config = ''
+          (setq yas-snippet-dirs '("~/Documents/org/snippets"))
+          (yas-global-mode 1)
+        '';
+      };
+
+      yasnippet-snippets = {
+        enable = true;
+        config = ''
+          (yas-reload-all)
+        '';
+      };
+
+      arduino-mode = {
+        enable = true;
+        config = ''
+          (require 'flycheck-arduino)
+          (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
+        '';
+        init = ''
+          (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
+        '';
+      };
+
+      dracula-theme = {
+        enable = true;
+        config = ''
+          (load-theme 'dracula t)
+        '';
+      };
+
     };
   };
 }
