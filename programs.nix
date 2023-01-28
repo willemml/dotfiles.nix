@@ -133,10 +133,12 @@
         cd = "z";
         l = "ls -1";
         web = "open -a Safari";
+        email = "open -a Mail";
+        o = "open -a";
+        am = lib.mkIf pkgs.stdenv.isDarwin "zsh ~/.config/zsh/am.sh";
       };
     };
 
     home-manager.enable = true;
-
   };
 }
