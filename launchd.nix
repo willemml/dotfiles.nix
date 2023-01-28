@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  launchd = {
+  launchd = lib.mkIf pkgs.stdenv.isDarwin {
     enable = true;
 
     agents.emacs = {

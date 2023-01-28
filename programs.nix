@@ -112,6 +112,10 @@
         export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH
         export GPG_TTY=$(tty)
         eval $(gpg-agent --daemon -q 2>/dev/null)
+
+        function gsearch() {
+               open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+        }
       '';
       dotDir = ".config/zsh";
       history = {
@@ -128,6 +132,7 @@
         hms = "home-manager switch";
         cd = "z";
         l = "ls -1";
+        web = "open -a Safari";
       };
     };
 

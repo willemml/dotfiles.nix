@@ -1,6 +1,8 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
+  inherit (pkgs) stdenv;
+  inherit (lib) mkIf;
   emacsCommand = "emacsclient -c -nw";
   homeDirectory = config.home.homeDirectory;
 in {
@@ -16,7 +18,7 @@ in {
     builders-use-substitutes = true
   '';
 
-  home.file.".gnupg/gpg-agent.conf".text = ''
+  home.file.".gnupg/gpg-agent.conf".text = mkIf stdenv.isDarwin ''
     pinentry-program "${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac"
   '';
 

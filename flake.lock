@@ -53,22 +53,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-willem": {
-      "locked": {
-        "lastModified": 1672945252,
-        "narHash": "sha256-vkZYxDq8Bdt5JhZCcV4nniqaIsiYW3DAiuNXClFWcGA=",
-        "owner": "willemml",
-        "repo": "nixpkgs",
-        "rev": "4d11054d40eeeb77400d8cd71966d1bf3098d449",
-        "type": "github"
-      },
-      "original": {
-        "owner": "willemml",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nur": {
       "locked": {
         "lastModified": 1672872270,
@@ -89,7 +73,6 @@
         "home-manager": "home-manager",
         "nixpkgs-22_11": "nixpkgs-22_11",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixpkgs-willem": "nixpkgs-willem",
         "nur": "nur"
       }
     },

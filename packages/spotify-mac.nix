@@ -1,4 +1,4 @@
-{ stdenv, lib, config, pkgs, ... }:
+{ stdenv, pkgs, ... }:
 
 stdenv.mkDerivation {
   name = "spotify-mac-app";
