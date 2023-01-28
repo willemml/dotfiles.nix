@@ -476,9 +476,6 @@ in {
 
       ob-python = {
         enable = true;
-        extraPackages = [
-          (pkgs.python310.withPackages (p: with p; [ matplotlib latexify-py ]))
-        ];
         after = [ "org" ];
         config = ''
                                         ; -*-emacs-lisp-*-

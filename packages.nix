@@ -28,13 +28,15 @@ in {
       docker
       docker-compose
       fd
+      fzf
       gawk
       htop
       jq
       nix-review
       nmap
       openssh
-      pass
+      (pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]))
+      (pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]))
       pv
       ripgrep
       rsync
