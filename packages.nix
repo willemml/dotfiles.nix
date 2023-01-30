@@ -28,6 +28,7 @@ in {
       docker
       docker-compose
       fd
+      findutils
       fzf
       gawk
       htop
