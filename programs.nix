@@ -136,6 +136,7 @@
         email = "open -a Mail";
         o = "open -a";
         am = lib.mkIf pkgs.stdenv.isDarwin "zsh ~/.config/zsh/am.sh";
+        pinentry = "pinentry-mac";
       };
     };
 

@@ -9,6 +9,7 @@ let
     karabiner-elements
     pinentry_mac
     spoof-mac
+    (pkgs.callPackage ./packages/pinentry-touchid.nix { inherit pkgs; })
     (pkgs.callPackage ./packages/qbittorrent-mac.nix { inherit pkgs; })
     (pkgs.callPackage ./packages/spotify-mac.nix { inherit pkgs; })
     (pkgs.callPackage ./packages/vlc-mac.nix { inherit pkgs; })
