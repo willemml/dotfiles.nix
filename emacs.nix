@@ -112,7 +112,6 @@ in {
     usePackage = {
       calibredb = {
         enable = true;
-        extraPackages = [ pkgs.sqlite ];
         config = ''
                                         ; -*-emacs-lisp-*-
           (setq calibredb-root-dir "~/Documents/calibre-library")
@@ -203,7 +202,6 @@ in {
           (setq-default format-all-formatters format-all-default-formatters)
         '';
         bindLocal.c-mode-map = { "C-c C-y" = "format-all-buffer"; };
-        extraPackages = [ pkgs.black pkgs.shellcheck pkgs.clang-tools ];
       };
 
       gnuplot = {
@@ -215,7 +213,6 @@ in {
           (setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
           (require 'gnuplot-context)
         '';
-        extraPackages = [ pkgs.gnuplot ];
       };
 
       graphviz-dot-mode = {
@@ -223,7 +220,6 @@ in {
         bindLocal.graphviz-dot-mode-map = {
           "C-c C-y" = "graphviz-dot-indent-graph";
         };
-        extraPackages = [ pkgs.graphviz ];
       };
 
       htmlize.enable = true;
@@ -328,7 +324,6 @@ in {
           "(javascript-mode . lsp)"
         ];
         bind = { "C-c C-y" = "my/format-document"; };
-        extraPackages = [ pkgs.nodePackages.bash-language-server ];
       };
 
       lsp-treemacs = {
@@ -440,7 +435,6 @@ in {
           (setq nix-executable "/nix/var/nix/profiles/default/bin/nix")
         '';
         bindLocal.nix-mode-map = { "C-c C-y" = "nix-format-buffer"; };
-        extraPackages = [ pkgs.nixfmt ];
       };
 
       ob-calc = {
@@ -471,7 +465,6 @@ in {
           (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
           (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
         '';
-        extraPackages = [ pkgs.octave pkgs.texinfo4 ];
       };
 
       ob-python = {
@@ -603,7 +596,6 @@ in {
           "C-c C-y" = "my/indent-org-block-automatically";
           "<mouse-2>" = "my/follow-org-link";
         };
-        extraPackages = [ pkgs.texlive.combined.scheme-full ];
       };
 
       org-contrib.enable = true;
@@ -615,7 +607,6 @@ in {
           (setq-default org-download-image-dir "~/Documents/org/images")
         '';
         hook = [ "(dired-mode-hook . org-download-enable)" ];
-        extraPackages = [ pkgs.pngpaste ];
       };
 
       org-ref = {
@@ -640,7 +631,6 @@ in {
           (setq-default pdf-view-display-size 'fit-width)
           (setq pdf-annot-activate-created-annotations t)
         '';
-        extraPackages = [ pkgs.poppler pkgs.automake ];
       };
 
       #
@@ -650,7 +640,6 @@ in {
           (setq plantuml-executable-path "${pkgs.plantuml}/bin/plantuml")
           (setq plantuml-default-exec-mode 'executable)
         '';
-        extraPackages = [ pkgs.plantuml ];
       };
       #
 

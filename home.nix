@@ -57,4 +57,5 @@ in {
       builtins.elem (lib.getName pkg) [ "discord" "unrar" "zoom" ];
   };
 
+  nixpkgs.overlays = [ (import ./overlays) ];
 }

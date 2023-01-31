@@ -1,4 +1,4 @@
-{ stdenv, pkgs, fetchurl, ... }:
+{ stdenv, fetchurl, pkgs, ... }:
 
 let
   version = "4.4.5";

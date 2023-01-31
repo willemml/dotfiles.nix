@@ -22,9 +22,9 @@
           (final: prev: {
             nixpkgs-unstable = import nixpkgs-unstable {
               inherit system;
-              overlays = [ ];
-            };
-          })
+               overlays = [ ];
+             };
+           })
         ];
       };
 

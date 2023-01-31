@@ -8,13 +8,16 @@ let
     iterm2
     karabiner-elements
     pinentry_mac
+    pinentry-touchid
+    qbittorrent-mac
     spoof-mac
-    (pkgs.callPackage ./packages/pinentry-touchid.nix { inherit pkgs; })
-    (pkgs.callPackage ./packages/qbittorrent-mac.nix { inherit pkgs; })
-    (pkgs.callPackage ./packages/spotify-mac.nix { inherit pkgs; })
-    (pkgs.callPackage ./packages/vlc-mac.nix { inherit pkgs; })
+    spotify-mac
+    vlc-mac
   ];
   linux = with pkgs; [ vlc qbittorrent ];
+  pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
+  python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
+  node-packages = with pkgs.nodePackages; [ bash-language-server ];
 in {
   home.packages = with pkgs;
     [
@@ -22,6 +25,8 @@ in {
       automake
       bash
       bat
+      black
+      clang-tools
       cmake
       comma
       curl
@@ -32,17 +37,28 @@ in {
       findutils
       fzf
       gawk
+      gnuplot
+      graphviz
       htop
       jq
+      nixfmt
       nix-review
       nmap
+      octave
       openssh
-      (pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]))
-      (pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]))
+      pass-extended
+      plantuml
+      pngpaste
+      poppler
+      python-wp
       pv
       ripgrep
       rsync
       rustup
+      shellcheck
+      sqlite
+      texinfo
+      texlive.combined.scheme-full
       tldr
       units
       unp
@@ -51,6 +67,8 @@ in {
       wget
       yq
       zoom-us
-    ] ++ lib.optionals stdenv.isLinux linux
-    ++ lib.optionals stdenv.isDarwin darwin;
+    ]
+    ++ lib.optionals stdenv.isDarwin darwin
+    ++ lib.optionals stdenv.isLinux linux
+    ++ node-packages;
 }
