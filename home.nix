@@ -19,7 +19,9 @@ in {
   '';
 
   home.file.".gnupg/gpg-agent.conf".text = mkIf stdenv.isDarwin ''
-    pinentry-program "${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac"
+    pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
+    default-cache-ttl 30
+    max-cache-ttl 600
   '';
 
   home.file.".config/zsh/am.sh" = mkIf stdenv.isDarwin {
@@ -49,7 +51,7 @@ in {
   };
 
   imports =
-    [ ./emacs.nix ./launchd.nix ./packages.nix ./programs.nix ./apps.nix ];
+    [ ./emacs.nix ./packages.nix ./programs.nix ./darwin.nix ];
 
   nixpkgs.config = {
     allowUnfree = true;

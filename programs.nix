@@ -52,47 +52,47 @@
       settings = {
         format =
           "$os[](fg:#979797 bg:#444444)$directory$git_branch$git_status[](fg:#444444)$fill[](fg:#444444)$cmd_duration$time$line_break$character";
-        fill = {
-          symbol = "·";
-          style = "fg:#505050";
-        };
-        cmd_duration = {
-          disabled = false;
-          min_time = 1500;
-          style = "fg:#979797 bg:#444444";
-          format = "[ $duration  ]($style)";
-        };
-        os = {
-          disabled = false;
-          style = "fg:#eaeaea bg:#444444";
-          format = "[ $symbol ]($style)";
-          symbols.Macos = "";
-        };
-        directory = {
-          disabled = false;
-          style = "fg:#149dff bg:#444444";
-          format = "[  $path ]($style)";
-          truncation_length = 3;
-          truncation_symbol = "";
-        };
-        git_branch = {
-          disabled = false;
-          symbol = "";
-          style = "fg:#53d306 bg:#444444";
-          format = "[[](fg:#979797 bg:#444444)  $symbol $branch ]($style)";
-        };
-        git_status = {
-          disabled = false;
-          style = "bg:#444444";
-          format =
-            "[[$staged](fg:#cca107 bg:#444444)[$modified](fg:#cca107 bg:#444444)[$untracked](fg:#149dff bg:#444444)[$conflicted](fg:#ed0505 bg:#444444)]($style)";
-        };
-        time = {
-          disabled = false;
-          style = "fg:#4d7573 bg:#444444";
-          format = "[ $time  ]($style)";
-          time_format = "%T";
-        };
+          fill = {
+            symbol = "·";
+            style = "fg:#505050";
+          };
+          cmd_duration = {
+            disabled = false;
+            min_time = 1500;
+            style = "fg:#979797 bg:#444444";
+            format = "[ $duration  ]($style)";
+          };
+          os = {
+            disabled = false;
+            style = "fg:#eaeaea bg:#444444";
+            format = "[ $symbol ]($style)";
+            symbols.Macos = "";
+          };
+          directory = {
+            disabled = false;
+            style = "fg:#149dff bg:#444444";
+            format = "[  $path ]($style)";
+            truncation_length = 3;
+            truncation_symbol = "";
+          };
+          git_branch = {
+            disabled = false;
+            symbol = "";
+            style = "fg:#53d306 bg:#444444";
+            format = "[[](fg:#979797 bg:#444444)  $symbol $branch ]($style)";
+          };
+          git_status = {
+            disabled = false;
+            style = "bg:#444444";
+            format =
+              "[[$staged](fg:#cca107 bg:#444444)[$modified](fg:#cca107 bg:#444444)[$untracked](fg:#149dff bg:#444444)[$conflicted](fg:#ed0505 bg:#444444)]($style)";
+          };
+          time = {
+            disabled = false;
+            style = "fg:#4d7573 bg:#444444";
+            format = "[ $time  ]($style)";
+            time_format = "%T";
+          };
       };
     };
 
@@ -109,13 +109,33 @@
       autocd = true;
       defaultKeymap = "emacs";
       envExtra = ''
-        export PATH=${pkgs.pinentry_mac.out}/Applications/pinentry-mac.app/Contents/MacOS:$PATH
-        export GPG_TTY=$(tty)
-        eval $(gpg-agent --daemon -q 2>/dev/null)
+#!/usr/bin/env zsh
+export GPG_TTY=$(tty)
+eval $(gpg-agent --daemon -q 2>/dev/null)
 
-        function gsearch() {
-               open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
-        }
+function gsearch() {
+    open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+}
+
+function plistxml2nix() {
+    tail -n +4 |
+        sed -e "s/<dict>/{/g"         \
+            -e "s/<\/dict>/\}\;/g"    \
+            -e "s/<key>/\"/g"         \
+            -e "s/<\/key>/\"=/g"      \
+            -e "s/<real>//g"          \
+            -e "s/<\/real>/;/g"       \
+            -e "s/<integer>//g"       \
+            -e "s/<\/integer>/;/g"    \
+            -e "s/<string>/\"/g"      \
+            -e "s/<\/string>/\"\;/g"  \
+            -e "s/<array>/\[/g"       \
+            -e "s/<\/array>/\];/g"     \
+            -e "s/<true\/>/true;/g"   \
+            -e "s/<false\/>/false;/g" \
+            -e "$ d" |
+        sed \-e "$ s/;//"
+}
       '';
       dotDir = ".config/zsh";
       history = {
