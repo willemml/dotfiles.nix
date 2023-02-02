@@ -51,7 +51,7 @@ in {
   };
 
   imports =
-    [ ./emacs.nix ./packages.nix ./programs.nix ./darwin.nix ];
+    [ ./emacs.nix ./packages.nix ./programs.nix ./darwin ];
 
   nixpkgs.config = {
     allowUnfree = true;
