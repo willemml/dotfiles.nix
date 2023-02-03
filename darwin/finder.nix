@@ -83,7 +83,11 @@ let
   } // default-view-settings;
 in
 {
+  AppleShowAllExtensions = true;
+  
   ComputerViewSettings = dvs-with-ws;
+
+  CreateDesktop = false;
 
   DesktopViewSettings = {
     GroupBy = "Kind";
@@ -101,6 +105,10 @@ in
 
   FXArrangeGroupViewBy = "Name";
 
+  FXDefaultSearchScope = "SCsp";
+
+  FXEnableExtensionChangeWarning = false;
+
   FXEnableRemoveFromICloudDriveWarning = false;
 
   FXICloudDriveDocuments = true;
@@ -109,11 +117,17 @@ in
 
   FXPreferredGroupBy = "Kind";
 
+  FXPreferredViewStyle = "Nlsv";
+
   GoToField = "~/Library/";
 
   ICloudViewSettings = dvs-with-ws;
 
   NetworkViewSettings = dvs-with-ws;
+
+  NSDocumentSaveNewDocumentsToCloud = false;
+
+  NSTableViewDefaultSizeMode = 1;
 
   PackageViewSettings = dvs-with-ws;
 
@@ -125,9 +139,13 @@ in
 
   ShowHardDrivesOnDesktop = false;
 
+  ShowPathbar = true;
+
   ShowRemovableMediaOnDesktop = false;
 
   ShowSidebar = true;
+
+  showWindowTitlebarIcons = false;
 
   SidebarWidth = 135;
 
