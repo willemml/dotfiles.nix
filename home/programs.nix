@@ -30,7 +30,20 @@
 
     firefox = {
       enable = true;
-      extensions = [
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        browserpass
+        bypass-paywalls-clean
+        clearurls
+        don-t-fuck-with-paste
+        dracula-dark-colorscheme
+        edit-with-emacs
+        fastforward
+        i-dont-care-about-cookies
+        multi-account-containers
+        musescore-downloader
+        offline-qr-code-generator
+        ublock-origin
+        zoom-redirector
       ];
     };
 
@@ -70,7 +83,7 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
-      package = pkgs.nixpkgs-unstable.starship;
+      package = pkgs.starship;
       settings = {
         format =
           "$os[](fg:#979797 bg:#444444)$directory$git_branch$git_status[](fg:#444444)$fill[](fg:#444444)$cmd_duration$time$line_break$character";
@@ -170,7 +183,7 @@
         e = "emacsclient -c -nw";
         em = "emacs -nw";
         ew = "emacsclient -c";
-        hms = "home-manager switch";
+        hms = "home-manager switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#willem";
         l = "ls -1";
         np = "nix-shell -p";
         org = "z ${config.home.sessionVariables.ORGDIR}";

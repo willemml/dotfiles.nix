@@ -28,7 +28,8 @@ in {
   home.file.".config/zsh/am.sh" = mkIf stdenv.isDarwin {
     executable = true;
     source = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
+      url =
+        "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
       sha256 = "sha256-78zRpNg7/OR7p8dpsJt6Xc4j0Y+8zSUtm/PT94nf03M=";
     };
   };

@@ -23,12 +23,14 @@ stdenv.mkDerivation {
   buildPhase = ''
     unset GOROOT
 
-    export GOPATH=/tmp/gopath
-    export GOCACHE=/tmp/gocache
+    export GOPATH="/tmp/gopath-$(echo $RANDOM | md5sum | head -c 20)"
+    export GOCACHE="/tmp/gocache-$(echo $RANDOM | md5sum | head -c 20)"
 
     export NIX_LDFLAGS="-F${pkgs.darwin.apple_sdk.frameworks.CoreFoundation}/Library/Frameworks -framework CoreFoundation $NIX_LDFLAGS";
 
     cd source
+
+    go mod download
     go build
   '';
 

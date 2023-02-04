@@ -5,8 +5,9 @@ stdenv.mkDerivation {
 
   sourceRoot = ".";
 
-  nativeBuildInputs = [ pkgs.undmg pkgs.makeWrapper pkgs.perl pkgs.unzip pkgs.zip ];
-  
+  nativeBuildInputs =
+    [ pkgs.undmg pkgs.makeWrapper pkgs.perl pkgs.unzip pkgs.zip ];
+
   src = pkgs.fetchurl {
     url = "https://download.scdn.co/Spotify.dmg";
     hash = "sha256-9Ts6064YaZdjbRN28qkZcrwTH+63drC/jUfTGLvpBNc=";

@@ -4,7 +4,7 @@
 
 {
   disabledModules = [ "targets/darwin/linkapps.nix" ];
-  
+
   home.activation = lib.mkIf pkgs.stdenv.isDarwin {
     copyApplications = let
       apps = pkgs.buildEnv {

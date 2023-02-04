@@ -60,17 +60,14 @@ let
   default-view-settings = {
     ExtendedListViewSettingsV2 = {
       columns = builtins.sort (a: b: a.index < b.index) (map (name:
-      (name: value: {
-        identifier = "${name}";
-        visible = value.visible;
-        width = value.width;
-        index = value.index;
-      })
-        name columnSettings.${name}) (builtins.attrNames columnSettings));
+        (name: value: {
+          identifier = "${name}";
+          visible = value.visible;
+          width = value.width;
+          index = value.index;
+        }) name columnSettings.${name}) (builtins.attrNames columnSettings));
     } // listviewsettings;
-    ListViewSettings = {
-      columns = columnSettings;
-    } // listviewsettings;
+    ListViewSettings = { columns = columnSettings; } // listviewsettings;
   };
 
   dvs-with-ws = {
@@ -79,29 +76,29 @@ let
       ShowStatusBar = true;
       ShowSidebar = true;
       ShowToolbar = true;
-      ShowTabView = true;};
+      ShowTabView = true;
+    };
   } // default-view-settings;
-in
-{
+in {
   AppleShowAllExtensions = true;
-  
+
   ComputerViewSettings = dvs-with-ws;
 
   CreateDesktop = false;
 
-  DesktopViewSettings = {
-    GroupBy = "Kind";
-  };
+  DesktopViewSettings = { GroupBy = "Kind"; };
 
   FinderSpawnTab = false;
 
-  FK_DefaultListViewSettingsV2 = default-view-settings.ExtendedListViewSettingsV2;
+  FK_DefaultListViewSettingsV2 =
+    default-view-settings.ExtendedListViewSettingsV2;
 
   FK_StandardViewSettings = {
     SettingsType = "FK_StandardViewSettings";
   } // default-view-settings;
 
-  FK_iCloudListViewSettingsV2 = default-view-settings.ExtendedListViewSettingsV2;
+  FK_iCloudListViewSettingsV2 =
+    default-view-settings.ExtendedListViewSettingsV2;
 
   FXArrangeGroupViewBy = "Name";
 

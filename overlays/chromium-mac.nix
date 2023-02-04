@@ -13,15 +13,20 @@ let
 
   srcs = {
     aarch64-darwin = fetchurl {
-      url = "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac_Arm/${version}/chrome-mac.zip";
-      sha256 = "sha256-LlbYlJmFLzyHIiygofa0Btm7NAOvWXXhmbjMHldVoGo=";
-      name = "${pname}_aarch64_${version}.zip";
+      url =
+        "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac_Arm/${version}/chrome-mac.zip";
+        sha256 = "sha256-LlbYlJmFLzyHIiygofa0Btm7NAOvWXXhmbjMHldVoGo=";
+        name = "${pname}_aarch64_${version}.zip";
     };
     x86_64-darwin = fetchurl {
-      url = "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac/${version}/chrome-mac.zip";
-      sha256 = "sha256-O+OnjakEpjCRbSjDysEA6RKKaKaSMw+LSO2ZLcxz2vM=";
-      name = "${pname}_x86_64_${version}.zip";
+      url =
+        "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac/${version}/chrome-mac.zip";
+        sha256 = "sha256-O+OnjakEpjCRbSjDysEA6RKKaKaSMw+LSO2ZLcxz2vM=";
+        name = "${pname}_x86_64_${version}.zip";
     };
   };
-  src =  srcs.${stdenv.hostPlatform.system};
-in import ./mk-mac-binpkg.nix { inherit pkgs src pname appName version; srcsubdir = "chrome-mac"; }
+  src = srcs.${stdenv.hostPlatform.system};
+in import ./mk-mac-binpkg.nix {
+  inherit pkgs src pname appName version;
+  srcsubdir = "chrome-mac";
+}
