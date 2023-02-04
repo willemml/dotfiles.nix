@@ -8,11 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-22_11";
     };
-    nur.url = "github:nix-community/NUR";
+    nurrepo.url = "github:nix-community/NUR";
   };
 
   outputs =
-    { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nur, ... }@inputs:
+    { self, nixpkgs-unstable, nixpkgs-22_11, home-manager, nurrepo, ... }@inputs:
     let
       system = "aarch64-darwin";
 
@@ -28,7 +28,12 @@
         ];
       };
 
-      nurNoPkgs = import nur {
+      nur = import nurrepo {
+        nurpkgs = pkgs;
+        pkgs = pkgs;
+      };
+
+      nurNoPkgs = import nurrepo {
         nurpkgs = pkgs;
         pkgs = throw "nixpkgs eval";
       };
@@ -38,11 +43,11 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ nur.hmModules.nur ./home.nix ];
+        modules = [ nurrepo.hmModules.nur ./home.nix ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit nurNoPkgs; };
+        extraSpecialArgs = { inherit nur nurNoPkgs; };
       };
     };
 }

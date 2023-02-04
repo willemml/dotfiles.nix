@@ -2,6 +2,22 @@
 
 {
   programs = {
+    browserpass = {
+      enable = true;
+      browsers = [
+        "chromium"
+        "firefox"
+      ];
+    };
+
+    chromium = {
+      enable = true;
+      extensions = [
+        { id = "naepdomgkenhinolocfifgehidddafch"; } # browserpass
+        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+      ];
+    };
+
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
@@ -10,6 +26,12 @@
     exa = {
       enable = true;
       enableAliases = true;
+    };
+
+    firefox = {
+      enable = true;
+      extensions = [
+      ];
     };
 
     git = {
@@ -109,33 +131,33 @@
       autocd = true;
       defaultKeymap = "emacs";
       envExtra = ''
-#!/usr/bin/env zsh
-export GPG_TTY=$(tty)
-eval $(gpg-agent --daemon -q 2>/dev/null)
+        #!/usr/bin/env zsh
+        export GPG_TTY=$(tty)
+        eval $(gpg-agent --daemon -q 2>/dev/null)
 
-function gsearch() {
-    open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
-}
+        function gsearch() {
+        open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+        }
 
-function plistxml2nix() {
-    tail -n +4 |
+        function plistxml2nix() {
+        tail -n +4 |
         sed -e "s/<dict>/{/g"         \
-            -e "s/<\/dict>/\}\;/g"    \
-            -e "s/<key>/\"/g"         \
-            -e "s/<\/key>/\"=/g"      \
-            -e "s/<real>//g"          \
-            -e "s/<\/real>/;/g"       \
-            -e "s/<integer>//g"       \
-            -e "s/<\/integer>/;/g"    \
-            -e "s/<string>/\"/g"      \
-            -e "s/<\/string>/\"\;/g"  \
-            -e "s/<array>/\[/g"       \
-            -e "s/<\/array>/\];/g"     \
-            -e "s/<true\/>/true;/g"   \
-            -e "s/<false\/>/false;/g" \
-            -e "$ d" |
+        -e "s/<\/dict>/\}\;/g"    \
+        -e "s/<key>/\"/g"         \
+        -e "s/<\/key>/\"=/g"      \
+        -e "s/<real>//g"          \
+        -e "s/<\/real>/;/g"       \
+        -e "s/<integer>//g"       \
+        -e "s/<\/integer>/;/g"    \
+        -e "s/<string>/\"/g"      \
+        -e "s/<\/string>/\"\;/g"  \
+        -e "s/<array>/\[/g"       \
+        -e "s/<\/array>/\];/g"     \
+        -e "s/<true\/>/true;/g"   \
+        -e "s/<false\/>/false;/g" \
+        -e "$ d" |
         sed \-e "$ s/;//"
-}
+        }
       '';
       dotDir = ".config/zsh";
       history = {
@@ -144,19 +166,16 @@ function plistxml2nix() {
         ignoreDups = true;
       };
       shellAliases = {
-        emw = "emacs";
+        cd = "z";
+        e = "emacsclient -c -nw";
         em = "emacs -nw";
         ew = "emacsclient -c";
-        e = "emacsclient -c -nw";
-        np = "nix-shell -p";
         hms = "home-manager switch";
-        cd = "z";
         l = "ls -1";
-        web = "open -a Safari";
-        email = "open -a Mail";
-        o = "open -a";
-        am = lib.mkIf pkgs.stdenv.isDarwin "zsh ~/.config/zsh/am.sh";
-        pinentry = "pinentry-mac";
+        np = "nix-shell -p";
+        org = "z ${config.home.sessionVariables.ORGDIR}";
+        ubc = "z ${config.home.sessionVariables.UBCDIR}";
+        emw = "emacs";
       };
     };
 

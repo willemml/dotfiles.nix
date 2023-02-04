@@ -1,4 +1,6 @@
 self: super: {
+  chromium-mac = super.callPackage ./chromium-mac.nix { pkgs = super; };
+  firefox-mac = super.callPackage ./firefox-mac.nix { pkgs = super; };
   pinentry-touchid = super.callPackage ./pinentry-touchid.nix { pkgs = super; };
   qbittorrent-mac = super.callPackage ./qbittorrent-mac.nix { pkgs = super; };
   spotify-mac = super.callPackage ./spotify-mac.nix { pkgs = super; };

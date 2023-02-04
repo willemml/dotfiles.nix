@@ -463,9 +463,7 @@ in {
         enable = true;
         after = [ "org" ];
         init = ''
-                                                  ; -*-emacs-lisp-*-
           (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
-          (setq org-babel-matlab-shell-command "~/Applications/MATLAB_R2022b.app/bin/matlab -nosplash")
         '';
       };
 
@@ -523,7 +521,6 @@ in {
         '';
         init = ''
                                                   ; -*-emacs-lisp-*-
-          (defvar my/org-dir "~/Documents/org/")
           (require 'oc)
           (require 'oc-basic)
           (require 'oc-csl)
@@ -537,7 +534,7 @@ in {
           (setq org-export-with-tags nil)
           (setq org-publish-project-alist
                 '(("root"
-                   :base-directory (expand-file-name my/org-dir)
+                   :base-directory "${config.home.sessionVariables.ORGDIR}"
                    :publishing-function org-html-publish-to-html
                    :publishing-directory (expand-file-name "~/public_html")
                    :section-numbers nil
@@ -551,8 +548,8 @@ in {
           (setq org-html-head-include-default-style nil)
           (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
           (setq org-html-section)
-          (setq bibtex-completion-notes-path (expand-file-name "notes.org" my/org-dir))
-          (setq org-cite-global-bibliography '("~/Documents/org/zotero.bib"))
+          (setq bibtex-completion-notes-path "${config.home.sessionVariables.ORGDIR}/notes.org")
+          (setq org-cite-global-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
           (setq org-cite-export-processors '((t basic)))
           (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
           (setq org-cite-csl-styles-dir "~/Zotero/styles")
@@ -566,7 +563,7 @@ in {
           (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
           (setq org-latex-pdf-process
                 '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
-          (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
+          (add-to-list 'exec-path "${config.home.homeDirectory}/.nix-profile/bin")
           (add-to-list 'org-latex-classes
                        '("apa6"
                          "\\documentclass{apa6}"
@@ -583,7 +580,7 @@ in {
                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-          (setq org-agenda-files '("~/Documents/org" "~/Documents/org/ubc"))
+          (setq org-agenda-files '("${config.home.sessionVariables.ORGDIR}" "${config.home.sessionVariables.UBCDIR}"))
         '';
         hook = [
           "(org-babel-after-execute . org-redisplay-inline-images)"
@@ -606,7 +603,7 @@ in {
         enable = true;
         init = ''
           (require 'org-download)
-          (setq-default org-download-image-dir "~/Documents/org/images")
+          (setq-default org-download-image-dir "${config.home.sessionVariables.ORGDIR}/images")
         '';
         hook = [ "(dired-mode-hook . org-download-enable)" ];
       };
@@ -618,8 +615,8 @@ in {
           (setq org-ref-insert-cite-function
                 (lambda ()
                   (org-cite-insert nil)))
-          (setq org-ref-default-bibliography "~/Documents/org/zotero.bib")
-          (setq bibtex-completion-bibliography '("~/Documents/org/zotero.bib"))
+          (setq org-ref-default-bibliography "${config.home.sessionVariables.ORGDIR}/zotero.bib")
+          (setq bibtex-completion-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
           (require 'org-ref)
           (require 'org-ref-ivy)
         '';
@@ -690,7 +687,7 @@ in {
       yasnippet = {
         enable = true;
         config = ''
-          (setq yas-snippet-dirs '("~/Documents/org/snippets"))
+          (setq yas-snippet-dirs '("${config.home.sessionVariables.ORGDIR}/snippets"))
           (yas-global-mode 1)
         '';
       };
