@@ -8,7 +8,7 @@
       enable = true;
       config = {
         ProgramArguments = [
-          "${config.home.homeDirectory}/.nix-profile/bin/emacs"
+          "${config.programs.emacs.finalPackage}/bin/emacs"
           "--fg-daemon"
         ];
         KeepAlive = true;

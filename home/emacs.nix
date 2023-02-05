@@ -563,7 +563,7 @@ in {
           (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
           (setq org-latex-pdf-process
                 '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
-          (add-to-list 'exec-path "${config.home.homeDirectory}/.nix-profile/bin")
+          (add-to-list 'exec-path "${config.home.profileDirectory}/bin")
           (add-to-list 'org-latex-classes
                        '("apa6"
                          "\\documentclass{apa6}"

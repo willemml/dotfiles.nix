@@ -39,7 +39,7 @@ in {
     o = "open";
     oa = "open -a";
     pinentry = "pinentry-mac";
-  } // lib.attrsets.mapAttrs (name: value: "open -a " + value) appCommands);
+  } // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
 
   programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
   programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
