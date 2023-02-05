@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 
 {
   programs = {
@@ -183,7 +183,7 @@
         e = "emacsclient -c -nw";
         em = "emacs -nw";
         ew = "emacsclient -c";
-        hms = "home-manager switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#willem";
+        drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         l = "ls -1";
         np = "nix-shell -p";
         org = "z ${config.home.sessionVariables.ORGDIR}";

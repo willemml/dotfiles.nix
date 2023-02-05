@@ -1,8 +1,6 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  inherit (pkgs) stdenv;
-  inherit (lib) mkIf;
   emacsCommand = "emacsclient -c -nw";
 in rec {
   home = {
@@ -24,7 +22,6 @@ in rec {
         }
       '';
     };
-    homeDirectory = "/Users/willem";
     keyboard = {
       layout = "us";
       variant = "colemak";
@@ -37,7 +34,7 @@ in rec {
     sessionVariables = rec {
       EDITOR = emacsCommand;
       VISUAL = emacsCommand;
-      ORGDIR = "${home.homeDirectory}/Documents/org";
+      ORGDIR = "~/Documents/org";
       UBCDIR = "${ORGDIR}/ubc";
     };
     stateVersion = "22.11";

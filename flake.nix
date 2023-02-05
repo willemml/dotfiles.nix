@@ -10,7 +10,7 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, nur, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nur, ... }:
   let
     system = "aarch64-darwin";
 
@@ -31,32 +31,30 @@
       nurpkgs = pkgs;
       pkgs = throw "nixpkgs eval";
     };
-  in {
-    homeConfigurations.willem = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
 
-      # Specify your home configuration modules here, for example,
-      # the path to your home.nix.
-      modules = [ nur.hmModules.nur ./home ];
-
-      # Optionally use extraSpecialArgs
-      # to pass through arguments to home.nix
-      extraSpecialArgs = { inherit nurNoPkgs; inputs = { inherit (inputs); }; };
+    home-manager-config = {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = { inherit nurNoPkgs pkgs; inputs = { inherit (inputs); }; };
+      home-manager.sharedModules = [ nur.hmModules.nur ];
+      home-manager.users.willem = ./home;
+      users.users.willem = {
+        home = "/Users/willem";
+        isHidden = false;
+        name = "willem";
+        shell = pkgs.zshInteractive;
+      };
     };
-    # darwinConfigurations = {
-      #   hostname = darwin.lib.darwinSystem {
-        #     inherit system (inputs);
-        #     modules = [
-          #       ./system
-          #       home-manager.darwinModules.home-manager {
-            #         home-manager.useGlobalPkgs = true;
-            #         home-manager.useUserPackages = true;
-            #         home-manager.users.willem = import ./home;
-
-            #         extraSpecialArgs = { inherit (inputs) nurNoPkgs; };
-            #       }
-            #     ];
-            #   };
-            # };
+  in {
+    darwinConfigurations = {
+      zeus = darwin.lib.darwinSystem {
+        inherit system;
+        modules = [
+          ./system/darwin.nix
+          home-manager.darwinModules.home-manager
+          home-manager-config
+        ];
+      };
+    };
   };
 }
