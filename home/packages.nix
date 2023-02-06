@@ -7,9 +7,8 @@ let
     freecad-mac
     gnused
     iterm2
-    karabiner-elements
-    pinentry_mac
     pinentry-touchid
+    pinentry_mac
     qbittorrent-mac
     spoof-mac
     spotify-mac
@@ -61,6 +60,7 @@ in
       rustup
       shellcheck
       spotify-tui
+      spotifyd
       sqlite
       texinfo
       texlive.combined.scheme-full

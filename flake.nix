@@ -49,7 +49,7 @@
     {
       darwinConfigurations = {
         zeus = darwin.lib.darwinSystem {
-          inherit system;
+          inherit system pkgs;
           modules = [
             ./system/darwin.nix
             home-manager.darwinModules.home-manager

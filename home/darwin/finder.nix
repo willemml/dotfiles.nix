@@ -156,6 +156,8 @@ in {
 
   WarnOnEmptyTrash = false;
 
+  _FXShowPosixPathInTitle = true;
+  
   _FXSortFoldersFirst = true;
 
   _FXSortFoldersFirstOnDesktop = true;

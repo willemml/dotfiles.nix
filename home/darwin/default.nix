@@ -17,7 +17,7 @@ let
     zotero = "Zotero";
   };
 in {
-  imports = [ ./launchd.nix ./apps.nix ];
+  imports = [ ./launchd.nix ];
 
   home.file.".gnupg/gpg-agent.conf".text = mkIf stdenv.isDarwin ''
     pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
@@ -51,30 +51,11 @@ in {
       NSGlobalDomain = {
         AppleLanguages = [ "en-CA" ];
         AppleLocale = "en_CA";
-        AppleMeasurementUnits = "Centimeters";
-        AppleMetricUnits = true;
-        AppleTemperatureUnit = "Celsius";
-        NSAutomaticCapitalizationEnabled = false;
-        NSAutomaticDashSubstitutionEnabled = false;
-        NSAutomaticPeriodSubstitutionEnabled = false;
-        NSAutomaticQuoteSubstitutionEnabled = false;
-        NSAutomaticSpellingCorrectionEnabled = false;
       };
       "com.apple.Safari" = {
         AutoOpenSafeDownloads = false;
         IncludeDevelopMenu = true;
         ShowFullURLInSmartSearchField = true;
-      };
-      "com.apple.dock" = {
-        autohide = true;
-        launchanim = false;
-        magnification = false;
-        minimize-to-application = true;
-        mru-spaces = false;
-        orientation = "bottom";
-        static-only = true;
-        tilesize = 35;
-        workspaces-swoosh-animation-off = true;
       };
       "com.apple.menuextra.clock" = {
         DateFormat = "EEE d MMM HH:mm:ss";
