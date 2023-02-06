@@ -2,7 +2,8 @@
 
 let
   emacsCommand = "emacsclient -c -nw";
-in rec {
+in
+rec {
   home = {
     file = {
       ".config/nix/nix.conf".text = ''

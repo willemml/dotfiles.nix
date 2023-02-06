@@ -11,50 +11,51 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, darwin, nur, ... }:
-  let
-    system = "aarch64-darwin";
+    let
+      system = "aarch64-darwin";
 
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = [
-        (import ./overlays)
-      ];
-      config = {
-        allowUnfree = true;
-        packageOverrides = pkgs: {
-          nur = import nur { inherit pkgs; nurpkgs = pkgs; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (import ./overlays)
+        ];
+        config = {
+          allowUnfree = true;
+          packageOverrides = pkgs: {
+            nur = import nur { inherit pkgs; nurpkgs = pkgs; };
+          };
+        };
+      };
+
+      nurNoPkgs = import nur {
+        nurpkgs = pkgs;
+        pkgs = throw "nixpkgs eval";
+      };
+
+      home-manager-config = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit nurNoPkgs pkgs; inputs = { inherit (inputs); }; };
+        home-manager.sharedModules = [ nur.hmModules.nur ];
+        home-manager.users.willem = ./home;
+        users.users.willem = {
+          home = "/Users/willem";
+          isHidden = false;
+          name = "willem";
+          shell = pkgs.zshInteractive;
+        };
+      };
+    in
+    {
+      darwinConfigurations = {
+        zeus = darwin.lib.darwinSystem {
+          inherit system;
+          modules = [
+            ./system/darwin.nix
+            home-manager.darwinModules.home-manager
+            home-manager-config
+          ];
         };
       };
     };
-
-    nurNoPkgs = import nur {
-      nurpkgs = pkgs;
-      pkgs = throw "nixpkgs eval";
-    };
-
-    home-manager-config = {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit nurNoPkgs pkgs; inputs = { inherit (inputs); }; };
-      home-manager.sharedModules = [ nur.hmModules.nur ];
-      home-manager.users.willem = ./home;
-      users.users.willem = {
-        home = "/Users/willem";
-        isHidden = false;
-        name = "willem";
-        shell = pkgs.zshInteractive;
-      };
-    };
-  in {
-    darwinConfigurations = {
-      zeus = darwin.lib.darwinSystem {
-        inherit system;
-        modules = [
-          ./system/darwin.nix
-          home-manager.darwinModules.home-manager
-          home-manager-config
-        ];
-      };
-    };
-  };
 }

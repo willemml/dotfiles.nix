@@ -46,8 +46,8 @@ in {
 
   targets.darwin = {
     defaults = {
-      "com.googlecode.iterm2" = ./iterm2.nix;
-      "com.apple.finder" = ./finder.nix;
+      "com.googlecode.iterm2" = import ./iterm2.nix;
+      "com.apple.finder" = import ./finder.nix;
       NSGlobalDomain = {
         AppleLanguages = [ "en-CA" ];
         AppleLocale = "en_CA";

@@ -19,7 +19,8 @@ let
     };
   };
   src = srcs.${stdenv.hostPlatform.system};
-in import ./mk-mac-binpkg.nix {
+in
+import ./mk-mac-binpkg.nix {
   inherit stdenv pkgs fetchurl src pname appName version;
 }
 

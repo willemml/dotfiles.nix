@@ -256,11 +256,13 @@ in {
       latex = {
         enable = true;
         package = epkgs: epkgs.auctex;
-        hook = [''
-          (LaTeX-mode
-           . (lambda ()
-               (turn-on-reftex)))
-        ''];
+        hook = [
+          ''
+            (LaTeX-mode
+             . (lambda ()
+                 (turn-on-reftex)))
+          ''
+        ];
         init = ''
           (setq TeX-PDF-mode t
                 TeX-auto-save t

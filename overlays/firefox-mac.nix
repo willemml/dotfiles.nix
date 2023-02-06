@@ -10,4 +10,5 @@ let
     sha256 = "sha256-V/8W3qqYhJmte2tq/ZSPtYChdhv8WFQoSORYRaxva9Y=";
     name = "${pname}_${version}.dmg";
   };
-in import ./mk-mac-binpkg.nix { inherit pkgs src pname appName version; }
+in
+import ./mk-mac-binpkg.nix { inherit pkgs src pname appName version; }
