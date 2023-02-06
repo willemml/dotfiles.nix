@@ -438,7 +438,6 @@ in {
           (setq nix-nixfmt-bin "${pkgs.nixfmt}/bin/nixfmt")
           (setq nix-executable "/nix/var/nix/profiles/default/bin/nix")
         '';
-        bindLocal.nix-mode-map = { "C-c C-y" = "nix-mode-format"; };
       };
 
       ob-calc = {

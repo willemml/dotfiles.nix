@@ -4,6 +4,7 @@ let
   darwin = with pkgs; [
     colima
     coreutils
+    freecad-mac
     gnused
     iterm2
     karabiner-elements
