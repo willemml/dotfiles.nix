@@ -3,7 +3,16 @@
 {
   environment.systemPackages = with pkgs; [ ];
 
-  nix.package = pkgs.nix;
+  nix = {
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      extra-trusted-users = willem
+    '';
+    generateRegistryFromInputs = true;
+    generateNixPathFromInputs = true;
+    linkInputs = true;
+    package = pkgs.nix;
+  };
 
   programs.bash.enable = true;
 

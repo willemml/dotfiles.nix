@@ -32,7 +32,7 @@
         pkgs = throw "nixpkgs eval";
       };
 
-      home-manager-config = {
+      user-config = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit nurNoPkgs pkgs; inputs = { inherit (inputs); }; };
@@ -49,11 +49,12 @@
     {
       darwinConfigurations = {
         zeus = darwin.lib.darwinSystem {
-          inherit system pkgs;
+          inherit system pkgs inputs;
           modules = [
+            ./modules/nix.nix
             ./system/darwin.nix
             home-manager.darwinModules.home-manager
-            home-manager-config
+            user-config
           ];
         };
       };
