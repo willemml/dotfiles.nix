@@ -33,6 +33,12 @@
           "${pkgs.pass}/bin/pass 'music/spotify' | head -n1"
           "--backend"
           "portaudio"
+          "--bitrate"
+          "320"
+          "--device-type"
+          "computer"
+          "--volume_controller"
+          "softvol"
         ];
         KeepAlive = true;
         UserName = "${config.home.username}";

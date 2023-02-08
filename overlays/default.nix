@@ -1,5 +1,6 @@
 self: super: {
   chromium-mac = super.callPackage ./chromium-mac.nix { pkgs = super; };
+  darwin-zsh-completions = import ./darwin-zsh-completions.nix { pkgs = super; };
   firefox-mac = super.callPackage ./firefox-mac.nix { pkgs = super; };
   freecad-mac = super.callPackage ./freecad-mac.nix { pkgs = super; };
   pinentry-touchid = super.callPackage ./pinentry-touchid.nix { pkgs = super; };

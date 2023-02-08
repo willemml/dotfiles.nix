@@ -2,6 +2,8 @@
 
 {
   programs = {
+    bash.enableCompletion = true;
+    
     browserpass = {
       enable = true;
       browsers = [
@@ -138,57 +140,62 @@
 
     zsh = {
       enable = true;
-      enableCompletion = true;
-      enableSyntaxHighlighting = true;
-      enableVteIntegration = true;
+      
       autocd = true;
       defaultKeymap = "emacs";
-      envExtra = ''
-        #!/usr/bin/env zsh
-        export GPG_TTY=$(tty)
-        eval $(gpg-agent --daemon -q 2>/dev/null)
-
-        function gsearch() {
-        open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
-        }
-
-        function plistxml2nix() {
-        tail -n +4 |
-        sed -e "s/<dict>/{/g"         \
-        -e "s/<\/dict>/\}\;/g"    \
-        -e "s/<key>/\"/g"         \
-        -e "s/<\/key>/\"=/g"      \
-        -e "s/<real>//g"          \
-        -e "s/<\/real>/;/g"       \
-        -e "s/<integer>//g"       \
-        -e "s/<\/integer>/;/g"    \
-        -e "s/<string>/\"/g"      \
-        -e "s/<\/string>/\"\;/g"  \
-        -e "s/<array>/\[/g"       \
-        -e "s/<\/array>/\];/g"     \
-        -e "s/<true\/>/true;/g"   \
-        -e "s/<false\/>/false;/g" \
-        -e "$ d" |
-        sed \-e "$ s/;//"
-        }
-      '';
       dotDir = ".config/zsh";
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      enableSyntaxHighlighting = true; 
+      enableVteIntegration = true;
+      
       history = {
         path = "$HOME/.local/zsh/history";
         extended = true;
         ignoreDups = true;
       };
+      
+      historySubstringSearch.enable = true;
+      
+      loginExtra = ''
+        #!/usr/bin/env zsh
+        export GPG_TTY=$(tty)
+        eval $(gpg-agent --daemon -q 2>/dev/null)
+        function gsearch() {
+            open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+        }
+        function plistxml2nix() {
+            tail -n +4 |
+                sed -e "s/<dict>/{/g"         \
+                    -e "s/<\/dict>/\}\;/g"    \
+                    -e "s/<key>/\"/g"         \
+                    -e "s/<\/key>/\"=/g"      \
+                    -e "s/<real>//g"          \
+                    -e "s/<\/real>/;/g"       \
+                    -e "s/<integer>//g"       \
+                    -e "s/<\/integer>/;/g"    \
+                    -e "s/<string>/\"/g"      \
+                    -e "s/<\/string>/\"\;/g"  \
+                    -e "s/<array>/\[/g"       \
+                    -e "s/<\/array>/\];/g"     \
+                    -e "s/<true\/>/true;/g"   \
+                    -e "s/<false\/>/false;/g" \
+                    -e "$ d" |
+                sed \-e "$ s/;//"
+        }
+      '';
+      
       shellAliases = {
         cd = "z";
+        drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         e = "emacsclient -c -nw";
         em = "emacs -nw";
+        emw = "emacs";
         ew = "emacsclient -c";
-        drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         l = "ls -1";
         np = "nix-shell -p";
         org = "z ${config.home.sessionVariables.ORGDIR}";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
-        emw = "emacs";
       };
     };
 

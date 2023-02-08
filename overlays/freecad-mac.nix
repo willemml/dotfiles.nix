@@ -1,15 +1,15 @@
 { pkgs, fetchurl, ... }:
 
 let
-  version = "31483";
-  date = "2022-12-31";
+  version = "0.20.2";
+  date = "2022-12-27";
   appName = "FreeCAD";
   pname = "freecad";
 
   src = fetchurl {
     url =
-      "https://github.com/FreeCAD/FreeCAD-Bundle/releases/download/weekly-builds/FreeCAD_weekly-builds-${version}-${date}-conda-macOS-arm-py311.dmg";
-    sha256 = "sha256-dm6QbAazx1vFrkakkCsfCqyGzRED9guI7yFMQ24mU9o=";
+      "https://github.com/FreeCAD/FreeCAD/releases/download/${version}/FreeCAD_${version}-${date}-conda-macOS-x86_64-py310.dmg";
+    sha256 = "sha256-OAi98HUacHcLHVYSadnQFPnEhutJvE4YfRBtPSZk00c=";
   };
 in
 pkgs.stdenv.mkDerivation {

@@ -14,7 +14,7 @@ let
     spotify-mac
     vlc-mac
   ];
-  linux = with pkgs; [ vlc qbittorrent ];
+  linux = with pkgs; [ vlc qbittorrent freecad spotify ];
   pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
   node-packages = with pkgs.nodePackages; [ bash-language-server ];
@@ -44,6 +44,7 @@ in
       htop
       jq
       nix-review
+      nix-zsh-completions
       nixfmt
       nixpkgs-fmt
       nmap
@@ -59,6 +60,7 @@ in
       rsync
       rustup
       shellcheck
+      shfmt
       spotify-tui
       spotifyd
       sqlite
@@ -71,6 +73,7 @@ in
       unzip
       wget
       yq
+      zsh-completions
     ]
     ++ lib.optionals stdenv.isDarwin darwin
     ++ lib.optionals stdenv.isLinux linux
