@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs ? import <nixpkgs> {} }:
 
 let
   version = "0.20.2";

@@ -32,6 +32,14 @@
     vlc-mac
   ];
 
+  launchd.user.agents.iterm2 = {
+    command = "${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2";
+    serviceConfig = {
+      KeepAlive = true;
+      ProcessType = "Adaptive";
+    };
+  };
+
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes

@@ -20,32 +20,5 @@
 
       };
     };
-
-    agents.spotifyd = {
-      enable = true;
-      config = {
-        ProgramArguments = [
-          "${pkgs.spotifyd}/bin/spotifyd"
-          "--no-daemon"
-          "--username-cmd"
-          "${pkgs.pass}/bin/pass 'music/spotify' | grep login | cut -f2 -d ' '"
-          "--password-cmd"
-          "${pkgs.pass}/bin/pass 'music/spotify' | head -n1"
-          "--backend"
-          "portaudio"
-          "--bitrate"
-          "320"
-          "--device-type"
-          "computer"
-          "--volume_controller"
-          "softvol"
-        ];
-        KeepAlive = true;
-        UserName = "${config.home.username}";
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/spotifyd-stdout.log";
-        StandardErrorPath =
-          "${config.home.homeDirectory}/Library/Logs/spotifyd-stderr.log";
-      };
-    };
   };
 }
