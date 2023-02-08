@@ -16,8 +16,9 @@ let
     web = "Safari";
     zotero = "Zotero";
   };
-in {
-  imports = [ ./launchd.nix ];
+in
+{
+  imports = [ ./launchd.nix ./iterm2.nix ./finder.nix ];
 
   home.file.".gnupg/gpg-agent.conf".text = mkIf stdenv.isDarwin ''
     pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
@@ -35,7 +36,6 @@ in {
   };
 
   programs.zsh.shellAliases = mkIf stdenv.isDarwin ({
-    am = lib.mkIf pkgs.stdenv.isDarwin "zsh ~/.config/zsh/am.sh";
     o = "open";
     oa = "open -a";
     pinentry = "pinentry-mac";
@@ -46,8 +46,6 @@ in {
 
   targets.darwin = {
     defaults = {
-      "com.googlecode.iterm2" = import ./iterm2.nix;
-      "com.apple.finder" = import ./finder.nix;
       NSGlobalDomain = {
         AppleLanguages = [ "en-CA" ];
         AppleLocale = "en_CA";

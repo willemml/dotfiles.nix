@@ -226,60 +226,63 @@ let
     "Visual Bell" = true;
     "Window Type" = 0;
   } // dracula_plus;
-in {
-  "AlternateMouseScroll" = true;
-  "Default Bookmark Guid" = "30FFD0AB-B2EB-4635-9469-D089C1D9E106";
-  "HotkeyMigratedFromSingleToMulti" = true;
-  "LeftCommand" = 7;
-  "LeftOption" = 2;
-  "ShowFullScreenTabBar" = false;
-  "SoundForEsc" = false;
-  "SUEnableAutomaticChecks" = false;
-  "SUHasLaunchedBefore" = true;
-  "VisualIndicatorForEsc" = false;
-  "New Bookmarks" = [
-    ({
-      "Columns" = 120;
-      "Command" = "";
-      "Custom Command" = "No";
-      "Custom Directory" = "No";
-      "Default Bookmark" = "Yes";
-      "Description" = "Default";
-      "Guid" = "30FFD0AB-B2EB-4635-9469-D089C1D9E106";
-      "Name" = "Primary";
-      "Rows" = 30;
-      "Screen" = -1;
-      "Tags" = [ ];
-      "Working Directory" = "/Users/willem";
-    } // profile_defaults)
-    ({
-      "Columns" = 120;
-      "Command" = "";
-      "Custom Command" = "No";
-      "Custom Directory" = "No";
-      "Default Bookmark" = "No";
-      "Description" = "Default";
-      "Disable Window Resizing" = true;
-      "Guid" = "00A17AC2-1885-4AE2-B941-A47A5D8C36B4";
-      "Has Hotkey" = true;
-      "HotKey Activated By Modifier" = false;
-      "HotKey Alternate Shortcuts" = { };
-      "HotKey Characters Ignoring Modifiers" = " ";
-      "HotKey Characters" = " ";
-      "HotKey Key Code" = 49;
-      "HotKey Modifier Activation" = 3;
-      "HotKey Modifier Flags" = 1048576;
-      "HotKey Window Animates" = false;
-      "HotKey Window AutoHides" = true;
-      "HotKey Window Dock Click Action" = 0;
-      "HotKey Window Floats" = true;
-      "HotKey Window Reopens On Activation" = false;
-      "Name" = "Hotkey Window";
-      "Rows" = 25;
-      "Screen" = -1;
-      "Space" = -1;
-      "Tags" = [ ];
-      "Working Directory" = "/Users/willem";
-    } // profile_defaults)
-  ];
+in
+{
+  targets.darwin.defaults."com.googlecode.iterm2" = {
+    "AlternateMouseScroll" = true;
+    "Default Bookmark Guid" = "30FFD0AB-B2EB-4635-9469-D089C1D9E106";
+    "HotkeyMigratedFromSingleToMulti" = true;
+    "LeftCommand" = 7;
+    "LeftOption" = 2;
+    "ShowFullScreenTabBar" = false;
+    "SoundForEsc" = false;
+    "SUEnableAutomaticChecks" = false;
+    "SUHasLaunchedBefore" = true;
+    "VisualIndicatorForEsc" = false;
+    "New Bookmarks" = [
+      ({
+        "Columns" = 120;
+        "Command" = "";
+        "Custom Command" = "No";
+        "Custom Directory" = "No";
+        "Default Bookmark" = "Yes";
+        "Description" = "Default";
+        "Guid" = "30FFD0AB-B2EB-4635-9469-D089C1D9E106";
+        "Name" = "Primary";
+        "Rows" = 30;
+        "Screen" = -1;
+        "Tags" = [ ];
+        "Working Directory" = "/Users/willem";
+      } // profile_defaults)
+      ({
+        "Columns" = 120;
+        "Command" = "";
+        "Custom Command" = "No";
+        "Custom Directory" = "No";
+        "Default Bookmark" = "No";
+        "Description" = "Default";
+        "Disable Window Resizing" = true;
+        "Guid" = "00A17AC2-1885-4AE2-B941-A47A5D8C36B4";
+        "Has Hotkey" = true;
+        "HotKey Activated By Modifier" = false;
+        "HotKey Alternate Shortcuts" = { };
+        "HotKey Characters Ignoring Modifiers" = " ";
+        "HotKey Characters" = " ";
+        "HotKey Key Code" = 49;
+        "HotKey Modifier Activation" = 3;
+        "HotKey Modifier Flags" = 1048576;
+        "HotKey Window Animates" = false;
+        "HotKey Window AutoHides" = true;
+        "HotKey Window Dock Click Action" = 0;
+        "HotKey Window Floats" = true;
+        "HotKey Window Reopens On Activation" = false;
+        "Name" = "Hotkey Window";
+        "Rows" = 25;
+        "Screen" = -1;
+        "Space" = -1;
+        "Tags" = [ ];
+        "Working Directory" = "/Users/willem";
+      } // profile_defaults)
+    ];
+  };
 }

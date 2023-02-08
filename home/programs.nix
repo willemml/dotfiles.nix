@@ -3,7 +3,7 @@
 {
   programs = {
     bash.enableCompletion = true;
-    
+
     browserpass = {
       enable = true;
       browsers = [
@@ -96,23 +96,23 @@
 
     zsh = {
       enable = true;
-      
+
       autocd = true;
       defaultKeymap = "emacs";
       dotDir = ".config/zsh";
       enableAutosuggestions = true;
       enableCompletion = true;
-      enableSyntaxHighlighting = true; 
+      enableSyntaxHighlighting = true;
       enableVteIntegration = true;
-      
+
       history = {
         path = "$HOME/.local/zsh/history";
         extended = true;
         ignoreDups = true;
       };
-      
+
       historySubstringSearch.enable = true;
-      
+
       loginExtra = ''
         #!/usr/bin/env zsh
         export GPG_TTY=$(tty)
@@ -140,7 +140,7 @@
                 sed \-e "$ s/;//"
         }
       '';
-      
+
       shellAliases = {
         cd = "z";
         drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
