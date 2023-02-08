@@ -29,6 +29,7 @@
     qbittorrent-mac
     spoof-mac
     spotify-mac
+    utm
     vlc-mac
   ];
 
