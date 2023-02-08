@@ -1,4 +1,4 @@
-{ stdenv, pkgs, fetchurl, ... }:
+{ pkgs }:
 
 let
   versions = {
@@ -6,26 +6,26 @@ let
     x86_64-darwin = "1101350";
   };
 
-  version = versions.${stdenv.hostPlatform.system};
+  version = versions.${pkgs.stdenv.hostPlatform.system};
 
   pname = "chromium";
   appName = "Chromium";
 
   srcs = {
-    aarch64-darwin = fetchurl {
+    aarch64-darwin = pkgs.fetchurl {
       url =
         "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac_Arm/${version}/chrome-mac.zip";
       sha256 = "sha256-LlbYlJmFLzyHIiygofa0Btm7NAOvWXXhmbjMHldVoGo=";
       name = "${pname}_aarch64_${version}.zip";
     };
-    x86_64-darwin = fetchurl {
+    x86_64-darwin = pkgs.fetchurl {
       url =
         "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac/${version}/chrome-mac.zip";
       sha256 = "sha256-O+OnjakEpjCRbSjDysEA6RKKaKaSMw+LSO2ZLcxz2vM=";
       name = "${pname}_x86_64_${version}.zip";
     };
   };
-  src = srcs.${stdenv.hostPlatform.system};
+  src = srcs.${pkgs.stdenv.hostPlatform.system};
 in
 import ./mk-mac-binpkg.nix {
   inherit pkgs src pname appName version;

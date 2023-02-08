@@ -17,7 +17,20 @@
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
   environment.variables.LANG = "en_US.UTF-8";
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    colima
+    coreutils
+    darwin-zsh-completions
+    freecad-mac
+    gnused
+    iterm2
+    pinentry-touchid
+    pinentry-mac
+    qbittorrent-mac
+    spoof-mac
+    spotify-mac
+    vlc-mac
+  ];
 
   nix = {
     extraOptions = ''
@@ -31,9 +44,11 @@
   };
 
   programs.bash.enable = true;
-  
+
+  programs.man.enable = true;
+
   programs.nix-index.enable = true;
-  
+
   programs.zsh.enable = true;
   programs.zsh.enableBashCompletion = true;
   programs.zsh.enableFzfCompletion = true;

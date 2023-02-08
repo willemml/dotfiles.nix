@@ -45,7 +45,6 @@
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/spotifyd-stdout.log";
         StandardErrorPath =
           "${config.home.homeDirectory}/Library/Logs/spotifyd-stderr.log";
-
       };
     };
   };

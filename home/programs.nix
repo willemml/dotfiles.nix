@@ -196,6 +196,7 @@
         np = "nix-shell -p";
         org = "z ${config.home.sessionVariables.ORGDIR}";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
+        nbpkgs = "nix-build --arg pkgs 'import <nixpkgs> {}'";
       };
     };
 

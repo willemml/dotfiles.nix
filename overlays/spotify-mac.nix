@@ -1,4 +1,4 @@
-{ stdenv, pkgs, fetchurl, ... }:
+{ pkgs }:
 
 let
   appName = "Spotify";

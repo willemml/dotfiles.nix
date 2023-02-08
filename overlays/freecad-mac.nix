@@ -1,4 +1,4 @@
-{ pkgs, fetchurl, ... }:
+{ pkgs }:
 
 let
   version = "0.20.2";
@@ -6,7 +6,7 @@ let
   appName = "FreeCAD";
   pname = "freecad";
 
-  src = fetchurl {
+  src = pkgs.fetchurl {
     url =
       "https://github.com/FreeCAD/FreeCAD/releases/download/${version}/FreeCAD_${version}-${date}-conda-macOS-x86_64-py310.dmg";
     sha256 = "sha256-OAi98HUacHcLHVYSadnQFPnEhutJvE4YfRBtPSZk00c=";

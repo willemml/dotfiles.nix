@@ -1,19 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  darwin = with pkgs; [
-    colima
-    coreutils
-    freecad-mac
-    gnused
-    iterm2
-    pinentry-touchid
-    pinentry_mac
-    qbittorrent-mac
-    spoof-mac
-    spotify-mac
-    vlc-mac
-  ];
+  darwin = with pkgs; [ ];
   linux = with pkgs; [ vlc qbittorrent freecad spotify ];
   pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
