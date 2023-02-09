@@ -38,6 +38,7 @@ in
   };
 
   programs.zsh.shellAliases = mkIf stdenv.isDarwin ({
+    drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     o = "open";
     oa = "open -a";
     pinentry = "pinentry-mac";

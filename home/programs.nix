@@ -143,13 +143,13 @@
 
       shellAliases = {
         cd = "z";
-        drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         e = "emacsclient -c -nw";
         em = "emacs -nw";
         emw = "emacs";
         ew = "emacsclient -c";
         l = "ls -1";
         np = "nix-shell -p";
+        nrs = lib.optionals pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         org = "z ${config.home.sessionVariables.ORGDIR}";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
       };
