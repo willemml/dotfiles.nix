@@ -6,6 +6,12 @@ in {
 
   programs.emacs.enable = true;
 
+  services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {
+    enable = true;
+    client.enable = true;
+    startWithUserSession = true;
+  };
+
   programs.emacs.init = {
     enable = true;
     packageQuickstart = true;
