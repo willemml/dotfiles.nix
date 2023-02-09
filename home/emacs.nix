@@ -8,7 +8,7 @@ in {
 
   programs.emacs.init = {
     enable = true;
-    packageQuickstart = false;
+    packageQuickstart = true;
     recommendedGcSettings = true;
     usePackageVerbose = false;
     earlyInit = ''
@@ -19,8 +19,6 @@ in {
       (scroll-bar-mode -1)
       ;; Disable menubar
       (menu-bar-mode -1)
-      ;; Increase garbage collector threshold before load
-      (setq gc-cons-threshold 640000000)
       (setq debug-on-error t)
       ;; Use UTF-8
       (set-terminal-coding-system 'utf-8)
@@ -107,6 +105,9 @@ in {
         "Shortcut to '~/dev' folder."
         (interactive)
         (my/find-file-in-folder-shortcut "~/dev"))
+      ;; Disable scroll + C to zoom
+      (global-unset-key (kbd "C-<wheel-down>"))
+      (global-unset-key (kbd "C-<wheel-up>"))
     '';
 
     usePackage = {

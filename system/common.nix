@@ -3,6 +3,8 @@
 {
   environment.systemPackages = [ pkgs.coreutils-full ];
   environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
+  environment.variables.LANGUAGE = "en_US.UTF-8";
+  environment.variables.LC_CTYPE = "en_US.UTF-8";
   environment.variables.LANG = "en_US.UTF-8";
 
   nix = {
