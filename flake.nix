@@ -12,9 +12,7 @@
 
   outputs = inputs@{ self, nixpkgs, home-manager, darwin, nur, ... }:
     let
-      system = "aarch64-darwin";
-
-      pkgs = import nixpkgs {
+      pkgsfunc = (system: import nixpkgs {
         inherit system;
         overlays = [
           (import ./overlays)
@@ -25,38 +23,51 @@
             nur = import nur { inherit pkgs; nurpkgs = pkgs; };
           };
         };
-      };
+      });
 
-      nurNoPkgs = import nur {
-        nurpkgs = pkgs;
-        pkgs = throw "nixpkgs eval";
-      };
-
-      user-config = {
+      user-config = (pkgs: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit nurNoPkgs pkgs; inputs = { inherit (inputs); }; };
+        home-manager.extraSpecialArgs = {
+          inherit pkgs; inputs = { inherit (inputs); };
+          nurNoPkgs = import nur {
+            nurpkgs = pkgs;
+            pkgs = throw "nixpkgs eval";
+          };
+        };
         home-manager.sharedModules = [ nur.hmModules.nur ];
         home-manager.users.willem = ./home;
-        users.users.willem = {
-          home = "/Users/willem";
-          isHidden = false;
-          name = "willem";
-          shell = pkgs.zshInteractive;
-        };
-      };
+      });
     in
     {
       darwinConfigurations = {
-        zeus = darwin.lib.darwinSystem {
-          inherit system pkgs inputs;
+        zeus = darwin.lib.darwinSystem rec {
+          inherit inputs;
+
+          system = "aarch64-darwin";
+
+          pkgs = pkgsfunc system;
+
           modules = [
             ./modules/nix.nix
             ./system/darwin.nix
             home-manager.darwinModules.home-manager
-            user-config
+            (user-config pkgs)
           ];
         };
+      };
+      nixosConfigurations.zeus-utm-vm = (pkgsfunc "aarch64-linux").lib.nixosSystem rec {
+        inherit inputs;
+        system = "aarch64-linux";
+
+        pkgs = pkgsfunc system;
+        
+        modules = [
+          ./modules/nix.nix
+          ./system/utm-arm-vm.nix
+          home-manager.nixosModules.home-manager
+          (user-config pkgs)
+        ];
       };
     };
 }

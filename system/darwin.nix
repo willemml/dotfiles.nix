@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./common.nix ];
+
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
     (allow default)
@@ -15,8 +17,6 @@
   '';
 
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
-  environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
-  environment.variables.LANG = "en_US.UTF-8";
   environment.systemPackages = with pkgs; [
     colima
     coreutils
@@ -41,25 +41,9 @@
     };
   };
 
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      extra-trusted-users = willem
-    '';
-    generateRegistryFromInputs = true;
-    generateNixPathFromInputs = true;
-    linkInputs = true;
-    package = pkgs.nix;
-  };
-
-  programs.bash.enable = true;
 
   programs.man.enable = true;
 
-  programs.nix-index.enable = true;
-
-  programs.zsh.enable = true;
-  programs.zsh.enableBashCompletion = true;
   programs.zsh.enableFzfCompletion = true;
   programs.zsh.enableFzfGit = true;
   programs.zsh.enableFzfHistory = true;
@@ -75,18 +59,6 @@
         export IN_NIX_SANDBOX=1
         exec /usr/bin/sandbox-exec -f /etc/nix/user-sandbox.sb $SHELL -l
     }
-  '';
-  programs.zsh.promptInit = ''
-    autoload -U promptinit && promptinit
-    setopt PROMPTSUBST
-    _prompt_nix() {
-      [ -z "$IN_NIX_SHELL" ] || echo "%F{yellow}%B[''${name:+$name}]%b%f "
-    }
-    PS1='%F{red}%B%(?..%? )%b%f%# '
-    RPS1='$(_prompt_nix)%F{green}%~%f'
-    if [ -n "$IN_NIX_SANDBOX" ]; then
-      PS1+='%F{red}[sandbox]%f '
-    fi
   '';
 
   services.nix-daemon.enable = true;
@@ -146,5 +118,11 @@
         HIDKeyboardModifierMappingDst = 30064771300;
       }];
     };
+  };
+
+  users.users.willem = {
+    home = "/Users/willem";
+    isHidden = false;
+    name = "willem";
   };
 }
