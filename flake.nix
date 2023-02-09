@@ -7,23 +7,23 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nur, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nixos-apple-silicon, nur, ... }:
     let
-      pkgsfunc = (system: import nixpkgs {
-        inherit system;
-        overlays = [
-          (import ./overlays)
-        ];
-        config = {
-          allowUnfree = true;
-          packageOverrides = pkgs: {
-            nur = import nur { inherit pkgs; nurpkgs = pkgs; };
+      pkgsfunc = ({ system, overlays ? [ ] }: import nixpkgs
+        {
+          inherit system overlays;
+          config = {
+            allowUnfree = true;
+            packageOverrides = pkgs: {
+              nur = import nur { inherit pkgs; nurpkgs = pkgs; };
+            };
           };
-        };
-      });
+        });
 
       user-config = (pkgs: {
         home-manager.useGlobalPkgs = true;
@@ -46,28 +46,46 @@
 
           system = "aarch64-darwin";
 
-          pkgs = pkgsfunc system;
+          pkgs = pkgsfunc { inherit system; overlays = [ (import ./overlays) ]; };
 
           modules = [
             ./modules/nix.nix
-            ./system/darwin.nix
+            ./system/zeus.darwin.nix
+            ./system/common.nix
             home-manager.darwinModules.home-manager
             (user-config pkgs)
           ];
         };
       };
-      nixosConfigurations.zeus-utm-vm = nixpkgs.lib.nixosSystem rec {
+
+      nixosConfigurations.zeus-utmvm = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
 
-        pkgs = pkgsfunc system;
+        pkgs = pkgsfunc { inherit system; };
 
         specialArgs = { inherit inputs; };
 
         modules = [
-          ./modules/nix.nix
-          ./system/utm-arm-vm.nix
           home-manager.nixosModules.home-manager
           (user-config pkgs)
+          ./modules/nix.nix
+          ./system/zeus.utmvm.nix
+        ];
+      };
+
+      nixosConfigurations.zeus-asahi = nixpkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+
+        pkgs = pkgsfunc { inherit system; overlays = [ nixos-apple-silicon.overlays ]; };
+
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          nixos-apple-silicon.nixosModules.apple-silicon-support
+          home-manager.nixosModules.home-manager
+          (user-config pkgs)
+          ./modules/nix.nix
+          ./system/zeus.asahi.nix
         ];
       };
     };
