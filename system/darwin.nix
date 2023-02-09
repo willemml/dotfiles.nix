@@ -19,13 +19,14 @@
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.systemPackages = with pkgs; [
     colima
-    coreutils
     darwin-zsh-completions
+    discord
     freecad-mac
     gnused
     iterm2
     pinentry-touchid
     pinentry-mac
+    pngpaste
     qbittorrent-mac
     spoof-mac
     spotify-mac
@@ -41,6 +42,7 @@
     };
   };
 
+  programs.bash.enable = true;
 
   programs.man.enable = true;
 

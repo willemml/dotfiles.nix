@@ -20,11 +20,13 @@ in
 {
   imports = [ ./launchd.nix ./iterm2.nix ./finder.nix ];
 
-  home.file.".gnupg/gpg-agent.conf".text = mkIf stdenv.isDarwin ''
-    pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
-    default-cache-ttl 30
-    max-cache-ttl 600
-  '';
+  home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
+    text = ''
+      pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
+      default-cache-ttl 30
+      max-cache-ttl 600
+    '';
+  };
 
   home.file.".config/zsh/am.sh" = mkIf stdenv.isDarwin {
     executable = true;
@@ -44,7 +46,7 @@ in
   programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
   programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
 
-  targets.darwin = {
+  targets.darwin = mkIf stdenv.isDarwin {
     defaults = {
       NSGlobalDomain = {
         AppleLanguages = [ "en-CA" ];

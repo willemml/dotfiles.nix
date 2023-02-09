@@ -43,5 +43,10 @@ rec {
     username = "willem";
   };
 
-  imports = [ ./emacs.nix ./packages.nix ./programs.nix ./darwin.nix ];
+  imports = [
+    ./darwin.nix
+    ./emacs.nix
+    ./packages.nix
+    ./programs.nix
+  ];
 }

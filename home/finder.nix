@@ -1,3 +1,4 @@
+{ pkgs, lib, ... }:
 let
   columnSettings = {
     name = {
@@ -84,7 +85,7 @@ let
   } // default-view-settings;
 in
 {
-  targets.darwin.defaults."com.apple.finder" = {
+  targets.darwin.defaults."com.apple.finder" = lib.mkIf pkgs.stdenv.isDarwin {
     AppleShowAllExtensions = true;
 
     ComputerViewSettings = dvs-with-ws;

@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  environment.systemPackages = [ pkgs.coreutils-full ];
   environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
   environment.variables.LANG = "en_US.UTF-8";
 
@@ -12,8 +13,6 @@
     settings.experimental-features = [ "nix-command" "flakes" ];
     settings.trusted-users = [ "root" "willem" ];
   };
-
-  programs.bash.enable = true;
 
   programs.nix-index.enable = true;
 
@@ -35,5 +34,5 @@
 
   time.timeZone = "America/Vancouver";
 
-  users.users.willem.shell = pkgs.zshInteractive;
+  users.users.willem.shell = pkgs.zsh;
 }

@@ -1,3 +1,5 @@
+{ pkgs, lib, ... }:
+
 let
   dracula_plus = {
     "Ansi 0 Color" = {
@@ -228,7 +230,7 @@ let
   } // dracula_plus;
 in
 {
-  targets.darwin.defaults."com.googlecode.iterm2" = {
+  targets.darwin.defaults."com.googlecode.iterm2" = lib.mkIf pkgs.stdenv.isDarwin {
     "AlternateMouseScroll" = true;
     "Default Bookmark Guid" = "30FFD0AB-B2EB-4635-9469-D089C1D9E106";
     "HotkeyMigratedFromSingleToMulti" = true;

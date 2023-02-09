@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+{
   imports = [ ./common.nix ];
 
   boot.loader.systemd-boot.enable = true;
@@ -6,8 +8,17 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   console.keyMap = "colemak";
-  
+
+  environment.systemPackages = with pkgs; [
+    freecad
+    pinentry-gnome
+    qbittorrent
+    vlc
+  ];
+
   i18n.defaultLocale = "en_US.UTF-8";
+
+  programs.command-not-found.enable = false;
 
   programs.zsh.loginShellInit = ''
     reexec() {
@@ -26,16 +37,16 @@
 
   services.printing.enable = true;
 
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
 
   security.rtkit.enable = true;
-  
+
   services.xserver = {
     enable = true;
 
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    
+
     layout = "us";
     xkbVariant = "colemak";
   };

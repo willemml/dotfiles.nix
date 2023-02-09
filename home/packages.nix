@@ -2,7 +2,7 @@
 
 let
   darwin = with pkgs; [ ];
-  linux = with pkgs; [ vlc qbittorrent freecad spotify ];
+  linux = with pkgs; [ ];
   pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
   node-packages = with pkgs.nodePackages; [ bash-language-server ];
@@ -20,7 +20,6 @@ in
       cmake
       comma
       curl
-      discord
       docker
       docker-compose
       fd
@@ -40,7 +39,6 @@ in
       openssh
       pass-extended
       plantuml
-      pngpaste
       poppler
       pv
       python-wp

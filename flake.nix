@@ -29,7 +29,7 @@
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit pkgs; inputs = { inherit (inputs); };
+          inherit pkgs;
           nurNoPkgs = import nur {
             nurpkgs = pkgs;
             pkgs = throw "nixpkgs eval";
@@ -56,12 +56,13 @@
           ];
         };
       };
-      nixosConfigurations.zeus-utm-vm = (pkgsfunc "aarch64-linux").lib.nixosSystem rec {
-        inherit inputs;
+      nixosConfigurations.zeus-utm-vm = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
 
         pkgs = pkgsfunc system;
-        
+
+        specialArgs = { inherit inputs; };
+
         modules = [
           ./modules/nix.nix
           ./system/utm-arm-vm.nix

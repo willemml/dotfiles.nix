@@ -17,8 +17,6 @@
     fsType = "vfat";
   };
 
-  networking.useDHCP = true;
-
   services.spice-vdagentd.enable = true;
 
   swapDevices = [ ];
