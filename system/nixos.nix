@@ -11,6 +11,7 @@
 
   environment.systemPackages = with pkgs; [
     freecad
+    gnome.gnome-terminal
     pinentry-gnome
     qbittorrent
     vlc
