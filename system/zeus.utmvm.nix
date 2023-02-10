@@ -11,6 +11,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  environment.systemPackages = with pkgs; [ mesa ];
   
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";

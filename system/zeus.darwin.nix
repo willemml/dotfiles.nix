@@ -22,13 +22,8 @@
     darwin-zsh-completions
     discord
     freecad-mac
-    gnused
     iterm2
-    pinentry-touchid
-    pinentry-mac
-    pngpaste
     qbittorrent-mac
-    spoof-mac
     spotify-mac
     utm
     vlc-mac

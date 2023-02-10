@@ -149,7 +149,7 @@
         ew = "emacsclient -c";
         l = "ls -1";
         np = "nix-shell -p";
-        nrs = lib.optionals pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+        nrs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         org = "z ${config.home.sessionVariables.ORGDIR}";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
       };
