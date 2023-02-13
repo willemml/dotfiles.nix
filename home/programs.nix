@@ -49,6 +49,12 @@
       ];
     };
 
+    fzf = {
+      enable = true;
+      defaultCommand = "${pkgs.fd}/bin/fd . ${config.home.homeDirectory}";
+      enableZshIntegration = true;
+    };
+
     git = {
       enable = true;
       delta = { enable = true; };

@@ -41,9 +41,6 @@
 
   programs.man.enable = true;
 
-  programs.zsh.enableFzfCompletion = true;
-  programs.zsh.enableFzfGit = true;
-  programs.zsh.enableFzfHistory = true;
   programs.zsh.loginShellInit = ''
     reexec() {
         unset __NIX_DARWIN_SET_ENVIRONMENT_DONE

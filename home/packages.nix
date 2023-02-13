@@ -29,7 +29,6 @@ in
       docker-compose
       fd
       findutils
-      fzf
       gawk
       gnuplot
       graphviz

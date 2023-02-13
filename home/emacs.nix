@@ -36,84 +36,84 @@ in {
     '';
 
     prelude = ''
-                                        ; -*-emacs-lisp-*-
-      ;; Disable startup message.
-      (setq inhibit-startup-screen t
-            inhibit-startup-echo-area-message (user-login-name))
-      (setq package-archives '(("melpa"        . "https://melpa.org/packages/")
-                               ("melpa-stable" . "https://stable.melpa.org/packages/")
-                               ("gnu"          . "https://elpa.gnu.org/packages/")
-                               ("nongnu"       . "https://elpa.nongnu.org/nongnu/")))
-      ;; Empty initial scratch buffer.
-      (setq initial-major-mode 'fundamental-mode
-            initial-scratch-message nil)
-      (setenv "PATH" (concat "${config.home.profileDirectory}/bin:" (getenv "PATH")))
-      ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
-      (defalias 'yes-or-no-p 'y-or-n-p)
-      ;; Typically, I only want spaces when pressing the TAB key. I also
-      ;; want 4 of them.
-      (setq-default indent-tabs-mode nil
-                    tab-width 4
-                    c-basic-offset 4)
-      ;; Increase emacs data read limit (default too low for LSP)
-      (setq read-process-output-max (* 1024 1024))
-      ;; Reduce wrist pain
-      (global-set-key (kbd "M-n") "~")
-      (global-set-key (kbd "M-N") "`")
-      ;; Stop creating backup and autosave files.
-      (setq make-backup-files nil
-            auto-save-default nil)
-      ;; Always show line and column number in the mode line.
-      (line-number-mode)
-      (column-number-mode)
-      ;; Soft wrap lines
-      (visual-line-mode)
-      ;; Use one space to end sentences.
-      (setq sentence-end-double-space nil)
-      ;; I typically want to use UTF-8.
-      (prefer-coding-system 'utf-8)
-      ;; Enable highlighting of current line.
-      (global-hl-line-mode 1)
-      ;; When finding file in non-existing directory, offer to create the
-      ;; parent directory.
-      (defun with-buffer-name-prompt-and-make-subdirs ()
-        (let ((parent-directory (file-name-directory buffer-file-name)))
-          (when (and (not (file-exists-p parent-directory))
-      			   (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
-            (make-directory parent-directory t))))
-      (add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
-      ;; Bind Emacs built in completion using completion-at-point to "C-M-i"
-      (global-set-key (kbd "C-M-i") 'completion-at-point)
-      ;; Keybind to format/prettify document, uses either format-all or
-      ;; lsp-mode depending on availability
-      (global-set-key (kbd "C-c C-y")  'my/format-document)
-      ;; Don't warn when cannot guess python indent level
-      (setq-default python-indent-guess-indent-offset-verbose nil)
-      (defun my/define-multiple-keys (map keys)
-        "Define multiple KEYS in a keymap.
-      Argument MAP keymap in which to bind the keys."
-        (dolist (key keys nil)
-          (define-key map (kbd (car key)) (nth 1 key))))
-      (defun my/customize-set-variables (variables)
-        "Set multiple Customize VARIABLES at once."
-        (dolist (variable variables nil)
-          (customize-set-variable (car variable) (nth 1 variable))))
-      (defun my/find-file-in-folder-shortcut (folder)
-        "Interactively call `find-file' after using 'cd' into 'FOLDER'."
-        (cd (expand-file-name folder))
-        (call-interactively #'find-file))
-      (defun my/electric-mode ()
-        "Enable some basic features for coding."
-        (interactive)
-        (electric-pair-local-mode)
-        (electric-indent-local-mode))
-      (defun dev ()
-        "Shortcut to '~/dev' folder."
-        (interactive)
-        (my/find-file-in-folder-shortcut "~/dev"))
-      ;; Disable scroll + C to zoom
-      (global-unset-key (kbd "C-<wheel-down>"))
-      (global-unset-key (kbd "C-<wheel-up>"))
+                                  ; -*-emacs-lisp-*-
+;; Disable startup message.
+(setq inhibit-startup-screen t
+      inhibit-startup-echo-area-message (user-login-name))
+(setq package-archives '(("melpa"        . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("gnu"          . "https://elpa.gnu.org/packages/")
+                         ("nongnu"       . "https://elpa.nongnu.org/nongnu/")))
+;; Empty initial scratch buffer.
+(setq initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
+(setenv "PATH" (concat "${config.home.profileDirectory}/bin:" (getenv "PATH")))
+;; Accept 'y' and 'n' rather than 'yes' and 'no'.
+(defalias 'yes-or-no-p 'y-or-n-p)
+;; Typically, I only want spaces when pressing the TAB key. I also
+;; want 4 of them.
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              c-basic-offset 4)
+;; Increase emacs data read limit (default too low for LSP)
+(setq read-process-output-max (* 1024 1024))
+;; Reduce wrist pain
+(global-set-key (kbd "M-n") "~")
+(global-set-key (kbd "M-N") "`")
+;; Stop creating backup and autosave files.
+(setq make-backup-files nil
+      auto-save-default nil)
+;; Always show line and column number in the mode line.
+(line-number-mode)
+(column-number-mode)
+;; Soft wrap lines
+(visual-line-mode)
+;; Use one space to end sentences.
+(setq sentence-end-double-space nil)
+;; I typically want to use UTF-8.
+(prefer-coding-system 'utf-8)
+;; Enable highlighting of current line.
+(global-hl-line-mode 1)
+;; When finding file in non-existing directory, offer to create the
+;; parent directory.
+(defun with-buffer-name-prompt-and-make-subdirs ()
+  (let ((parent-directory (file-name-directory buffer-file-name)))
+    (when (and (not (file-exists-p parent-directory))
+			   (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
+      (make-directory parent-directory t))))
+(add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
+;; Bind Emacs built in completion using completion-at-point to "C-M-i"
+(global-set-key (kbd "C-M-i") 'completion-at-point)
+;; Keybind to format/prettify document, uses either format-all or
+;; lsp-mode depending on availability
+(global-set-key (kbd "C-c C-y")  'my/format-document)
+;; Don't warn when cannot guess python indent level
+(setq-default python-indent-guess-indent-offset-verbose nil)
+(defun my/define-multiple-keys (map keys)
+  "Define multiple KEYS in a keymap.
+Argument MAP keymap in which to bind the keys."
+  (dolist (key keys nil)
+    (define-key map (kbd (car key)) (nth 1 key))))
+(defun my/customize-set-variables (variables)
+  "Set multiple Customize VARIABLES at once."
+  (dolist (variable variables nil)
+    (customize-set-variable (car variable) (nth 1 variable))))
+(defun my/find-file-in-folder-shortcut (folder)
+  "Interactively call `find-file' after using 'cd' into 'FOLDER'."
+  (cd (expand-file-name folder))
+  (call-interactively #'find-file))
+(defun my/electric-mode ()
+  "Enable some basic features for coding."
+  (interactive)
+  (electric-pair-local-mode)
+  (electric-indent-local-mode))
+(defun dev ()
+  "Shortcut to '~/dev' folder."
+  (interactive)
+  (my/find-file-in-folder-shortcut "~/dev"))
+;; Disable scroll + C to zoom
+(global-unset-key (kbd "C-<wheel-down>"))
+(global-unset-key (kbd "C-<wheel-up>"))
     '';
 
     usePackage = {
@@ -614,6 +614,11 @@ in {
           (setq-default org-download-image-dir "${config.home.sessionVariables.ORGDIR}/images")
         '';
         hook = [ "(dired-mode-hook . org-download-enable)" ];
+      };
+
+      org-fragtog ={
+        enable = true;
+        hook = [ "(org-mode-hook . org-fragtog-mode)" ];
       };
 
       org-ref = {
