@@ -12,11 +12,12 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nixos-apple-silicon, nur, ... }:
+  outputs = inputs@{ self, darwin, home-manager, mach-nix, nixos-apple-silicon, nixpkgs, nur, ... }:
     let
       pkgsfunc = ({ system, overlays ? [ ] }: import nixpkgs
         {
-          inherit system overlays;
+          inherit system;
+          overlays = [ (import ./overlays) ] ++ overlays;
           config = {
             allowUnfree = true;
             packageOverrides = pkgs: {
@@ -46,7 +47,10 @@
 
           system = "aarch64-darwin";
 
-          pkgs = pkgsfunc { inherit system; overlays = [ (import ./overlays) ]; };
+          pkgs = pkgsfunc {
+            inherit system;
+            overlays = [ (import ./overlays/darwin.nix) ];
+          };
 
           modules = [
             ./modules/nix.nix
@@ -76,7 +80,10 @@
       nixosConfigurations.zeus-asahi = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
 
-        pkgs = pkgsfunc { inherit system; overlays = [ nixos-apple-silicon.overlays ]; };
+        pkgs = pkgsfunc {
+          inherit system;
+          overlays = [ nixos-apple-silicon.overlays ];
+        };
 
         specialArgs = { inherit inputs; };
 

@@ -36,87 +36,79 @@ in {
     '';
 
     prelude = ''
-                                  ; -*-emacs-lisp-*-
-;; Disable startup message.
-(setq inhibit-startup-screen t
-      inhibit-startup-echo-area-message (user-login-name))
-(setq package-archives '(("melpa"        . "https://melpa.org/packages/")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("gnu"          . "https://elpa.gnu.org/packages/")
-                         ("nongnu"       . "https://elpa.nongnu.org/nongnu/")))
-;; Empty initial scratch buffer.
-(setq initial-major-mode 'fundamental-mode
-      initial-scratch-message nil)
-(setenv "PATH" (concat "${config.home.profileDirectory}/bin:" (getenv "PATH")))
-;; Accept 'y' and 'n' rather than 'yes' and 'no'.
-(defalias 'yes-or-no-p 'y-or-n-p)
-;; Typically, I only want spaces when pressing the TAB key. I also
-;; want 4 of them.
-(setq-default indent-tabs-mode nil
-              tab-width 4
-              c-basic-offset 4)
-;; Increase emacs data read limit (default too low for LSP)
-(setq read-process-output-max (* 1024 1024))
-;; Reduce wrist pain
-(global-set-key (kbd "M-n") "~")
-(global-set-key (kbd "M-N") "`")
-;; Stop creating backup and autosave files.
-(setq make-backup-files nil
-      auto-save-default nil)
-;; Always show line and column number in the mode line.
-(line-number-mode)
-(column-number-mode)
-;; Soft wrap lines
-(visual-line-mode)
-;; Use one space to end sentences.
-(setq sentence-end-double-space nil)
-;; I typically want to use UTF-8.
-(prefer-coding-system 'utf-8)
-;; Enable highlighting of current line.
-(global-hl-line-mode 1)
-;; When finding file in non-existing directory, offer to create the
-;; parent directory.
-(defun with-buffer-name-prompt-and-make-subdirs ()
-  (let ((parent-directory (file-name-directory buffer-file-name)))
-    (when (and (not (file-exists-p parent-directory))
-			   (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
-      (make-directory parent-directory t))))
-(add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
-;; Bind Emacs built in completion using completion-at-point to "C-M-i"
-(global-set-key (kbd "C-M-i") 'completion-at-point)
-;; Keybind to format/prettify document, uses either format-all or
-;; lsp-mode depending on availability
-(global-set-key (kbd "C-c C-y")  'my/format-document)
-;; Don't warn when cannot guess python indent level
-(setq-default python-indent-guess-indent-offset-verbose nil)
-(defun my/define-multiple-keys (map keys)
-  "Define multiple KEYS in a keymap.
-Argument MAP keymap in which to bind the keys."
-  (dolist (key keys nil)
-    (define-key map (kbd (car key)) (nth 1 key))))
-(defun my/customize-set-variables (variables)
-  "Set multiple Customize VARIABLES at once."
-  (dolist (variable variables nil)
-    (customize-set-variable (car variable) (nth 1 variable))))
-(defun my/find-file-in-folder-shortcut (folder)
-  "Interactively call `find-file' after using 'cd' into 'FOLDER'."
-  (cd (expand-file-name folder))
-  (call-interactively #'find-file))
-(defun my/electric-mode ()
-  "Enable some basic features for coding."
-  (interactive)
-  (electric-pair-local-mode)
-  (electric-indent-local-mode))
-(defun dev ()
-  "Shortcut to '~/dev' folder."
-  (interactive)
-  (my/find-file-in-folder-shortcut "~/dev"))
-;; Disable scroll + C to zoom
-(global-unset-key (kbd "C-<wheel-down>"))
-(global-unset-key (kbd "C-<wheel-up>"))
+                                        ; -*-emacs-lisp-*-
+      ;; Disable startup message.
+      (setq inhibit-startup-screen t
+            inhibit-startup-echo-area-message (user-login-name))
+      (setq package-archives '(("melpa"        . "https://melpa.org/packages/")
+                               ("melpa-stable" . "https://stable.melpa.org/packages/")
+                               ("gnu"          . "https://elpa.gnu.org/packages/")
+                               ("nongnu"       . "https://elpa.nongnu.org/nongnu/")))
+      ;; Empty initial scratch buffer.
+      (setq initial-major-mode 'emacs-lisp-mode
+            initial-scratch-message nil)
+      (setenv "PATH" (concat "${config.home.profileDirectory}/bin:" (getenv "PATH")))
+      ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
+      (defalias 'yes-or-no-p 'y-or-n-p)
+      ;; Typically, I only want spaces when pressing the TAB key. I also
+      ;; want 4 of them.
+      (setq-default indent-tabs-mode nil
+                    tab-width 4
+                    c-basic-offset 4)
+      ;; Increase emacs data read limit (default too low for LSP)
+      (setq read-process-output-max (* 1024 1024))
+    '';
+
+    postlude = ''
+                                              ;-*-emacs-lisp-*-
+      ;; Stop creating backup and autosave files.
+      (setq make-backup-files nil
+            auto-save-default nil)
+      ;; Always show line and column number in the mode line.
+      (line-number-mode)
+      (column-number-mode)
+      ;; Soft wrap lines
+      (visual-line-mode)
+      ;; Use one space to end sentences.
+      (setq sentence-end-double-space nil)
+      ;; I typically want to use UTF-8.
+      (prefer-coding-system 'utf-8)
+      ;; Enable highlighting of current line.
+      (global-hl-line-mode 1)
+      ;; When finding file in non-existing directory, offer to create the
+      ;; parent directory.
+      (defun with-buffer-name-prompt-and-make-subdirs ()
+        (let ((parent-directory (file-name-directory buffer-file-name)))
+          (when (and (not (file-exists-p parent-directory))
+          		   (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
+            (make-directory parent-directory t))))
+      (add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
+      ;; Reduce wrist pain
+      (global-set-key (kbd "M-n") "~")
+      (global-set-key (kbd "M-N") "`")
+      ;; Keybind to format/prettify document, uses either format-all or
+      ;; lsp-mode depending on availability
+      (global-set-key (kbd "C-c C-y")  'my/format-document)
+      ;; Don't warn when cannot guess python indent level
+      (setq-default python-indent-guess-indent-offset-verbose nil)
+      ;; Disable scroll + C to zoom
+      (global-unset-key (kbd "C-<wheel-down>"))
+      (global-unset-key (kbd "C-<wheel-up>"))
+      (load-theme 'doom-gruvbox t)
+
     '';
 
     usePackage = {
+      all-the-icons = {
+        enable = true;
+        extraConfig = ":if (display-graphic-p)";
+      };
+
+      all-the-icons-dired = {
+        enable = true;
+        hook = [ "(dired-mode . all-the-icons-dired-mode)" ];
+      };
+
       calibredb = {
         enable = true;
         config = ''
@@ -131,9 +123,7 @@ Argument MAP keymap in which to bind the keys."
       cdlatex = {
         enable = true;
         after = [ "latex" ];
-        init = ''
-          (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)
-        '';
+        hook = [ "(LaTeX-mode . turn-on-cdlatex)" ];
       };
 
       citeproc.enable = true;
@@ -185,6 +175,16 @@ Argument MAP keymap in which to bind the keys."
         };
       };
 
+      doom-modeline = {
+        enable = true;
+        hook = [ "(after-init . doom-modeline-mode)" ];
+        config = ''
+          (setq doom-modeline-icon t)
+        '';
+      };
+
+      doom-themes.enable = true;
+
       edit-indirect.enable = true;
 
       editorconfig = {
@@ -210,7 +210,6 @@ Argument MAP keymap in which to bind the keys."
         config = ''
           (setq-default format-all-formatters format-all-default-formatters)
         '';
-        bindLocal.c-mode-map = { "C-c C-y" = "format-all-buffer"; };
       };
 
       gnuplot = {
@@ -236,10 +235,10 @@ Argument MAP keymap in which to bind the keys."
       ivy = {
         enable = true;
         command = [ "ivy-mode" ];
-        extraConfig = ''
-          :custom
-          (ivy-use-virtual-buffers t)
-          (enable-recursive-minibuffers t)
+        init = ''
+          (setq ivy-use-virtual-buffers t)
+          (setq ivy-use-selectable-prompt t)
+          (setq enable-recursive-minibuffers t)
         '';
         bind = { "C-c C-r" = "ivy-resume"; };
         hook = [ "(after-init . ivy-mode)" ];
@@ -247,10 +246,12 @@ Argument MAP keymap in which to bind the keys."
 
       ivy-bibtex = {
         enable = true;
+        after = [ "ivy" ];
         init = ''
                                                   ; -*-emacs-lisp-*-
           ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
           ;; ignores the order of regexp tokens when searching for matching candidates.
+          (require 'ivy-bibtex)
           (setq ivy-re-builders-alist
                 '((ivy-bibtex . ivy--regex-ignore-order)
                   (t . ivy--regex-plus)))
@@ -514,7 +515,7 @@ Argument MAP keymap in which to bind the keys."
           		 (quote
           		  ((vm . vm-visit-folder)
           		   (vm-imap . vm-visit-imap-folder)
-          		   (gnus. gnus)
+          		   (gnus . gnus)
           		   (file . find-file)
           		   (wl . wl)))
           		 ))
@@ -526,7 +527,13 @@ Argument MAP keymap in which to bind the keys."
             (if arg
           	  (org-open-at-point)
           	(my/org-force-open-current-window)))
+          (defun krofna-hack ()
+            (when (looking-back (rx "$ "))
+              (save-excursion
+                (backward-char 1)
+                (org-toggle-latex-fragment))))
         '';
+
         init = ''
                                                   ; -*-emacs-lisp-*-
           (require 'oc)
@@ -534,43 +541,11 @@ Argument MAP keymap in which to bind the keys."
           (require 'oc-csl)
           (require 'oc-natbib)
           (require 'ox-latex)
-          (setq org-src-window-setup 'current-window)
-          (setq org-confirm-babel-evaluate nil)
-          (setq org-src-fontify-natively t)
-          (setq org-src-tab-acts-natively t)
-          (setq org-src-preserve-indentation t)
-          (setq org-export-with-tags nil)
-          (setq org-publish-project-alist
-                '(("root"
-                   :base-directory "${config.home.sessionVariables.ORGDIR}"
-                   :publishing-function org-html-publish-to-html
-                   :publishing-directory (expand-file-name "~/public_html")
-                   :section-numbers nil
-                   :with-author nil
-                   :with-creator t
-                   :with-toc t
-                   :time-stamp-file nil)))
-          ;; Configure HTML export
-          (setq org-html-validation-link nil)
-          (setq org-html-head-include-scripts nil)
-          (setq org-html-head-include-default-style nil)
-          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
-          (setq org-html-section)
-          (setq bibtex-completion-notes-path "${config.home.sessionVariables.ORGDIR}/notes.org")
-          (setq org-cite-global-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
-          (setq org-cite-export-processors '((t basic)))
-          (setq org-cite-follow-processor 'ivy-bibtex-org-cite-follow)
-          (setq org-cite-csl-styles-dir "~/Zotero/styles")
-          (setq bibtex-completion-pdf-open-function
-                (lambda (fpath)
-                  (call-process "open" nil 0 nil "-a" "/Applications/Preview.app" fpath)))
-          (defun org-export-latex-no-toc (depth)
-            (when depth
-              (format "%% Org-mode is exporting headings to %s levels.\n"
-                      depth)))
-          (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-          (setq org-latex-pdf-process
-                '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
+          (add-hook 'org-mode-hook
+                    (lambda ()
+                      (add-hook 'post-self-insert-hook #'krofna-hack 'append 'local)))
+
           (add-to-list 'exec-path "${config.home.profileDirectory}/bin")
           (add-to-list 'org-latex-classes
                        '("apa6"
@@ -588,11 +563,65 @@ Argument MAP keymap in which to bind the keys."
                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+          (plist-put org-format-latex-options :scale 3)
+
+          (setq org-agenda-block-separator ?─)
+          (setq org-agenda-current-time-string "⭠ now ─────────────────────────────────────────────────")
           (setq org-agenda-files '("${config.home.sessionVariables.ORGDIR}" "${config.home.sessionVariables.UBCDIR}"))
+          (setq org-agenda-tags-column 0)
+          (setq org-auto-align-tags nil)
+          (setq org-catch-invisible-edits 'show-and-error)
+          (setq org-cite-csl-styles-dir "~/Zotero/styles")
+          (setq org-cite-export-processors '((t basic)))
+          (setq org-cite-global-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
+          (setq org-confirm-babel-evaluate nil)
+          (setq org-ellipsis "…")
+          (setq org-export-with-tags nil)
+          (setq org-hide-emphasis-markers t)
+          (setq org-highlight-latex-and-related '(latex))
+          (setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+          (setq org-html-head-include-default-style nil)
+          (setq org-html-head-include-scripts nil)
+          (setq org-html-validation-link nil)
+          (setq org-image-actual-width 300)
+          (setq org-insert-heading-respect-content t)
+          (setq org-latex-pdf-process '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+          (setq org-pretty-entities t)
+          (setq org-preview-latex-default-process 'dvisvgm)
+          (setq org-special-ctrl-a/e t)
+          (setq org-src-fontify-natively t)
+          (setq org-src-preserve-indentation t)
+          (setq org-src-tab-acts-natively t)
+          (setq org-src-window-setup 'current-window)
+          (setq org-tags-column 0)
+
+          (setq org-agenda-time-grid
+                '((daily today require-timed)
+                  (800 1000 1200 1400 1600 1800 2000)
+                  " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+
+          (setq org-publish-project-alist
+                '(("html"
+                   :base-directory "${config.home.sessionVariables.ORGDIR}"
+                   :base-extension "org"
+                   :htmlized-source t
+                   :recursive t
+                   :publishing-directory "${config.home.sessionVariables.ORGDIR}/exports"
+                   :publishing-function org-html-publish-to-html)
+                  ("pdf"
+                   :base-directory "${config.home.sessionVariables.ORGDIR}"
+                   :base-extension "org"
+                   :recursive t
+                   :publishing-directory "${config.home.sessionVariables.ORGDIR}/exports"
+                   :publishing-function org-latex-publish-to-pdf)
+                  ("all" :components ("html" "pdf"))
+                  ))
         '';
         hook = [
           "(org-babel-after-execute . org-redisplay-inline-images)"
           "(org-mode . visual-line-mode)"
+          "(org-mode . org-cdlatex-mode)"
         ];
         bind = {
           "C-c n c" = "org-id-get-create";
@@ -605,24 +634,45 @@ Argument MAP keymap in which to bind the keys."
         };
       };
 
+      org-auctex = {
+        enable = true;
+        package = epkgs: epkgs.trivialBuild {
+          pname = "org-auctex";
+          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+
+          packageRequires = [ epkgs.auctex ];
+
+          src = pkgs.fetchFromGitHub {
+            owner = "karthink";
+            repo = "org-auctex";
+            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+          };
+        };
+        hook = [ "(org-mode . org-auctex-mode)" ];
+      };
+
       org-contrib.enable = true;
 
       org-download = {
         enable = true;
+        after = [ "org" ];
         init = ''
           (require 'org-download)
           (setq-default org-download-image-dir "${config.home.sessionVariables.ORGDIR}/images")
         '';
-        hook = [ "(dired-mode-hook . org-download-enable)" ];
+        hook = [ "(dired-mode . org-download-enable)" ];
       };
 
-      org-fragtog ={
+      org-modern = {
         enable = true;
-        hook = [ "(org-mode-hook . org-fragtog-mode)" ];
+        after = [ "org" ];
+        hook = [ "(org-mode . org-modern-mode)" ];
       };
 
       org-ref = {
         enable = true;
+        after = [ "org" "ivy" ];
         init = ''
                                                   ; -*-emacs-lisp-*-
           (setq org-ref-insert-cite-function
@@ -630,6 +680,7 @@ Argument MAP keymap in which to bind the keys."
                   (org-cite-insert nil)))
           (setq org-ref-default-bibliography "${config.home.sessionVariables.ORGDIR}/zotero.bib")
           (setq bibtex-completion-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
+          (setq bibtex-completion-notes-path "${config.home.sessionVariables.ORGDIR}/notes.org")
           (require 'org-ref)
           (require 'org-ref-ivy)
         '';
@@ -683,6 +734,7 @@ Argument MAP keymap in which to bind the keys."
 
       tree-sitter = {
         enable = true;
+        package = epkgs: epkgs.tsc;
         init = ''
           (setq tree-sitter-major-mode-language-alist '((arduino-mode . c)))
         '';
@@ -695,7 +747,10 @@ Argument MAP keymap in which to bind the keys."
         ];
       };
 
-      tree-sitter-langs.enable = true;
+      tree-sitter-langs = {
+        enable = true;
+        package = epkgs: epkgs.tree-sitter-langs;
+      };
 
       yasnippet = {
         enable = true;
@@ -716,20 +771,12 @@ Argument MAP keymap in which to bind the keys."
         enable = true;
         config = ''
           (require 'flycheck-arduino)
-          (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
         '';
+        hook = [ "(arduino-mode . flycheck-arduino-setup)" ];
         init = ''
           (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
         '';
       };
-
-      dracula-theme = {
-        enable = true;
-        config = ''
-          (load-theme 'dracula t)
-        '';
-      };
-
     };
   };
 }

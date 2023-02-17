@@ -19,7 +19,6 @@
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.systemPackages = with pkgs; [
     colima
-    darwin-zsh-completions
     discord
     freecad-mac
     iterm2

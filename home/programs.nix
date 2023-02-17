@@ -22,6 +22,8 @@
 
     direnv = {
       enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
       nix-direnv = { enable = true; };
     };
 
@@ -97,6 +99,7 @@
 
     zoxide = {
       enable = true;
+      enableBashIntegration = true;
       enableZshIntegration = true;
     };
 
@@ -120,30 +123,55 @@
       historySubstringSearch.enable = true;
 
       loginExtra = ''
-        #!/usr/bin/env zsh
+        # -*-sh-*-
         export GPG_TTY=$(tty)
         eval $(gpg-agent --daemon -q 2>/dev/null)
         function gsearch() {
             open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
         }
-        function plistxml2nix() {
-            tail -n +4 |
-                sed -e "s/<dict>/{/g"         \
-                    -e "s/<\/dict>/\}\;/g"    \
-                    -e "s/<key>/\"/g"         \
-                    -e "s/<\/key>/\"=/g"      \
-                    -e "s/<real>//g"          \
-                    -e "s/<\/real>/;/g"       \
-                    -e "s/<integer>//g"       \
-                    -e "s/<\/integer>/;/g"    \
-                    -e "s/<string>/\"/g"      \
-                    -e "s/<\/string>/\"\;/g"  \
-                    -e "s/<array>/\[/g"       \
-                    -e "s/<\/array>/\];/g"     \
-                    -e "s/<true\/>/true;/g"   \
-                    -e "s/<false\/>/false;/g" \
-                    -e "$ d" |
-                sed \-e "$ s/;//"
+        nixify() {
+          if [ ! -e ./.envrc ]; then
+            echo "use nix" > .envrc
+            direnv allow
+          fi
+          if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
+            cat > default.nix <<'EOF'
+        with import <nixpkgs> {};
+        mkShell {
+          nativeBuildInputs = [
+            bashInteractive
+          ];
+        }
+        EOF
+            ${config.home.sessionVariables.EDITOR} default.nix
+          fi
+        }
+        nixifypy() {
+          if [ ! -e ./.envrc ]; then
+            echo "use nix" > .envrc
+            direnv allow
+          fi
+          if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
+            cat > default.nix <<'EOF'
+        with import <nixpkgs> {};
+        mkShell {
+          nativeBuildInputs = [
+            bashInteractive
+            (pkgs.python310.withPackages (p: with p; [  ]))
+          ];
+        }
+        EOF
+            ${config.home.sessionVariables.EDITOR} default.nix
+          fi
+        }
+        flakify() {
+          if [ ! -e flake.nix ]; then
+            nix flake new -t github:nix-community/nix-direnv .
+          elif [ ! -e .envrc ]; then
+            echo "use flake" > .envrc
+            direnv allow
+          fi
+          ${config.home.sessionVariables.EDITOR} flake.nix
         }
       '';
 
