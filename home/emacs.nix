@@ -362,8 +362,12 @@ in
         command = [ "lsp-ui-mode" ];
       };
 
+      magit = {
+        enable = true;
+      };
+
       meow = {
-        enable = false;
+        enable = true;
         init = ''
                                                   ; -*-emacs-lisp-*-
           (defun meow-setup ()
@@ -447,7 +451,9 @@ in
              '("z" . meow-pop-selection)
              '("'" . repeat)
              '("<escape>" . ignore)))
+          (require 'meow)
           (meow-setup)
+          (meow-global-mode 1)
         '';
       };
 
