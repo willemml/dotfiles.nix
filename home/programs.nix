@@ -184,6 +184,7 @@
         l = "ls -1";
         np = "nix-shell -p";
         nrs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+        nbs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         org = "z ${config.home.sessionVariables.ORGDIR}";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
       };

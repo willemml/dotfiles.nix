@@ -39,6 +39,7 @@ in
 
   programs.zsh.shellAliases = mkIf stdenv.isDarwin ({
     drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
     o = "open";
     oa = "open -a";
