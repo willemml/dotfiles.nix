@@ -34,21 +34,98 @@
 
     firefox = {
       enable = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        browserpass
-        bypass-paywalls-clean
-        clearurls
-        don-t-fuck-with-paste
-        dracula-dark-colorscheme
-        edit-with-emacs
-        fastforward
-        i-dont-care-about-cookies
-        multi-account-containers
-        musescore-downloader
-        offline-qr-code-generator
-        ublock-origin
-        zoom-redirector
-      ];
+      profiles.primary = {
+        id = 0;
+        isDefault = true;
+        search = {
+          force = true;
+          default = "DuckDuckGo";
+          order = [
+            "DuckDuckGo"
+            "Google"
+          ];
+          engines = {
+            "Nix Packages" = {
+              urls = [{
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "type"; value = "packages"; }
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@np" ];
+            };
+
+            "NixOS Wiki" = {
+              urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+              iconUpdateURL = "https://nixos.wiki/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = [ "@nw" ];
+            };
+
+            "Bing".metaData.hidden = true;
+            "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+          };
+        };
+        settings = {
+          "browser.startup.homepage" = "https://github.com/willemml/org-notes";
+          "browser.search.region" = "CA";
+          "browser.search.isUS" = false;
+          "distribution.searchplugins.defaultLocale" = "en-CA";
+          "general.useragent.locale" = "en-CA";
+          "browser.bookmarks.showMobileBookmarks" = true;
+          "browser.newtabpage.pinned" = [{
+            title = "Notes";
+            url = "https://github.com/willemml/org-notes";
+          }
+            {
+              title = "Dotfiles";
+              url = "https://github.com/willemml/dotfiles.nix";
+            }];
+        };
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          browserpass
+          #bypass-paywalls-clean
+          clearurls
+          don-t-fuck-with-paste
+          dracula-dark-colorscheme
+          edit-with-emacs
+          fastforward
+          i-dont-care-about-cookies
+          multi-account-containers
+          musescore-downloader
+          offline-qr-code-generator
+          ublock-origin
+          zoom-redirector
+        ];
+        bookmarks = [
+          {
+            name = "wikipedia";
+            keyword = "wiki";
+            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
+          }
+          {
+            name = "kernel.org";
+            url = "https://www.kernel.org";
+          }
+          {
+            name = "Nix sites";
+            bookmarks = [
+              {
+                name = "homepage";
+                url = "https://nixos.org/";
+              }
+              {
+                name = "wiki";
+                keyword = "nixwiki";
+                url = "https://nixos.wiki/";
+              }
+            ];
+          }
+        ];
+      };
     };
 
     fzf = {
