@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
@@ -12,7 +13,7 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = inputs@{ self, darwin, home-manager, mach-nix, nixos-apple-silicon, nixpkgs, nur, ... }:
+  outputs = inputs@{ self, darwin, flake-utils, home-manager, mach-nix, nixos-apple-silicon, nixpkgs, nur, ... }:
     let
       pkgsfunc = ({ system, overlays ? [ ] }: import nixpkgs
         {
