@@ -574,6 +574,12 @@ in
         '';
       };
 
+      nix-update = {
+        enable = true;
+        command = [ "nix-update-fetch" ];
+        bindLocal.nix-mode-map."C-c C-u" = "nix-update-fetch";
+      };
+
       ob-calc = {
         enable = true;
         after = [ "org" ];
