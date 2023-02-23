@@ -39,10 +39,10 @@
         isDefault = true;
         search = {
           force = true;
-          default = "DuckDuckGo";
+          default = "Google";
           order = [
-            "DuckDuckGo"
             "Google"
+            "DuckDuckGo"
           ];
           engines = {
             "Nix Packages" = {
@@ -66,24 +66,26 @@
             };
 
             "Bing".metaData.hidden = true;
-            "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+            "Google".metaData.alias = "@g";
           };
         };
         settings = {
-          "browser.startup.homepage" = "https://github.com/willemml/org-notes";
+          "browser.startup.homepage" = "";
           "browser.search.region" = "CA";
           "browser.search.isUS" = false;
           "distribution.searchplugins.defaultLocale" = "en-CA";
           "general.useragent.locale" = "en-CA";
           "browser.bookmarks.showMobileBookmarks" = true;
-          "browser.newtabpage.pinned" = [{
-            title = "Notes";
-            url = "https://github.com/willemml/org-notes";
-          }
+          "browser.newtabpage.pinned" = [
+            {
+              title = "Notes";
+              url = "https://github.com/willemml/org-notes";
+            }
             {
               title = "Dotfiles";
               url = "https://github.com/willemml/dotfiles.nix";
-            }];
+            }
+          ];
         };
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           browserpass

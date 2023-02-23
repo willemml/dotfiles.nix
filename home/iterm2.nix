@@ -205,7 +205,6 @@ let
     "Horizontal Spacing" = 1;
     "Idle Code" = 0;
     "Jobs to Ignore" = [ "rlogin" "ssh" "slogin" "telnet" ];
-    "Keyboard Map" = null;
     "Mouse Reporting" = true;
     "Non Ascii Font" = "Monaco 12";
     "Non-ASCII Anti Aliased" = true;
