@@ -169,6 +169,17 @@
       package = pkgs.jdk;
     };
 
+    mu.enable = true;
+
+    offlineimap = {
+      enable = true;
+      pythonFile = ''
+        import subprocess
+        def get_pass(service, cmd):
+            return subprocess.check_output(cmd, ).splitlines()[0]
+      '';
+    };
+
     starship = {
       enable = true;
       enableZshIntegration = true;

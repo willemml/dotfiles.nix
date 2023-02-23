@@ -201,10 +201,29 @@ in
 
       edit-indirect.enable = true;
 
+      edit-server = {
+        enable = true;
+        command = [ "edit-server-start" ];
+        config = ''
+          (setq edit-server-new-frame nil)
+        '';
+        hook = [ "(after-init . edit-server-start)" ];
+      };
+
       editorconfig = {
         enable = true;
-        config = ''
+        init = ''
           (editorconfig-mode 1)
+        '';
+      };
+
+      async = {
+        enable = true;
+        init = ''
+          (require 'smtpmail-async)
+
+          (setq send-mail-function 'async-smtpmail-send-it
+                message-send-mail-function 'async-smtpmail-send-it)
         '';
       };
 
@@ -457,6 +476,93 @@ in
         '';
       };
 
+      mu4e =
+        let
+          smtpConfig = name:
+            (
+              let
+                account = config.accounts.email.accounts.${name};
+                port = builtins.toString account.smtp.port;
+                host = account.smtp.host;
+              in
+              ''
+                ("${name}"
+                     (mu4e-drafts-folder "/${name}/${account.folders.drafts}")
+                     (mu4e-sent-folder "/${name}/${account.folders.sent}")
+                     (mu4e-trash-folder "/${name}/${account.folders.trash}")
+                     ; (mu4e-maildir-shortcuts
+                     ;   '( (:maildir "/${name}/${account.folders.inbox}"  :key ?i)
+                     ;      (:maildir "/${name}/${account.folders.sent}"   :key ?s)
+                     ;      (:maildir "/${name}/${account.folders.drafts}" :key ?d)
+                     ;      (:maildir "/${name}/${account.folders.trash}"  :key ?t)))
+                     (smtpmail-default-smtp-server "${host}")
+                     (smtpmail-smtp-server "${host}")
+                     (smtpmail-smtp-service ${port} )
+                     (smtpmail-smtp-user "${account.userName}")
+                     (user-mail-address "${account.address}"))
+              ''
+            );
+          smtpAccounts = ''
+            '( ${(smtpConfig "leitso")}
+               ${(smtpConfig "gmail")} 
+               ${(smtpConfig "wnuke9")} )
+          '';
+        in
+        {
+          enable = true;
+          after = [ "async" ];
+          package = epkgs: pkgs.mu;
+          demand = true;
+          extraPackages = [ pkgs.gnutls pkgs.mu ];
+          init = ''
+                                                    ;-*-emacs-lisp-*-
+
+            (add-to-list 'load-path "${pkgs.mu}/share/emacs/site-lisp/mu4e")
+
+            (require 'mu4e)
+
+            (setq starttls-use-gnutls t
+                  message-kill-buffer-on-exit t
+                  mail-user-agent 'mu4e-user-agent)
+
+            (set-variable 'read-mail-command 'mu4e)
+
+            (defvar my-mu4e-account-alist ${smtpAccounts} )
+
+            (mapc #'(lambda (var)
+                      (set (car var) (cadr var)))
+                  (cdr (assoc "leitso" my-mu4e-account-alist)))
+
+            (defun my-mu4e-set-account ()
+              "Set the account for composing a message."
+              (let* ((account
+                      (if mu4e-compose-parent-message
+                          (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                            (string-match "/\\(.*?\\)/" maildir)
+                            (match-string 1 maildir))
+                        (completing-read (format "Compose with account: (%s) "
+                                                 (mapconcat #'(lambda (var) (car var))
+                                                            my-mu4e-account-alist "/"))
+                                         (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                                         nil t nil nil (caar my-mu4e-account-alist))))
+                     (account-vars (cdr (assoc account my-mu4e-account-alist))))
+                (if account-vars
+                    (mapc #'(lambda (var)
+                              (set (car var) (cadr var)))
+                          account-vars)
+                  (error "No email account found"))))
+
+            (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+
+          '';
+
+          bind = {
+            "C-c C-u" = "my-mu4e-set-account";
+          };
+
+          hook = [ "(mu4e-compose-pre-hook . my-mu4e-set-account)" ];
+        };
+
       nix-mode = {
         enable = true;
         extraConfig = ''
@@ -499,7 +605,7 @@ in
       ob-python = {
         enable = true;
         after = [ "org" ];
-        config = ''
+        init = ''
                                         ; -*-emacs-lisp-*-
           (setq org-babel-python-command "${pkgs.python310}/bin/python3.10")
           (setq-default python-indent-guess-indent-offset-verbose nil)
@@ -779,7 +885,7 @@ in
 
       yasnippet = {
         enable = true;
-        config = ''
+        init = ''
           (setq yas-snippet-dirs '("${config.home.sessionVariables.ORGDIR}/snippets"))
           (yas-global-mode 1)
         '';
@@ -787,18 +893,16 @@ in
 
       yasnippet-snippets = {
         enable = true;
-        config = ''
+        init = ''
           (yas-reload-all)
         '';
       };
 
       arduino-mode = {
         enable = true;
-        config = ''
-          (require 'flycheck-arduino)
-        '';
         hook = [ "(arduino-mode . flycheck-arduino-setup)" ];
         init = ''
+          (require 'flycheck-arduino)
           (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
         '';
       };
