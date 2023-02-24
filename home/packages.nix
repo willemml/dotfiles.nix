@@ -47,6 +47,7 @@ in
       pv
       python-wp
       ripgrep
+      rnix-lsp
       rsync
       rustup
       shellcheck

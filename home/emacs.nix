@@ -367,6 +367,7 @@ in
           "(rust-mode . lsp)"
           "(c-mode . lsp)"
           "(javascript-mode . lsp)"
+          "(nix-mode . lsp)"
         ];
         bind = { "C-c C-y" = "my/format-document"; };
       };
