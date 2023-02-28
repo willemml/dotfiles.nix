@@ -1,7 +1,7 @@
 self: super: {
   tree-sitter-grammars = super.tree-sitter-grammars // {
     tree-sitter-python = super.tree-sitter-grammars.tree-sitter-python.overrideAttrs (_: {
-      nativeBuildInputs = [ self.nodejs self.tree-sitter ];
+      nativeBuildInputs = [ super.nodejs super.tree-sitter ];
       configurePhase = ''
         tree-sitter generate --abi 13 src/grammar.json
       '';

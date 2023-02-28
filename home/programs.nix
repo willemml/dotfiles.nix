@@ -70,22 +70,30 @@
           };
         };
         settings = {
+          "app.update.auto" = false;
+          "permissions.default.camera" = 2;
+          "permissions.default.microphone" = 2;
+          "permissions.default.desktop-notifications" = 2;
+          "print_printer" = "Mozilla Save to PDF";
+          "media.autoplay.default" = 5;
+          "general.autoScroll" = false;
+          "extensions.recommendations.hideNotice" = true;
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+          "browser.newtabpage.activity-stream.feeds.topsites" = false;
+          "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+          "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+          "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
+          "browser.newtabpage.activity-stream.showSponsored" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.newtabpage.enabled" = false;
+          "signon.rememberSignons" = false;
+          "privacy.donottrackheader.enabled" = true;
           "browser.startup.homepage" = "";
           "browser.search.region" = "CA";
           "browser.search.isUS" = false;
           "distribution.searchplugins.defaultLocale" = "en-CA";
           "general.useragent.locale" = "en-CA";
           "browser.bookmarks.showMobileBookmarks" = true;
-          "browser.newtabpage.pinned" = [
-            {
-              title = "Notes";
-              url = "https://github.com/willemml/org-notes";
-            }
-            {
-              title = "Dotfiles";
-              url = "https://github.com/willemml/dotfiles.nix";
-            }
-          ];
         };
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           browserpass
@@ -217,7 +225,7 @@
         export GPG_TTY=$(tty)
         eval $(gpg-agent --daemon -q 2>/dev/null)
         function gsearch() {
-            open -a Safari "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+            web "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
         }
         nixify() {
           if [ ! -e ./.envrc ]; then
