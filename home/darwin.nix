@@ -5,17 +5,13 @@ let
   inherit (pkgs) stdenv;
   appCommands = {
     calibre = "Calibre";
-    discord = "Discord";
     email = "Mail";
-    firefox = "Firefox";
     ical = "Calendar";
     im = "Messages";
     maps = "Maps";
     music = "Music";
     safari = "Safari";
     settings = "System Settings";
-    spotify = "Spotify";
-    web = "Firefox";
     zotero = "Zotero";
   };
 in

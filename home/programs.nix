@@ -1,6 +1,6 @@
-{ lib, config, inputs, pkgs, ... }:
+{ lib, config, inputs, pkgs, ... }: {
+  imports = [ ./emacs.nix ./firefox.nix ];
 
-{
   programs = {
     bash.enableCompletion = true;
 
@@ -32,111 +32,6 @@
       enableAliases = true;
     };
 
-    firefox = {
-      enable = true;
-      profiles.primary = {
-        id = 0;
-        isDefault = true;
-        search = {
-          force = true;
-          default = "Google";
-          order = [
-            "Google"
-            "DuckDuckGo"
-          ];
-          engines = {
-            "Nix Packages" = {
-              urls = [{
-                template = "https://search.nixos.org/packages";
-                params = [
-                  { name = "type"; value = "packages"; }
-                  { name = "query"; value = "{searchTerms}"; }
-                ];
-              }];
-
-              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@np" ];
-            };
-
-            "NixOS Wiki" = {
-              urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
-              iconUpdateURL = "https://nixos.wiki/favicon.png";
-              updateInterval = 24 * 60 * 60 * 1000; # every day
-              definedAliases = [ "@nw" ];
-            };
-
-            "Bing".metaData.hidden = true;
-            "Google".metaData.alias = "@g";
-          };
-        };
-        settings = {
-          "app.update.auto" = false;
-          "permissions.default.camera" = 2;
-          "permissions.default.microphone" = 2;
-          "permissions.default.desktop-notifications" = 2;
-          "print_printer" = "Mozilla Save to PDF";
-          "media.autoplay.default" = 5;
-          "general.autoScroll" = false;
-          "extensions.recommendations.hideNotice" = true;
-          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-          "browser.newtabpage.activity-stream.feeds.topsites" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
-          "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-          "browser.newtabpage.enabled" = false;
-          "signon.rememberSignons" = false;
-          "privacy.donottrackheader.enabled" = true;
-          "browser.startup.homepage" = "";
-          "browser.search.region" = "CA";
-          "browser.search.isUS" = false;
-          "distribution.searchplugins.defaultLocale" = "en-CA";
-          "general.useragent.locale" = "en-CA";
-          "browser.bookmarks.showMobileBookmarks" = true;
-        };
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          browserpass
-          #bypass-paywalls-clean
-          clearurls
-          don-t-fuck-with-paste
-          dracula-dark-colorscheme
-          edit-with-emacs
-          fastforward
-          i-dont-care-about-cookies
-          multi-account-containers
-          musescore-downloader
-          offline-qr-code-generator
-          ublock-origin
-          zoom-redirector
-        ];
-        bookmarks = [
-          {
-            name = "wikipedia";
-            keyword = "wiki";
-            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
-          }
-          {
-            name = "kernel.org";
-            url = "https://www.kernel.org";
-          }
-          {
-            name = "Nix sites";
-            bookmarks = [
-              {
-                name = "homepage";
-                url = "https://nixos.org/";
-              }
-              {
-                name = "wiki";
-                keyword = "nixwiki";
-                url = "https://nixos.wiki/";
-              }
-            ];
-          }
-        ];
-      };
-    };
 
     fzf = {
       enable = true;
@@ -273,18 +168,21 @@
         }
       '';
 
-      shellAliases = {
+      shellAliases = rec {
         cd = "z";
+        discord = "${web} https://discord.com/channels/@me";
         e = "emacsclient -c -nw";
         em = "emacs -nw";
         emw = "emacs";
         ew = "emacsclient -c";
         l = "ls -1";
+        nbs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         np = "nix-shell -p";
         nrs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-        nbs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         org = "z ${config.home.sessionVariables.ORGDIR}";
+        spotify = "${web} https://open.spotify.com/";
         ubc = "z ${config.home.sessionVariables.UBCDIR}";
+        web = "${config.programs.firefox.package}/bin/firefox";
       };
     };
 

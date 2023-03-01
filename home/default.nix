@@ -46,7 +46,6 @@ rec {
   imports = [
     ./accounts.nix
     ./darwin.nix
-    ./emacs.nix
     ./packages.nix
     ./programs.nix
   ];

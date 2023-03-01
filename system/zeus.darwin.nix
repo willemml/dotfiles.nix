@@ -19,11 +19,9 @@
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.systemPackages = with pkgs; [
     colima
-    discord
     freecad-mac
     iterm2
     qbittorrent-mac
-    spotify-mac
     utm
     vlc-mac
   ];
