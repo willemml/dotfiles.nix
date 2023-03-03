@@ -34,9 +34,10 @@ rec {
       ctype = "en_US.UTF-8";
     };
     sessionVariables = rec {
+      DOTDIR = "${config.home.homeDirectory}/.config/dotfiles.nix";
       EDITOR = emacsCommand;
       VISUAL = emacsCommand;
-      ORGDIR = "~/Documents/org";
+      ORGDIR = "${config.home.homeDirectory}/Documents/org";
       UBCDIR = "${ORGDIR}/ubc";
     };
     stateVersion = "22.11";

@@ -32,7 +32,6 @@
       enableAliases = true;
     };
 
-
     fzf = {
       enable = true;
       defaultCommand = "${pkgs.fd}/bin/fd . ${config.home.homeDirectory}";
@@ -171,19 +170,21 @@
       shellAliases = rec {
         cd = "z";
         discord = "${web} https://discord.com/channels/@me";
+        dotd = "cd ${config.home.sessionVariables.DOTDIR} ";
         e = "emacsclient -c -nw";
         em = "emacs -nw";
         emw = "emacs";
         ew = "emacsclient -c";
         l = "ls -1";
-        nbs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
         np = "nix-shell -p";
-        nrs = lib.mkIf pkgs.stdenv.isLinux "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-        org = "z ${config.home.sessionVariables.ORGDIR}";
+        org = "cd ${config.home.sessionVariables.ORGDIR} ";
         spotify = "${web} https://open.spotify.com/";
-        ubc = "z ${config.home.sessionVariables.UBCDIR}";
+        ubc = "cd ${config.home.sessionVariables.UBCDIR} ";
         web = "${config.programs.firefox.package}/bin/firefox";
-      };
+      }; #// lib.optionals pkgs.stdenv.isLinux {
+        #nbs = "sudo nixos-rebuild build --flake ${config.home.sessionVariables.DOTDIR}#";
+       # nrs = "sudo nixos-rebuild switch --flake ${config.home.sessionVariables.DOTDIR}#";
+      #};
     };
 
     home-manager.enable = true;
