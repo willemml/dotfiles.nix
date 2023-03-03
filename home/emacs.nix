@@ -763,7 +763,8 @@ in
         bindLocal.org-mode-map = {
           "C-c C-o" = "my/follow-org-link";
           "C-c C-y" = "my/indent-org-block-automatically";
-          "<mouse-2>" = "my/follow-org-link";
+
+          "C-c ]" = "org-cite-insert";
         };
       };
 
@@ -801,23 +802,6 @@ in
         enable = true;
         after = [ "org" ];
         hook = [ "(org-mode . org-modern-mode)" ];
-      };
-
-      org-ref = {
-        enable = true;
-        after = [ "org" "ivy" ];
-        init = ''
-                                                  ; -*-emacs-lisp-*-
-          (setq org-ref-insert-cite-function
-                (lambda ()
-                  (org-cite-insert nil)))
-          (setq org-ref-default-bibliography "${config.home.sessionVariables.ORGDIR}/zotero.bib")
-          (setq bibtex-completion-bibliography '("${config.home.sessionVariables.ORGDIR}/zotero.bib"))
-          (setq bibtex-completion-notes-path "${config.home.sessionVariables.ORGDIR}/notes.org")
-          (require 'org-ref)
-          (require 'org-ref-ivy)
-        '';
-        bindLocal.org-mode-map = { "C-c ]" = "org-ref-insert-link"; };
       };
 
       pdf-tools = {
