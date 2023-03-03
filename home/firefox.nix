@@ -42,6 +42,7 @@
         "app.update.silent" = true;
         "browser.aboutConfig.showWarning" = false;
         "browser.bookmarks.showMobileBookmarks" = true;
+        "browser.download.alwaysOpenPanel" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
         "browser.newtabpage.activity-stream.feeds.topsites" = false;
         "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
