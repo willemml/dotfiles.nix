@@ -18,7 +18,7 @@
   };
 
   
-  programs.nix-index.enable = true;
+  programs.nix-index.enable = false;
 
   programs.zsh.enable = true;
   programs.zsh.enableBashCompletion = true;

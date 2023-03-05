@@ -34,7 +34,7 @@
 
     fzf = {
       enable = true;
-      defaultCommand = "${pkgs.fd}/bin/fd . ${config.home.homeDirectory}";
+      defaultCommand = "${pkgs.ripgrep}/bin/rg --files --hidden --no-ignore-vcs";
       enableZshIntegration = true;
     };
 
