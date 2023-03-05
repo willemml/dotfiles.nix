@@ -12,6 +12,27 @@ let
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
   node-packages = with pkgs.nodePackages; [ bash-language-server ];
   octave-wp = pkgs.octave.withPackages (p: with p; [ symbolic ]);
+  texliveset = pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-basic
+      amscls
+      amsmath
+      biblatex-mla
+      block
+      cancel
+      capt-of
+      graphics
+      hanging
+      hyperref
+      latex
+      latexindent
+      latexmk
+      metafont
+      mlacls
+      psnfss
+      tools
+      ulem
+      wrapfig;
+  };
 in
 {
   home.packages = with pkgs;
@@ -56,7 +77,7 @@ in
       spotifyd
       sqlite
       texinfo
-      texlive.combined.scheme-full
+      texliveset
       tldr
       units
       unp
