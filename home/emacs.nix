@@ -680,14 +680,7 @@ in
                       (add-hook 'post-self-insert-hook #'krofna-hack 'append 'local)))
 
           (add-to-list 'exec-path "${config.home.profileDirectory}/bin")
-          (add-to-list 'org-latex-classes
-                       '("apa6"
-                         "\\documentclass{apa6}"
-                         ("\\section{%s}" . "\\section*{%s}")
-                         ("\\subsection{%s}" . "\\subsection*{%s}")
-                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
           (add-to-list 'org-latex-classes
                        '("mla"
                          "\\documentclass{mla}"
@@ -696,6 +689,12 @@ in
                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (add-to-list 'org-latex-classes
+                       '("letter"
+                         "\\documentclass{letter}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
 
           (plist-put org-format-latex-options :scale 3)
 
@@ -750,6 +749,7 @@ in
                    :publishing-function org-latex-publish-to-pdf)
                   ("all" :components ("html" "pdf"))
                   ))
+
         '';
         hook = [
           "(org-babel-after-execute . org-redisplay-inline-images)"
