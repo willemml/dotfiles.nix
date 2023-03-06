@@ -20,6 +20,7 @@ let
       block
       cancel
       capt-of
+      enumitem
       graphics
       hanging
       hyperref
