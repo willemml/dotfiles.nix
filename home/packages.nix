@@ -14,25 +14,45 @@ let
   octave-wp = pkgs.octave.withPackages (p: with p; [ symbolic ]);
   texliveset = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic
+      babel
       amscls
       amsmath
+      biber
+      biblatex
       biblatex-mla
       block
       cancel
+      caption
       capt-of
+      csquotes
+      enotez
       enumitem
+      etex
+      etoolbox
+      fancyhdr
+      float
+      fontaxes
       graphics
       hanging
       hyperref
       latex
       latexindent
       latexmk
+      logreq
       metafont
       mlacls
+      newtx
+      preprint
       psnfss
+      ragged2e
+      titlesec
       tools
+      translations
       ulem
-      wrapfig;
+      url
+      wrapfig
+      xstring
+      xkeyval;
   };
 in
 {
