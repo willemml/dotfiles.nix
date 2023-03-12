@@ -5,7 +5,6 @@ let
   inherit (pkgs) stdenv;
   appCommands = {
     calibre = "Calibre";
-    email = "Mail";
     ical = "Calendar";
     im = "Messages";
     maps = "Maps";
