@@ -10,7 +10,7 @@ let
   linux = with pkgs; [ ];
   pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
-  node-packages = with pkgs.nodePackages; [ bash-language-server ];
+  node-packages = with pkgs.nodePackages; [ bash-language-server prettier ];
   octave-wp = pkgs.octave.withPackages (p: with p; [ symbolic ]);
   texliveset = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic
