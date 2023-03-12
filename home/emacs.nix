@@ -503,11 +503,8 @@ in
                      (user-mail-address "${account.address}"))
               ''
             );
-          smtpAccounts = ''
-            '( ${(smtpConfig "leitso")}
-               ${(smtpConfig "gmail")} 
-               ${(smtpConfig "wnuke9")} )
-          '';
+          smtpAccountStrings = pkgs.lib.forEach (builtins.attrNames config.accounts.email.accounts) (account: " ${(smtpConfig account)} ");
+          smtpAccounts = "'( ${pkgs.lib.concatStrings smtpAccountStrings} )";
         in
         {
           enable = true;
