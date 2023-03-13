@@ -8,7 +8,6 @@ let
     spoof-mac
   ];
   linux = with pkgs; [ ];
-  pass-extended = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
   python-wp = pkgs.python310.withPackages (p: with p; [ setuptools pyaml requests latexify-py ]);
   node-packages = with pkgs.nodePackages; [ bash-language-server prettier ];
   octave-wp = pkgs.octave.withPackages (p: with p; [ symbolic ]);
@@ -86,7 +85,6 @@ in
       nmap
       octave-wp
       openssh
-      pass-extended
       plantuml
       poppler
       pv

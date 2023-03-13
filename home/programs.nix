@@ -82,6 +82,16 @@
       '';
     };
 
+    password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions (exts: [ exts.pass-genphrase exts.pass-otp exts.pass-import ]);
+      settings = {
+        PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.password-store";
+        PASSWORD_STORE_CLIP_TIME = "60";
+        PASSWORD_STORE_KEY = "48BD20833B6AE9AA";
+      };
+    };
+
     zoxide = {
       enable = true;
       enableBashIntegration = true;
