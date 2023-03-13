@@ -42,6 +42,8 @@ let
       metafont
       mlacls
       newtx
+      pdflscape
+      pdfpages
       preprint
       psnfss
       ragged2e
