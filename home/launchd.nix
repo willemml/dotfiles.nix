@@ -17,7 +17,21 @@
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/emacs-stdout.log";
         StandardErrorPath =
           "${config.home.homeDirectory}/Library/Logs/emacs-stderr.log";
+      };
+    };
 
+    agents.rss2email = {
+      enable = true;
+      config = {
+        ProgramArguments = [
+          "${pkgs.rss2email}/bin/r2e"
+          "run"
+        ];
+        UserName = "${config.home.username}";
+        StartInterval = 3600;
+        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/rss2email-stdout.log";
+        StandardErrorPath =
+          "${config.home.homeDirectory}/Library/Logs/rss2email-stderr.log";
       };
     };
   };

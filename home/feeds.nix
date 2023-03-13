@@ -11,7 +11,7 @@ let
     devto = "https://dev.to/feed/";
   };
 
-  config = {
+  rss2emailConfig = {
     html-mail = "True";
     date-header = "True";
     from = "rss2email@home.localhost";
@@ -25,11 +25,12 @@ let
   };
 
   mkFeedString = name: url: ''
+
     [feed.${name}]
     url = ${url}
   '';
 
-  configStrings = lib.mapAttrsToList (name: value: "${name} = ${value}\n") config;
+  configStrings = lib.mapAttrsToList (name: value: "${name} = ${value}\n") rss2emailConfig;
 
   feedStrings = lib.mapAttrsToList mkFeedString feeds;
 
