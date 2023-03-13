@@ -99,6 +99,10 @@
       enableSyntaxHighlighting = true;
       enableVteIntegration = true;
 
+      initExtraBeforeCompInit = ''
+        fpath+=(${config.home.profileDirectory}/share/zsh/site-functions)
+      '';
+
       history = {
         path = "$HOME/.local/zsh/history";
         extended = true;

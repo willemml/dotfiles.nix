@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  environment.pathsToLink = [ "/share/zsh" ];
   environment.systemPackages = [ pkgs.coreutils-full ];
   environment.variables.LANG = "en_US.UTF-8";
   environment.variables.LANGUAGE = "en_US.UTF-8";
