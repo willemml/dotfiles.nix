@@ -39,6 +39,7 @@ rec {
       VISUAL = emacsCommand;
       ORGDIR = "${config.home.homeDirectory}/Documents/org";
       UBCDIR = "${ORGDIR}/ubc";
+      MAILDIR = "${config.home.homeDirectory}/Maildir";
     };
     stateVersion = "22.11";
     username = "willem";
@@ -47,6 +48,7 @@ rec {
   imports = [
     ./accounts.nix
     ./darwin.nix
+    ./feeds.nix
     ./packages.nix
     ./programs.nix
   ];
