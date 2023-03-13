@@ -68,6 +68,7 @@ in
       clang-tools
       cmake
       comma
+      coreutils-full
       curl
       docker
       docker-compose

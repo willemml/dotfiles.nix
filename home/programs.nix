@@ -82,20 +82,13 @@
       '';
     };
 
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
-      enableBashIntegration = true;
-      package = pkgs.starship;
-    };
-
     zoxide = {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
 
-    zsh = {
+    zsh = rec {
       enable = true;
 
       autocd = true;
@@ -118,8 +111,8 @@
         # -*-sh-*-
         export GPG_TTY=$(tty)
         eval $(gpg-agent --daemon -q 2>/dev/null)
-        function gsearch() {
-            web "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
+        function s() {
+            ${shellAliases.web} "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
         }
         nixify() {
           if [ ! -e ./.envrc ]; then
@@ -167,6 +160,11 @@
         }
       '';
 
+      localVariables = {
+        PROMPT = "\n%B%F{blue}%~\n%F{green}$ %f%b";
+        RPROMPT = "%B%F{red}%*%f%b";
+      };
+
       shellAliases = rec {
         cd = "z";
         discord = "${web} https://discord.com/channels/@me";
@@ -182,7 +180,7 @@
         spotify = "${web} https://open.spotify.com/";
         ubc = "cd ${config.home.sessionVariables.UBCDIR} ";
         ubcmail = "${web} https://webmail.student.ubc.ca";
-        web = "${config.programs.firefox.package}/bin/firefox";
+        web = "${pkgs.coreutils-full}/bin/nohup ${config.programs.firefox.package}/bin/firefox &> ${config.home.homeDirectory}/.firefox.log";
       } // (if pkgs.stdenv.isLinux then {
         nbs = "sudo nixos-rebuild build --flake ${config.home.sessionVariables.DOTDIR}#";
         nrs = "sudo nixos-rebuild switch --flake ${config.home.sessionVariables.DOTDIR}#";
