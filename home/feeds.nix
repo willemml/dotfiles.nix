@@ -2,26 +2,26 @@
 
 let
   feeds = {
-    xkcd = "http://xkcd.com/atom.xml";
     dailywtf = "http://syndication.thedailywtf.com/TheDailyWtf";
-    nixos = "https://weekly.nixos.org/feeds/all.rss.xml";
-    rust = "https://blog.rust-lang.org/feed.xml";
+    devto = "https://dev.to/feed/";
     insiderust = "https://blog.rust-lang.org/inside-rust/feed.xml";
     kdb424 = "https://blog.kdb424.xyz/atom.xml";
-    devto = "https://dev.to/feed/";
+    nixos = "https://weekly.nixos.org/feeds/all.rss.xml";
+    rust = "https://blog.rust-lang.org/feed.xml";
+    xkcd = "http://xkcd.com/atom.xml";
   };
 
   rss2emailConfig = {
-    html-mail = "True";
-    date-header = "True";
-    from = "rss2email@home.localhost";
-    force-from = "False";
-    use-publisher-email = "True";
     active = "true";
-    to = "willem@home.localhost";
+    date-header = "True";
     email-protocol = "maildir";
+    force-from = "False";
+    from = "rss2email@home.localhost";
+    html-mail = "True";
     maildir-mailbox = "feeds";
     maildir-path = config.home.sessionVariables.MAILDIR;
+    to = "willem@home.localhost";
+    use-publisher-email = "True";
   };
 
   mkFeedString = name: url: ''

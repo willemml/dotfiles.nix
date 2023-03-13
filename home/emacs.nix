@@ -550,6 +550,13 @@ in
                           account-vars)
                   (error "No email account found"))))
 
+            (setq mu4e-bookmarks
+                  '((:name "Unread messages" :query "flag:unread AND NOT (flag:trashed OR maildir:/feeds)" :key ?u)
+                   (:name "Today's messages" :query "date:today..now AND NOT maildir:/feeds" :key ?t)
+                   (:name "Last 7 days" :query "date:7d..now AND NOT maildir:/feeds" :key ?w)
+                   (:name "Feed" :query "maildir:/feeds" :key ?f)
+                   (:name "XKCD" :query "list:xkcd.localhost" :key ?x)))
+
             (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
           '';
