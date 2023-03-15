@@ -6,8 +6,10 @@ let
     devto = "https://dev.to/feed/";
     insiderust = "https://blog.rust-lang.org/inside-rust/feed.xml";
     kdb424 = "https://blog.kdb424.xyz/atom.xml";
+    logrocket = "https://blog.logrocket.com/feed/";
     nixos = "https://weekly.nixos.org/feeds/all.rss.xml";
     rust = "https://blog.rust-lang.org/feed.xml";
+    sourcehut = "https://sourcehut.org/blog/index.xml";
     xkcd = "http://xkcd.com/atom.xml";
   };
 
