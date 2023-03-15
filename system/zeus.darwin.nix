@@ -34,10 +34,6 @@
     };
   };
 
-  programs.bash.enable = true;
-
-  programs.man.enable = true;
-
   programs.zsh.loginShellInit = ''
     reexec() {
         unset __NIX_DARWIN_SET_ENVIRONMENT_DONE
