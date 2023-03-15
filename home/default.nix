@@ -30,8 +30,6 @@ rec {
     };
     language = {
       base = "en_CA.UTF-8";
-      messages = "en_US.UTF-8";
-      ctype = "en_US.UTF-8";
     };
     sessionVariables = rec {
       DOTDIR = "${config.home.homeDirectory}/.config/dotfiles.nix";
