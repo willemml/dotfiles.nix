@@ -2,6 +2,7 @@
 
 let
   feeds = {
+    calvinandhobbes = "https://www.comicsrss.com/rss/calvinandhobbes.rss";
     dailywtf = "http://syndication.thedailywtf.com/TheDailyWtf";
     devto = "https://dev.to/feed/";
     insiderust = "https://blog.rust-lang.org/inside-rust/feed.xml";
