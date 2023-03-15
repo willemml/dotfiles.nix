@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 let
-  passCmd = path: "${pkgs.pass}/bin/pass ${path}";
+  passCmd = address: "${pkgs.python310Packages.keyring}/bin/keyring get login email(${address})";
   generalAccount = address: {
     inherit address;
     userName = address;
@@ -15,7 +15,7 @@ let
       enable = true;
       useStartTls = true;
     };
-    passwordCommand = passCmd "email/${address}";
+    passwordCommand = passCmd address;
   };
 
   gmailAccount = address: ({
