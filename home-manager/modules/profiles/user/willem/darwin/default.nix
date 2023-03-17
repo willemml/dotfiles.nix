@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   inherit (lib) mkIf;
@@ -15,11 +15,15 @@ let
   };
 in
 {
-  imports = [ ./launchd.nix ./iterm2.nix ./finder.nix ];
-
+  imports = [
+    ./finder.nix
+    ./iterm2.nix
+    ./launchd.nix
+  ];
+  
   home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
     text = ''
-      pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
+      pinentry-program "${pkgs.pinentryTouchid}/bin/pinentry-touchid"
       default-cache-ttl 30
       max-cache-ttl 600
     '';
@@ -43,8 +47,8 @@ in
     pinentry = "pinentry-mac";
   } // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
 
-  programs.firefox.package = mkIf stdenv.isDarwin (pkgs.callPackage ../overlays/firefox-mac.nix { inherit pkgs; });
-  programs.chromium.package = mkIf stdenv.isDarwin (pkgs.callPackage ../overlays/chromium-mac.nix { inherit pkgs; });
+  programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefoxMac;
+  programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromiumMac;
 
   targets.darwin = mkIf stdenv.isDarwin {
     defaults = {

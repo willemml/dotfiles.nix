@@ -1,5 +1,8 @@
-{ lib, config, inputs, pkgs, ... }: {
-  imports = [ ./emacs.nix ./firefox.nix ];
+{ lib, config, pkgs, ... }: {
+  imports = [
+    ./emacs.nix
+    ./firefox.nix
+  ];
 
   programs = {
     bash.enableCompletion = true;

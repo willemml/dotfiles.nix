@@ -2,13 +2,12 @@
 
 {
   flake.overlays = {
-    default = final: prev: (
+    apps = final: prev: (
       let
         appsDir = self.lib.importDirToAttrs ../apps;
-        builtApps = lib.mapAttrs (name: value: value.definition self.lib prev) appsDir;
-        packages = import ../packages final prev;
       in
-      builtApps // packages
+      lib.mapAttrs (name: value: value.definition self.lib prev) appsDir
     );
+    default = import ../packages;
   };
 }

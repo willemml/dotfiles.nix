@@ -3,8 +3,8 @@
 let
   darwin = with pkgs; [
     pngpaste
-    pinentry-touchid
-    pinentry-mac
+    pinentryTouchid
+    pinentryMac
     spoof-mac
   ];
   linux = with pkgs; [ ];

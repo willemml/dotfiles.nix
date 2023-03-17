@@ -46,9 +46,9 @@ rec {
 
   imports = [
     ./accounts.nix
-    ./darwin.nix
+    ./darwin
     ./feeds.nix
     ./packages.nix
-    ./programs.nix
+    ./programs
   ];
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, nurNoPkgs, ... }:
+{ config, pkgs, nurNoPkgs, ... }:
 
 let
   pcfg = config.programs.emacs.init.usePackage;

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 let
   passCmd = address: "${pkgs.python310Packages.keyring}/bin/keyring get login email(${address})";
