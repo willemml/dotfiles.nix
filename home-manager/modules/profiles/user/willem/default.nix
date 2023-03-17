@@ -24,6 +24,7 @@ rec {
 
       '';
     };
+    homeDirectory = "/Users/willem";
     keyboard = {
       layout = "us";
       variant = "colemak";

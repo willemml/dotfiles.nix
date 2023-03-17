@@ -43,8 +43,8 @@ in
     pinentry = "pinentry-mac";
   } // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
 
-  programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
-  programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
+  programs.firefox.package = mkIf stdenv.isDarwin (pkgs.callPackage ../overlays/firefox-mac.nix { inherit pkgs; });
+  programs.chromium.package = mkIf stdenv.isDarwin (pkgs.callPackage ../overlays/chromium-mac.nix { inherit pkgs; });
 
   targets.darwin = mkIf stdenv.isDarwin {
     defaults = {
