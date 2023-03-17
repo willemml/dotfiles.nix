@@ -5,25 +5,6 @@ let
 in
 rec {
   home = {
-    file = {
-      ".config/nix/nix.conf".text = ''
-        allow-dirty = true
-        experimental-features = flakes nix-command repl-flake
-        builders-use-substitutes = true
-      '';
-      ".config/nixpkgs/config.nix".text = ''
-        # -*-nix-*-
-        {
-          packageOverrides = pkgs: {
-            nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-              inherit pkgs;
-            };
-          };
-          allowUnfree = true;
-        }
-
-      '';
-    };
     homeDirectory = "/Users/willem";
     keyboard = {
       layout = "us";

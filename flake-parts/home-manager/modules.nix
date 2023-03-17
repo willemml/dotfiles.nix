@@ -20,14 +20,13 @@
       };
       
       nixpkgs-Config = {
-        nixpkgs.config.allowUnfreePredicate = lib.const true;
+        nixpkgs.config.allowUnfreePredicate = (_: true);
         nixpkgs.config.allowUnsupportedSystem = true;
         nixpkgs.overlays = builtins.attrValues self.overlays;
       };
 
       nixpkgs-useFlakeNixpkgs = {
         home.sessionVariables.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
-        systemd.user.sessionVariables.NIX_PATH = lib.mkForce "nixpkgs=${inputs.nixpkgs}";
         nix.registry.nixpkgs.flake = inputs.nixpkgs;
       };
     }

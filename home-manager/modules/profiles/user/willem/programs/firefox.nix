@@ -73,9 +73,9 @@
         #bypass-paywalls-clean
         clearurls
         don-t-fuck-with-paste
-        dracula-dark-colorscheme
+        #dracula-dark-colorscheme
         edit-with-emacs
-        fastforward
+        #fastforward
         i-dont-care-about-cookies
         musescore-downloader
         offline-qr-code-generator
