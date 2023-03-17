@@ -9,7 +9,6 @@
             nurNoPkgs = (import inputs.nur { pkgs = null; nurpkgs = pkgs; });
           in
           [
-            self.homeManagerModules.programs-emacsInit
             self.homeManagerModules.nixpkgs-useFlakeNixpkgs
             self.homeManagerModules.nixpkgs-Config
             self.homeManagerModules.default
