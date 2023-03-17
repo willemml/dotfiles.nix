@@ -43,12 +43,4 @@ rec {
     stateVersion = "22.11";
     username = "willem";
   };
-
-  imports = [
-    ./accounts.nix
-    ./darwin
-    ./feeds.nix
-    ./packages.nix
-    ./programs
-  ];
 }

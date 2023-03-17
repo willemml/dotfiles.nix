@@ -84,6 +84,21 @@
         "type": "github"
       }
     },
+    "flake-utils_3": {
+      "locked": {
+        "lastModified": 1629284811,
+        "narHash": "sha256-JHgasjPR0/J1J3DRm4KxM4zTyAj4IOJY8vIl75v/kPI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c5d161cc0af116a2e17f54316f0bf43f0819785c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -213,18 +228,19 @@
         "type": "github"
       }
     },
-    "nur": {
+    "nixpkgs_3": {
       "locked": {
-        "lastModified": 1678117608,
-        "narHash": "sha256-hgqRYieVMKmdW6/JIQxUxBvz1o0jea+VZPtvefeof+I=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "9613bf1f8846150d3453d6ea69f538264148c68a",
+        "lastModified": 1627814220,
+        "narHash": "sha256-P+MDgdZw2CBk9X1ZZaUgHgN+32pTfLFf3XVIBOXirI4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ab5b6828af26215bf2646c31961da5d3749591ef",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -258,8 +274,8 @@
         "home-manager": "home-manager",
         "nixos-apple-silicon": "nixos-apple-silicon",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
-        "pre-commit-hooks-nix": "pre-commit-hooks-nix"
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix",
+        "rycee-firefox-addons": "rycee-firefox-addons"
       }
     },
     "rust-overlay": {
@@ -276,6 +292,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
+      }
+    },
+    "rycee-firefox-addons": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1676584149,
+        "narHash": "sha256-3gWGqaVDx4N0Xkb5xFotVoKsqDTo4Jes3b6VSxP/UDw=",
+        "ref": "refs/heads/master",
+        "rev": "db2f2ff538c8c755e6b062c9be1c514752c6ee1a",
+        "revCount": 2706,
+        "type": "git",
+        "url": "https://git.sr.ht/~rycee/nur-expressions?dir=pkgs%2ffirefox-addons"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "type": "git",
+        "url": "https://git.sr.ht/~rycee/nur-expressions?dir=pkgs%2ffirefox-addons"
       }
     },
     "utils": {

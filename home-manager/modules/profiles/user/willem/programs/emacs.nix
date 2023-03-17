@@ -1,11 +1,9 @@
-{ config, pkgs, nurNoPkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   pcfg = config.programs.emacs.init.usePackage;
 in
 {
-  imports = [ nurNoPkgs.repos.rycee.hmModules.emacs-init ];
-
   programs.emacs.enable = true;
 
   services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {

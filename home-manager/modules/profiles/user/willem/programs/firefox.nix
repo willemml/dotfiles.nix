@@ -68,7 +68,7 @@
         "privacy.donottrackheader.enabled" = true;
         "signon.rememberSignons" = false;
       };
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions = with pkgs.rycee-firefox-addons; [
         browserpass
         #bypass-paywalls-clean
         clearurls

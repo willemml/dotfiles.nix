@@ -15,12 +15,6 @@ let
   };
 in
 {
-  imports = [
-    ./finder.nix
-    ./iterm2.nix
-    ./launchd.nix
-  ];
-  
   home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
     text = ''
       pinentry-program "${pkgs.pinentryTouchid}/bin/pinentry-touchid"

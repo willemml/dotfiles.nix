@@ -1,31 +1,19 @@
 { inputs, self, lib, ... }:
 {
-  flake = {
-    homeManagerModules.nixpkgsConfig = {
-      nixpkgs.config.allowUnfreePredicate = lib.const true;
-      nixpkgs.config.packageOverrides = pkgs: {
-        nur = import inputs.nur { inherit pkgs; nurpkgs = pkgs; };
-      };
-      nixpkgs.config.allowUnsupportedSystem = true;
-      nixpkgs.overlays = builtins.attrValues self.overlays;
-    };
-    testOutput = builtins.attrValues self.overlays;
-  };
   perSystem = { pkgs, self', ... }:
     rec {
       homeConfigurations.willem = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [
-          self.homeManagerModules.nixpkgs-useFlakeNixpkgs
-          self.homeManagerModules.nixpkgsConfig
-          self.homeManagerModules.profiles-user-willem
-        ];
-        extraSpecialArgs = {
-          nurNoPkgs = import inputs.nur {
-            nurpkgs = pkgs;
-            pkgs = throw "nixpkgs eval";
-          };
-        };
+        modules =
+          let
+            nurNoPkgs = (import inputs.nur { pkgs = null; nurpkgs = pkgs; });
+          in
+          [
+            self.homeManagerModules.programs-emacsInit
+            self.homeManagerModules.nixpkgs-useFlakeNixpkgs
+            self.homeManagerModules.nixpkgs-Config
+            self.homeManagerModules.default
+          ];
       };
       packages =
         let activationPackages = builtins.mapAttrs (_: lib.getAttr "activationPackage") homeConfigurations;

@@ -15,6 +15,16 @@
       modules = self.lib.importDirToAttrs ../../home-manager/modules;
     in
     {
+      default = {
+        imports = builtins.attrValues modules;
+      };
+      
+      nixpkgs-Config = {
+        nixpkgs.config.allowUnfreePredicate = lib.const true;
+        nixpkgs.config.allowUnsupportedSystem = true;
+        nixpkgs.overlays = builtins.attrValues self.overlays;
+      };
+
       nixpkgs-useFlakeNixpkgs = {
         home.sessionVariables.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
         systemd.user.sessionVariables.NIX_PATH = lib.mkForce "nixpkgs=${inputs.nixpkgs}";

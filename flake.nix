@@ -11,7 +11,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
-    nur.url = "github:nix-community/NUR";
+    rycee-firefox-addons.url = "git+https://git.sr.ht/~rycee/nur-expressions?dir=pkgs/firefox-addons";
     pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
   };
 
@@ -22,10 +22,10 @@
       ];
 
       systems = [
-        "x86_64-linux"
-        "x86_64-darwin"
+#        "x86_64-linux"
+#        "x86_64-darwin"
         "aarch64-darwin"
-        "aarch64-linux"
+#        "aarch64-linux"
       ];
     };
 }
