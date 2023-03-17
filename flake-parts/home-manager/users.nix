@@ -18,9 +18,9 @@
           };
         };
       };
-      packages = lib.pipe activationPackages [
-        (lib.filterAttrs (_: drv: pkgs.system == drv.system))
-        (lib.mapAttrs' (username: lib.nameValuePair "home-${username}"))
-      ];
+#      packages = lib.pipe activationPackages [
+ #       (lib.filterAttrs (_: drv: pkgs.system == drv.system))
+  #      (lib.mapAttrs' (username: lib.nameValuePair "home-${username}"))
+   #   ];
     };
 }
