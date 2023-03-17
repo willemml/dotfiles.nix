@@ -17,7 +17,7 @@ in
 {
   home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
     text = ''
-      pinentry-program "${pkgs.pinentryTouchid}/bin/pinentry-touchid"
+      pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
       default-cache-ttl 30
       max-cache-ttl 600
     '';
@@ -41,8 +41,8 @@ in
     pinentry = "pinentry-mac";
   } // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
 
-  programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefoxMac;
-  programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromiumMac;
+  programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
+  programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
 
   targets.darwin = mkIf stdenv.isDarwin {
     defaults = {

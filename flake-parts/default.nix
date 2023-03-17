@@ -4,5 +4,6 @@
     ./home-manager
     ./lib
     ./overlays.nix
+    ./packages.nix
   ];
 }
