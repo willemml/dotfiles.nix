@@ -11,7 +11,16 @@
         sha256 = "sha256-9h+gFAEU0tKrltOjnOKLfylbbBunGZqvPzQogdP9uQM=";
       };
     in
-    lib.mk-mac-binpkg { inherit pkgs src pname appName version; };
+    lib.mk-mac-binpkg {
+      inherit pkgs src pname appName version;
+      meta = with pkgs.lib; {
+        description = "Featureful free software BitTorrent client";
+        homepage = "https://www.qbittorrent.org/";
+        changelog = "https://github.com/qbittorrent/qBittorrent/blob/release-${version}/Changelog";
+        license = licenses.gpl2Plus;
+        platforms = platforms.darwin;
+      };
+    };
 
   systems = [ "aarch64-darwin" "x86_64-darwin" ];
 }

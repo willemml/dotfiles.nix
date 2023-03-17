@@ -11,7 +11,16 @@
         name = "spotify-mac.dmg";
       };
     in
-    lib.mk-mac-binpkg { inherit pkgs src pname appName version; };
+    lib.mk-mac-binpkg {
+      inherit pkgs src pname appName version;
+      meta = with pkgs.lib; {
+        homepage = "https://www.spotify.com/";
+        description = "Play music from the Spotify music service";
+        sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+        license = licenses.unfree;
+        platforms = platforms.darwin;
+      };
+    };
 
   systems = [ "aarch64-darwin" "x86_64-darwin" ];
 }

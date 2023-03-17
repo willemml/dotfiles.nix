@@ -1,8 +1,8 @@
 # taken from nix-darwin repo
 # https://github.com/LnL7/nix-darwin/blob/87b9d090ad39b25b2400029c64825fc2a8868943/modules/examples/lnl.nix
-{ pkgs ? import <nixpkgs> {} }:
+{ runCommand }:
 
-pkgs.runCommand "darwin-zsh-completions-0.0.0"
+runCommand "darwin-zsh-completions-0.0.0"
 { preferLocalBuild = true; }
   ''
     mkdir -p $out/share/zsh/site-functions

@@ -1,7 +1,8 @@
 {
   imports = [
+    ./apps.nix
     ./home-manager
     ./lib
-    ./apps.nix
+    ./overlays.nix
   ];
 }

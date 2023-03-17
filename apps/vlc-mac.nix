@@ -22,6 +22,12 @@
     in
     lib.mk-mac-binpkg {
       inherit pkgs src pname appName version;
+      meta = with pkgs.lib; {
+        description = "Cross-platform media player and streaming server";
+        homepage = "http://www.videolan.org/vlc/";
+        license = licenses.lgpl21Plus;
+        platforms = platforms.darwin;
+      };
     };
 
   systems = [ "aarch64-darwin" "x86_64-darwin" ];
