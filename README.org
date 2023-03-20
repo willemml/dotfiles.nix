@@ -1,0 +1,130 @@
+#+title: dotfiles.nix
+
+My dotfiles using Nix.
+System configuration done using [[https://github.com/LnL7/nix-darwin][nix-darwin]] and [[https://nixos.org/][NixOS]].
+User configuration using [[https://github.com/nix-community/home-manager][home-manager]].
+This repo is put together as a flake using [[https://github.com/hercules-ci/flake-parts][flake-parts]].
+
+Much of the structure of dotfiles.nix is taken from [[https://github.com/terlar/nix-config/tree/main][terlar/nix-config]] with other ideas taken from [[https://sr.ht/~rycee/configurations/][~rycee/configurations]].
+Another notable info source is [[https://github.com/hlissner/dotfiles][hlissner/dotfiles]].
+
+All Nix code in this repo is formatted using [[https://github.com/kamadorueda/alejandra][alejandra]].
+
+* Usage
+
+Show what this flake provides:
+
+#+begin_src shell
+nix flake show
+#+end_src
+
+Switch both system (NixOS) and home:
+
+#+begin_src shell
+nix run .#nixos-switch
+#+end_src
+
+Switch both system (nix-darwin) and home:
+
+#+begin_src shell
+nix run .#darwin-switch
+#+end_src
+
+Switch home only:
+
+#+begin_src shell
+nix run .#home-switch
+#+end_src
+
+Build home without switching:
+
+#+begin_src shell
+nix run .#home-switch
+#+end_src
+
+Update all inputs:
+
+#+begin_src shell
+nix flake update --commit-lock-file
+#+end_src
+
+Update a single input:
+
+#+begin_src shell
+nix flake lock --update-input nixpkgs --commit-lock-file
+#+end_src
+
+Format all nix files:
+
+#+begin_src shell
+nix fmt
+#+end_src
+
+Enter the dev shell (if not using [[https://github.com/nix-community/nix-direnv][nix-direnv]]):
+
+#+begin_src
+nix develop
+#+end_src
+
+* Outputs
+
+** Home Configurations
+
+Due to the way the ~homeConfigurations~ output is structured (each user configuration is generated for each system,) the ~home-manager switch --flake~ command cannot be used as per usual, instead the ~FLAKE_CONFIG_URI~ variable needs to be set. See [[./apps/home-switch.nix]] for an example.
+
+All home configurations are exposed under both ~packages.SYSTEM.home-USER~ and ~homeConfiguration.SYSTEM.USER~.
+
+** Apps
+
+These packages make some operations simpler or more intuitive, to use an app, run the following command from within the flake directory: ~nix run .#APPNAME~.
+
+*** darwin-switch
+
+Build and switch to the nix-darwin configuration for the current host (only on Darwin.)
+The configuration is defined under ~darwinConfigurations.HOSTNAME~.
+
+*** nixos-switch
+
+Build and switch to the nixos configuration for the current host (only on NixOS.)
+The configurations are defined under ~nixosConfigurations.HOSTNAME~.
+
+*** home-switch & home-build
+
+Build and or switch to the home-manager configuration for the current user.
+Home configurations are defined under ~homeConfigurations.SYSTEM.USER~.
+
+** Packages
+
+This flake exposes several package definitions I have created, most of them are binary sourced applications for macOS, most importantly Firefox.
+
+** Darwin Configurations
+
+System configurations for macOS.
+
+*** zeus
+
+My primary computer.
+
+** NixOS Configurations
+
+System configurations for NixOS.
+
+*** zeusvm
+
+Linux VM for my macOS machine (~darwinConfigurations.zeus~).
+
+*** zeusasahi
+
+NixOS configuration for my M1 MacBook Pro, uses [[https://github.com/tpwrules/nixos-apple-silicon][tpwrules/nixos-apple-silicon]].
+Currently untested, WIP.
+
+** NixOS Modules
+
+Modules for NixOS configurations, most of these should also work for Darwin.
+
+*** custom-linkNixInputs
+
+Adds the inputs of this flake to the nix registry and ~NIX_PATH~.
+
+Taken from [[https://github.com/LnL7/nix-darwin/issues/277#issuecomment-992866471][LnL7/nix-darwin #277]].
+
