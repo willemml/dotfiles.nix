@@ -35,4 +35,6 @@
   '';
 
   time.timeZone = "America/Vancouver";
+
+  users.users.willem.shell = pkgs.zsh;
 }
