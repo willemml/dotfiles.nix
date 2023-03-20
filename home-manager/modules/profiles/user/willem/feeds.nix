@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   feeds = {
     calvinandhobbes = "https://www.comicsrss.com/rss/calvinandhobbes.rss";
     dailywtf = "http://syndication.thedailywtf.com/TheDailyWtf";
@@ -37,12 +40,11 @@ let
 
   feedStrings = lib.mapAttrsToList mkFeedString feeds;
 
-  configArray = [ "[DEFAULT]\n" ] ++ configStrings ++ feedStrings;
+  configArray = ["[DEFAULT]\n"] ++ configStrings ++ feedStrings;
 
   configString = lib.concatStrings configArray;
-in
-{
-  home.packages = [ pkgs.rss2email ];
+in {
+  home.packages = [pkgs.rss2email];
 
   home.file.".config/rss2email.cfg".text = configString;
 }

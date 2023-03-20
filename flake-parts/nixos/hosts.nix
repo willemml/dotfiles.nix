@@ -1,6 +1,10 @@
-{ self, inputs, ... }: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake = {
-    nixosModules.base = { config, ... }: {
+    nixosModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux-common.nix
@@ -14,7 +18,7 @@
       nixpkgs.config.allowUnfree = true;
     };
 
-    darwinModules.base = { config, ... }: {
+    darwinModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
         inputs.home-manager.darwinModules.home-manager
@@ -41,7 +45,6 @@
         self.nixosModules.base
         ../../nixos/hosts/zeus.asahi.nix
       ];
-
     };
 
     darwinConfigurations.zeus = inputs.darwin.lib.darwinSystem {

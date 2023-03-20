@@ -46,6 +46,8 @@
         devShells.default = pkgs.mkShell {
           inherit (self'.checks.pre-commit-check) shellHook;
         };
+
+        formatter = pkgs.alejandra;
       };
     };
 }

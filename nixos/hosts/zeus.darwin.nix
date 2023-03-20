@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  imports = [ ../profiles/common.nix ];
+{pkgs, ...}: {
+  imports = [../profiles/common.nix];
 
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
@@ -100,10 +98,12 @@
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
       # see https://developer.apple.com/library/content/technotes/tn2450/_index.html for more info
-      userKeyMapping = [{
-        HIDKeyboardModifierMappingSrc = 30064771303; # remap right command to right control.
-        HIDKeyboardModifierMappingDst = 30064771300;
-      }];
+      userKeyMapping = [
+        {
+          HIDKeyboardModifierMappingSrc = 30064771303; # remap right command to right control.
+          HIDKeyboardModifierMappingDst = 30064771300;
+        }
+      ];
     };
   };
 

@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  imports = [ ./common.nix ];
+{pkgs, ...}: {
+  imports = [./common.nix];
 
   console.keyMap = "colemak";
 
@@ -23,6 +21,6 @@
 
   users.users.willem = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
   };
 }

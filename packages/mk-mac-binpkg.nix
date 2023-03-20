@@ -1,9 +1,17 @@
-pkgs: { src, version, pname, appName, srcsubdir ? ".", ... }: pkgs.stdenv.mkDerivation {
+pkgs: {
+  src,
+  version,
+  pname,
+  appName,
+  srcsubdir ? ".",
+  ...
+}:
+pkgs.stdenv.mkDerivation {
   inherit version src;
 
   name = pname;
 
-  nativeBuildInputs = [ pkgs.undmg pkgs.unzip pkgs.makeWrapper ];
+  nativeBuildInputs = [pkgs.undmg pkgs.unzip pkgs.makeWrapper];
 
   sourceRoot = ".";
 

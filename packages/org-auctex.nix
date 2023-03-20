@@ -1,5 +1,7 @@
-{ emacsPackages, fetchFromGitHub }:
-
+{
+  emacsPackages,
+  fetchFromGitHub,
+}:
 emacsPackages.trivialBuild {
   pname = "org-auctex";
   version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";

@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   columnSettings = {
     name = {
       visible = true;
@@ -59,32 +62,36 @@ let
   };
 
   default-view-settings = {
-    ExtendedListViewSettingsV2 = {
-      columns = builtins.sort (a: b: a.index < b.index) (map
-        (name:
-          (name: value: {
-            identifier = "${name}";
-            visible = value.visible;
-            width = value.width;
-            index = value.index;
-          }) name
+    ExtendedListViewSettingsV2 =
+      {
+        columns = builtins.sort (a: b: a.index < b.index) (map
+          (name:
+            (name: value: {
+              identifier = "${name}";
+              visible = value.visible;
+              width = value.width;
+              index = value.index;
+            })
+            name
             columnSettings.${name})
-        (builtins.attrNames columnSettings));
-    } // listviewsettings;
-    ListViewSettings = { columns = columnSettings; } // listviewsettings;
+          (builtins.attrNames columnSettings));
+      }
+      // listviewsettings;
+    ListViewSettings = {columns = columnSettings;} // listviewsettings;
   };
 
-  dvs-with-ws = {
-    WindowState = {
-      ContainerShowSidebar = true;
-      ShowStatusBar = true;
-      ShowSidebar = true;
-      ShowToolbar = true;
-      ShowTabView = true;
-    };
-  } // default-view-settings;
-in
-{
+  dvs-with-ws =
+    {
+      WindowState = {
+        ContainerShowSidebar = true;
+        ShowStatusBar = true;
+        ShowSidebar = true;
+        ShowToolbar = true;
+        ShowTabView = true;
+      };
+    }
+    // default-view-settings;
+in {
   targets.darwin.defaults."com.apple.finder" = lib.mkIf pkgs.stdenv.isDarwin {
     AppleShowAllExtensions = true;
 
@@ -92,16 +99,18 @@ in
 
     CreateDesktop = false;
 
-    DesktopViewSettings = { GroupBy = "Kind"; };
+    DesktopViewSettings = {GroupBy = "Kind";};
 
     FinderSpawnTab = false;
 
     FK_DefaultListViewSettingsV2 =
       default-view-settings.ExtendedListViewSettingsV2;
 
-    FK_StandardViewSettings = {
-      SettingsType = "FK_StandardViewSettings";
-    } // default-view-settings;
+    FK_StandardViewSettings =
+      {
+        SettingsType = "FK_StandardViewSettings";
+      }
+      // default-view-settings;
 
     FK_iCloudListViewSettingsV2 =
       default-view-settings.ExtendedListViewSettingsV2;
@@ -152,11 +161,13 @@ in
 
     SidebarWidth = 135;
 
-    SidebarZoneOrder1 = [ "icloud_drive" "favorites" "devices" "tags" ];
+    SidebarZoneOrder1 = ["icloud_drive" "favorites" "devices" "tags"];
 
-    StandardViewSettings = {
-      SettingsType = "StandardViewSettings";
-    } // default-view-settings;
+    StandardViewSettings =
+      {
+        SettingsType = "StandardViewSettings";
+      }
+      // default-view-settings;
 
     TrashViewSettings = dvs-with-ws;
 

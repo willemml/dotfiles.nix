@@ -1,4 +1,10 @@
-{ fetchFromGitHub, lib, pkgs, stdenv }: stdenv.mkDerivation {
+{
+  fetchFromGitHub,
+  lib,
+  pkgs,
+  stdenv,
+}:
+stdenv.mkDerivation {
   name = "pinentry-touchid";
   src = fetchFromGitHub {
     owner = "jorgelbg";

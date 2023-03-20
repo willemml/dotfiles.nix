@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf;
   inherit (pkgs) stdenv;
   appCommands = {
@@ -13,8 +16,7 @@ let
     settings = "System Settings";
     zotero = "Zotero";
   };
-in
-{
+in {
   home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
     text = ''
       pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
@@ -26,20 +28,20 @@ in
   home.file.".config/zsh/am.sh" = mkIf stdenv.isDarwin {
     executable = true;
     source = builtins.fetchurl {
-      url =
-        "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
+      url = "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
       sha256 = "sha256-78zRpNg7/OR7p8dpsJt6Xc4j0Y+8zSUtm/PT94nf03M=";
     };
   };
 
   programs.zsh.shellAliases = mkIf stdenv.isDarwin ({
-    drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-    dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-    f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
-    o = "open";
-    oa = "open -a";
-    pinentry = "pinentry-mac";
-  } // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
+      drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+      dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+      f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
+      o = "open";
+      oa = "open -a";
+      pinentry = "pinentry-mac";
+    }
+    // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
 
   programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
   programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
@@ -47,7 +49,7 @@ in
   targets.darwin = mkIf stdenv.isDarwin {
     defaults = {
       NSGlobalDomain = {
-        AppleLanguages = [ "en-CA" ];
+        AppleLanguages = ["en-CA"];
         AppleLocale = "en_CA";
       };
       "com.apple.Safari" = {

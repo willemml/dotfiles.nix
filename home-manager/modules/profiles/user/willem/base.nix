@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   emacsCommand = "emacsclient -c -nw";
-in
-rec {
+in rec {
   home = {
     homeDirectory = "/Users/willem";
     keyboard = {

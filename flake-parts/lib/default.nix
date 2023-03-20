@@ -1,13 +1,11 @@
 # Copyright (c) 2018 Terje Larsen
-
-# This work is licensed under the terms of the MIT license.  
+# This work is licensed under the terms of the MIT license.
 # For a copy, see https://opensource.org/licenses/MIT.
-
 # https://github.com/terlar/nix-config/blob/00c8a3622e8bc4cb522bbf335e6ede04ca07da40/flake-parts/lib/default.nix
-
-{ self
-, lib
-, ...
+{
+  self,
+  lib,
+  ...
 }: {
   flake.lib = {
     kebabCaseToCamelCase =
@@ -24,7 +22,7 @@
             (lib.removeSuffix "/default.nix")
             (lib.removeSuffix ".nix")
             self.lib.kebabCaseToCamelCase
-            (builtins.replaceStrings [ "/" ] [ "-" ])
+            (builtins.replaceStrings ["/"] ["-"])
           ];
           value = import path;
         }))

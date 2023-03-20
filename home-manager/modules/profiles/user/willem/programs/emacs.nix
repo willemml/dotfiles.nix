@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
-
-let
-  pcfg = config.programs.emacs.init.usePackage;
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  pcfg = config.programs.emacs.init.usePackage;
+in {
   programs.emacs.enable = true;
 
   services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {
@@ -120,7 +121,7 @@ in
 
       all-the-icons-dired = {
         enable = true;
-        hook = [ "(dired-mode . all-the-icons-dired-mode)" ];
+        hook = ["(dired-mode . all-the-icons-dired-mode)"];
       };
 
       calibredb = {
@@ -136,15 +137,15 @@ in
 
       cdlatex = {
         enable = true;
-        after = [ "latex" ];
-        hook = [ "(LaTeX-mode . turn-on-cdlatex)" ];
+        after = ["latex"];
+        hook = ["(LaTeX-mode . turn-on-cdlatex)"];
       };
 
       citeproc.enable = true;
 
       company = {
         enable = true;
-        defines = [ "comapny-text-icons-margin" ];
+        defines = ["comapny-text-icons-margin"];
         init = ''
           ;; Align company-mode tooltips to the right hand side
           (setq company-tooltip-align-annotations t)
@@ -154,13 +155,12 @@ in
           ;; Display text icon of type in company popup
           (setq company-format-margin-function #'company-text-icons-margin)
         '';
-        hook =
-          [ "(sh-mode . company-mode)" "(emacs-lisp-mode . company-mode)" ];
+        hook = ["(sh-mode . company-mode)" "(emacs-lisp-mode . company-mode)"];
       };
 
       company-math = {
         enable = true;
-        after = [ "company" ];
+        after = ["company"];
         init = ''
                                                   ; -*-emacs-lisp-*-
           (add-to-list 'company-backends 'company-math-symbols-unicode)
@@ -185,13 +185,13 @@ in
           "C-S-o" = "counsel-rhythmbox";
         };
         bindLocal = {
-          minibuffer-local-map = { "C-r" = "counsel-minibuffer-history"; };
+          minibuffer-local-map = {"C-r" = "counsel-minibuffer-history";};
         };
       };
 
       doom-modeline = {
         enable = true;
-        hook = [ "(after-init . doom-modeline-mode)" ];
+        hook = ["(after-init . doom-modeline-mode)"];
         config = ''
           (setq doom-modeline-icon t)
         '';
@@ -201,11 +201,11 @@ in
 
       edit-server = {
         enable = true;
-        command = [ "edit-server-start" ];
+        command = ["edit-server-start"];
         config = ''
           (setq edit-server-new-frame nil)
         '';
-        hook = [ "(after-init . edit-server-start)" ];
+        hook = ["(after-init . edit-server-start)"];
       };
 
       editorconfig = {
@@ -227,7 +227,7 @@ in
 
       flycheck = {
         enable = true;
-        hook = [ "(after-init . global-flycheck-mode)" ];
+        hook = ["(after-init . global-flycheck-mode)"];
         config = ''
           (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
         '';
@@ -237,7 +237,7 @@ in
 
       format-all = {
         enable = true;
-        command = [ "format-all-buffer" ];
+        command = ["format-all-buffer"];
         config = ''
           (setq-default format-all-formatters format-all-default-formatters)
         '';
@@ -265,19 +265,19 @@ in
 
       ivy = {
         enable = true;
-        command = [ "ivy-mode" ];
+        command = ["ivy-mode"];
         init = ''
           (setq ivy-use-virtual-buffers t)
           (setq ivy-use-selectable-prompt t)
           (setq enable-recursive-minibuffers t)
         '';
-        bind = { "C-c C-r" = "ivy-resume"; };
-        hook = [ "(after-init . ivy-mode)" ];
+        bind = {"C-c C-r" = "ivy-resume";};
+        hook = ["(after-init . ivy-mode)"];
       };
 
       ivy-bibtex = {
         enable = true;
-        after = [ "ivy" ];
+        after = ["ivy"];
         init = ''
                                                   ; -*-emacs-lisp-*-
           ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
@@ -311,7 +311,7 @@ in
 
       lsp-ivy = {
         enable = true;
-        command = [ "lsp-ivy-workspace-symbol" ];
+        command = ["lsp-ivy-workspace-symbol"];
       };
 
       lsp-java = {
@@ -325,13 +325,13 @@ in
           (setq lsp-java-jdt-download-url
            "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
         '';
-        hook = [ "(java-mode . lsp)" ];
+        hook = ["(java-mode . lsp)"];
       };
 
       lsp-mode = {
         enable = true;
-        after = [ "format-all" ];
-        command = [ "lsp-format-buffer" ];
+        after = ["format-all"];
+        command = ["lsp-format-buffer"];
         extraConfig = ''
             :preface
             (defun my/format-document ()
@@ -344,21 +344,21 @@ in
           		         ((lsp-feature? "textDocument/rangeFormatting")
           		          (lsp-format-buffer))
           		         (t (format-all-buffer))))
-                    (t 
+                    (t
                        (format-all-buffer))))
         '';
-        functions = [ "lsp-deferred" "lsp-feature" "lsp-register-client" ];
+        functions = ["lsp-deferred" "lsp-feature" "lsp-register-client"];
         init = ''
           (setq lsp-log-io nil)
           (setq lsp-keymap-prefix "C-c l")
         '';
         config = ''
-            (lsp-treemacs-sync-mode 1)
-            (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-            (lsp-register-client
-             (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-          					:major-modes '(nix-mode)
-          					:server-id 'nix))
+          (lsp-treemacs-sync-mode 1)
+          (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+          (lsp-register-client
+           (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+          			:major-modes '(nix-mode)
+          			:server-id 'nix))
         '';
         hook = [
           "(lsp-mode . company-mode)"
@@ -367,17 +367,17 @@ in
           "(javascript-mode . lsp)"
           "(nix-mode . lsp)"
         ];
-        bind = { "C-c C-y" = "my/format-document"; };
+        bind = {"C-c C-y" = "my/format-document";};
       };
 
       lsp-treemacs = {
         enable = true;
-        command = [ "lsp-treemacs-errors-lisp" ];
+        command = ["lsp-treemacs-errors-lisp"];
       };
 
       lsp-ui = {
         enable = true;
-        command = [ "lsp-ui-mode" ];
+        command = ["lsp-ui-mode"];
       };
 
       magit = {
@@ -475,96 +475,92 @@ in
         '';
       };
 
-      mu4e =
-        let
-          smtpConfig = name:
-            (
-              let
-                account = config.accounts.email.accounts.${name};
-                port = builtins.toString account.smtp.port;
-                host = account.smtp.host;
-              in
-              ''
-                ("${name}"
-                     (mu4e-drafts-folder "/${name}/${account.folders.drafts}")
-                     (mu4e-sent-folder "/${name}/${account.folders.sent}")
-                     (mu4e-trash-folder "/${name}/${account.folders.trash}")
-                     ; (mu4e-maildir-shortcuts
-                     ;   '( (:maildir "/${name}/${account.folders.inbox}"  :key ?i)
-                     ;      (:maildir "/${name}/${account.folders.sent}"   :key ?s)
-                     ;      (:maildir "/${name}/${account.folders.drafts}" :key ?d)
-                     ;      (:maildir "/${name}/${account.folders.trash}"  :key ?t)))
-                     (smtpmail-default-smtp-server "${host}")
-                     (smtpmail-smtp-server "${host}")
-                     (smtpmail-smtp-service ${port} )
-                     (smtpmail-smtp-user "${account.userName}")
-                     (user-mail-address "${account.address}"))
-              ''
-            );
-          smtpAccountStrings = pkgs.lib.forEach (builtins.attrNames config.accounts.email.accounts) (account: " ${(smtpConfig account)} ");
-          smtpAccounts = "'( ${pkgs.lib.concatStrings smtpAccountStrings} )";
-        in
-        {
-          enable = true;
-          after = [ "async" ];
-          package = epkgs: pkgs.mu;
-          demand = true;
-          extraPackages = [ pkgs.gnutls pkgs.mu ];
-          init = ''
-                                                    ;-*-emacs-lisp-*-
+      mu4e = let
+        smtpConfig = name: (
+          let
+            account = config.accounts.email.accounts.${name};
+            port = builtins.toString account.smtp.port;
+            host = account.smtp.host;
+          in ''
+            ("${name}"
+                 (mu4e-drafts-folder "/${name}/${account.folders.drafts}")
+                 (mu4e-sent-folder "/${name}/${account.folders.sent}")
+                 (mu4e-trash-folder "/${name}/${account.folders.trash}")
+                 ; (mu4e-maildir-shortcuts
+                 ;   '( (:maildir "/${name}/${account.folders.inbox}"  :key ?i)
+                 ;      (:maildir "/${name}/${account.folders.sent}"   :key ?s)
+                 ;      (:maildir "/${name}/${account.folders.drafts}" :key ?d)
+                 ;      (:maildir "/${name}/${account.folders.trash}"  :key ?t)))
+                 (smtpmail-default-smtp-server "${host}")
+                 (smtpmail-smtp-server "${host}")
+                 (smtpmail-smtp-service ${port} )
+                 (smtpmail-smtp-user "${account.userName}")
+                 (user-mail-address "${account.address}"))
+          ''
+        );
+        smtpAccountStrings = pkgs.lib.forEach (builtins.attrNames config.accounts.email.accounts) (account: " ${(smtpConfig account)} ");
+        smtpAccounts = "'( ${pkgs.lib.concatStrings smtpAccountStrings} )";
+      in {
+        enable = true;
+        after = ["async"];
+        package = epkgs: pkgs.mu;
+        demand = true;
+        extraPackages = [pkgs.gnutls pkgs.mu];
+        init = ''
+                                                  ;-*-emacs-lisp-*-
 
-            (add-to-list 'load-path "${pkgs.mu}/share/emacs/site-lisp/mu4e")
+          (add-to-list 'load-path "${pkgs.mu}/share/emacs/site-lisp/mu4e")
 
-            (require 'mu4e)
+          (require 'mu4e)
 
-            (setq starttls-use-gnutls t
-                  message-kill-buffer-on-exit t
-                  mail-user-agent 'mu4e-user-agent)
+          (setq starttls-use-gnutls t
+                message-kill-buffer-on-exit t
+                mail-user-agent 'mu4e-user-agent)
 
-            (set-variable 'read-mail-command 'mu4e)
+          (set-variable 'read-mail-command 'mu4e)
 
-            (defvar my-mu4e-account-alist ${smtpAccounts} )
+          (defvar my-mu4e-account-alist ${smtpAccounts} )
 
-            (mapc #'(lambda (var)
-                      (set (car var) (cadr var)))
-                  (cdr (assoc "leitso" my-mu4e-account-alist)))
+          (mapc #'(lambda (var)
+                    (set (car var) (cadr var)))
+                (cdr (assoc "leitso" my-mu4e-account-alist)))
 
-            (defun my-mu4e-set-account ()
-              "Set the account for composing a message."
-              (let* ((account
-                      (if mu4e-compose-parent-message
-                          (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                            (string-match "/\\(.*?\\)/" maildir)
-                            (match-string 1 maildir))
-                        (completing-read (format "Compose with account: (%s) "
-                                                 (mapconcat #'(lambda (var) (car var))
-                                                            my-mu4e-account-alist "/"))
-                                         (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                                         nil t nil nil (caar my-mu4e-account-alist))))
-                     (account-vars (cdr (assoc account my-mu4e-account-alist))))
-                (if account-vars
-                    (mapc #'(lambda (var)
-                              (set (car var) (cadr var)))
-                          account-vars)
-                  (error "No email account found"))))
+          (defun my-mu4e-set-account ()
+            "Set the account for composing a message."
+            (let* ((account
+                    (if mu4e-compose-parent-message
+                        (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                          (string-match "/\\(.*?\\)/" maildir)
+                          (match-string 1 maildir))
+                      (completing-read (format "Compose with account: (%s) "
+                                               (mapconcat #'(lambda (var) (car var))
+                                                          my-mu4e-account-alist "/"))
+                                       (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                                       nil t nil nil (caar my-mu4e-account-alist))))
+                   (account-vars (cdr (assoc account my-mu4e-account-alist))))
+              (if account-vars
+                  (mapc #'(lambda (var)
+                            (set (car var) (cadr var)))
+                        account-vars)
+                (error "No email account found"))))
 
-            (setq mu4e-bookmarks
-                  '((:name "Unread messages" :query "flag:unread AND NOT (flag:trashed OR maildir:/feeds)" :key ?u)
-                   (:name "Today's messages" :query "date:today..now AND NOT maildir:/feeds" :key ?t)
-                   (:name "Last 7 days" :query "date:7d..now AND NOT maildir:/feeds" :key ?w)
-                   (:name "Feed" :query "maildir:/feeds" :key ?f)
-                   (:name "XKCD" :query "list:xkcd.localhost" :key ?x)))
+          (setq mu4e-bookmarks
+                '((:name "Unread messages" :query "flag:unread AND NOT (flag:trashed OR maildir:/feeds)" :key ?u)
+                 (:name "Today's messages" :query "date:today..now AND NOT maildir:/feeds" :key ?t)
+                 (:name "Last 7 days" :query "date:7d..now AND NOT maildir:/feeds" :key ?w)
+                 (:name "Feed" :query "maildir:/feeds" :key ?f)
+                 (:name "XKCD" :query "list:xkcd.localhost" :key ?x)))
 
-            (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+          (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
-          '';
+        '';
 
-          bind = {
-            "C-c C-u" = "my-mu4e-set-account";
-          };
-
-          hook = [ "(mu4e-compose-pre-hook . my-mu4e-set-account)" ];
+        bind = {
+          "C-c C-u" = "my-mu4e-set-account";
         };
+
+        hook = ["(mu4e-compose-pre-hook . my-mu4e-set-account)"];
+      };
 
       nix-mode = {
         enable = true;
@@ -579,33 +575,33 @@ in
 
       nix-update = {
         enable = true;
-        command = [ "nix-update-fetch" ];
+        command = ["nix-update-fetch"];
         bindLocal.nix-mode-map."C-c C-u" = "nix-update-fetch";
       };
 
       ob-calc = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
       };
 
       ob-dot = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
       };
 
       ob-emacs-lisp = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
       };
 
       ob-gnuplot = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
       };
 
       ob-matlab = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
         init = ''
           (setq org-babel-octave-shell-command "${pkgs.octave}/bin/octave -q")
         '';
@@ -613,7 +609,7 @@ in
 
       ob-python = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
         init = ''
                                         ; -*-emacs-lisp-*-
           (setq org-babel-python-command "${pkgs.python310}/bin/python3.10")
@@ -628,7 +624,7 @@ in
 
       ob-shell = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
       };
 
       org = {
@@ -772,38 +768,39 @@ in
 
       org-auctex = {
         enable = true;
-        package = epkgs: epkgs.trivialBuild {
-          pname = "org-auctex";
-          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+        package = epkgs:
+          epkgs.trivialBuild {
+            pname = "org-auctex";
+            version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
 
-          packageRequires = [ epkgs.auctex ];
+            packageRequires = [epkgs.auctex];
 
-          src = pkgs.fetchFromGitHub {
-            owner = "karthink";
-            repo = "org-auctex";
-            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+            src = pkgs.fetchFromGitHub {
+              owner = "karthink";
+              repo = "org-auctex";
+              rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+              sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+            };
           };
-        };
-        hook = [ "(org-mode . org-auctex-mode)" ];
+        hook = ["(org-mode . org-auctex-mode)"];
       };
 
       org-contrib.enable = true;
 
       org-download = {
         enable = true;
-        after = [ "org" ];
+        after = ["org"];
         init = ''
           (require 'org-download)
           (setq-default org-download-image-dir "${config.home.sessionVariables.ORGDIR}/images")
         '';
-        hook = [ "(dired-mode . org-download-enable)" ];
+        hook = ["(dired-mode . org-download-enable)"];
       };
 
       org-modern = {
         enable = true;
-        after = [ "org" ];
-        hook = [ "(org-mode . org-modern-mode)" ];
+        after = ["org"];
+        hook = ["(org-mode . org-modern-mode)"];
       };
 
       pdf-tools = {
@@ -838,8 +835,8 @@ in
 
       separedit = {
         enable = true;
-        bind = { "C-c '" = "separedit"; };
-        hook = [ "(separedit-buffer-creation . normal-mode)" ];
+        bind = {"C-c '" = "separedit";};
+        hook = ["(separedit-buffer-creation . normal-mode)"];
         init = ''
                                                   ; -*-emacs-lisp-*-
           (setq separedit-preserve-string-indentation t)
@@ -853,7 +850,7 @@ in
 
       swiper = {
         enable = true;
-        bind = { "C-s" = "swiper"; };
+        bind = {"C-s" = "swiper";};
       };
 
       tree-sitter = {
@@ -893,7 +890,7 @@ in
 
       arduino-mode = {
         enable = true;
-        hook = [ "(arduino-mode . flycheck-arduino-setup)" ];
+        hook = ["(arduino-mode . flycheck-arduino-setup)"];
         init = ''
           (require 'flycheck-arduino)
           (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")

@@ -1,6 +1,9 @@
-{ lib, config, pkgs, ... }:
-
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   launchd = lib.mkIf pkgs.stdenv.isDarwin {
     enable = true;
 
@@ -22,7 +25,7 @@
     agents.offlineimap = {
       enable = true;
       config = {
-        ProgramArguments = [ "${pkgs.offlineimap}/bin/offlineimap" ];
+        ProgramArguments = ["${pkgs.offlineimap}/bin/offlineimap"];
         UserName = "${config.home.username}";
         StartInterval = 900;
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/offlineimap-stdout.log";

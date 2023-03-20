@@ -1,4 +1,9 @@
-{ lib, pinentry_mac, stdenv }: stdenv.mkDerivation {
+{
+  lib,
+  pinentry_mac,
+  stdenv,
+}:
+stdenv.mkDerivation {
   name = "pinentry-mac";
   src = pinentry_mac;
   installPhase = ''
@@ -16,4 +21,3 @@
     platforms = platforms.darwin;
   };
 }
-
