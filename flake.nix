@@ -13,11 +13,12 @@
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
     rycee-firefox-addons.url = "git+https://git.sr.ht/~rycee/nur-expressions?dir=pkgs/firefox-addons";
-    pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./flake-parts
       ];
@@ -28,6 +29,23 @@
         "aarch64-darwin"
         #        "aarch64-linux"
       ];
+
+      perSystem = {
+        system,
+        self',
+        pkgs,
+        ...
+      }: {
+        checks.pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            alejandra.enable = true;
+          };
+        };
+
+        devShells.default = pkgs.mkShell {
+          inherit (self'.checks.pre-commit-check) shellHook;
+        };
+      };
     };
 }
-  
