@@ -30,7 +30,7 @@
         }))
         builtins.listToAttrs
       ];
-    
+
     mk-mac-binpkg = import ../../packages/mk-mac-binpkg.nix;
   };
 }

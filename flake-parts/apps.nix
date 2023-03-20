@@ -5,11 +5,11 @@
 
 # https://github.com/terlar/nix-config/blob/00c8a3622e8bc4cb522bbf335e6ede04ca07da40/flake-parts/apps.nix
 
-{lib, ...}: {
-  perSystem = {pkgs, ...}:
+{ lib, ... }: {
+  perSystem = { pkgs, ... }:
     lib.pipe ../apps [
       lib.filesystem.listFilesRecursive
-      (map (file: pkgs.callPackage file {}))
+      (map (file: pkgs.callPackage file { }))
       (map (drv: {
         apps.${drv.name} = {
           type = "app";
@@ -17,6 +17,6 @@
         };
         checks."app-${drv.name}" = drv;
       }))
-      (lib.fold lib.recursiveUpdate {})
+      (lib.fold lib.recursiveUpdate { })
     ];
 }

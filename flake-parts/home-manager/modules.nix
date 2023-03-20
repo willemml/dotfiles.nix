@@ -18,7 +18,7 @@
       default = {
         imports = builtins.attrValues modules;
       };
-      
+
       nixpkgs-Config = {
         nixpkgs.config.allowUnfreePredicate = (_: true);
         nixpkgs.config.allowUnsupportedSystem = true;

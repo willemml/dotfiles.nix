@@ -2,7 +2,7 @@
 
 {
   imports = [ ../profiles/common.nix ];
-  
+
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
     (allow default)

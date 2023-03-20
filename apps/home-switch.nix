@@ -1,7 +1,6 @@
 { writeShellApplication
 , home-manager
 , stdenv
-,
 }:
 writeShellApplication {
   name = "home-switch";

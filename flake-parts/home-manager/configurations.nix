@@ -4,13 +4,13 @@ let
   inherit (flake-parts-lib) mkTransposedPerSystemModule;
 in
 mkTransposedPerSystemModule
-  {
-    name = "homeConfigurations";
-    file = ./configurations.nix;
-    option = mkOption {
-      type = types.lazyAttrsOf types.unspecified;
-      default = { };
-      description = "Home Manager user configurations.";
-    };
+{
+  name = "homeConfigurations";
+  file = ./configurations.nix;
+  option = mkOption {
+    type = types.lazyAttrsOf types.unspecified;
+    default = { };
+    description = "Home Manager user configurations.";
+  };
 }
 
