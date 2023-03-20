@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./nixos.common.nix ./nixos.gnome.nix ];
+  imports = [ ../profiles/linux-common.nix ../profiles/gnome.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;

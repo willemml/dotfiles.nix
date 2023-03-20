@@ -1,8 +1,12 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./nixos.common.nix ./nixos.gnome.nix ];
-  
+  imports = [
+    ../profiles/desktop.nix
+    ../profiles/gnome.nix
+    ../profiles/linux-common.nix
+  ];
+
   boot.extraModulePackages = [ ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod" ];
@@ -13,7 +17,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   environment.systemPackages = with pkgs; [ mesa ];
-  
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";

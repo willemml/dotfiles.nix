@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./common.nix ];
+  imports = [ ../profiles/common.nix ];
   
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)

@@ -74,6 +74,7 @@ in
       bash
       bat
       black
+      cachix
       clang-tools
       cmake
       comma

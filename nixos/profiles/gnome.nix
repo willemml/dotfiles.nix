@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./nixos.desktop.nix ];
+  imports = [ ./desktop.nix ];
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
