@@ -4,24 +4,50 @@
   lib,
   ...
 }: {
+  flake = {
+    homeManagerModules.user-willem = {
+      imports = [
+        self.homeManagerModules.default
+        self.homeManagerModules.nixpkgs-useFlakeNixpkgs
+        self.homeManagerModules.nixpkgs-config
+      ];
+
+      home.username = "willem";
+      home.stateVersion = "22.11";
+    };
+
+    homeManagerModules.user-willem-darwin = {
+      imports = [
+        self.homeManagerModules.darwin
+        self.homeManagerModules.user-willem
+      ];
+
+      home.homeDirectory = "/Users/willem";
+    };
+
+    homeManagerModules.user-willem-linux = {
+      imports = [self.homeManagerModules.user-willem];
+
+      home.homeDirectory = "/home/willem";
+    };
+  };
+
   perSystem = {
     pkgs,
     self',
+    system,
     ...
   }: rec {
-    homeConfigurations.willem = inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = let
-        nurNoPkgs = import inputs.nur {
-          pkgs = null;
-          nurpkgs = pkgs;
-        };
-      in [
-        self.homeManagerModules.nixpkgs-useFlakeNixpkgs
-        self.homeManagerModules.nixpkgs-Config
-        self.homeManagerModules.default
-      ];
-    };
+    homeConfigurations.willem = let
+      systemType =
+        if pkgs.stdenv.isDarwin
+        then "darwin"
+        else "linux";
+    in
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [self.homeManagerModules."user-willem-${systemType}"];
+      };
     packages = let
       activationPackages = builtins.mapAttrs (_: lib.getAttr "activationPackage") homeConfigurations;
     in

@@ -92,7 +92,7 @@
     }
     // default-view-settings;
 in {
-  targets.darwin.defaults."com.apple.finder" = lib.mkIf pkgs.stdenv.isDarwin {
+  targets.darwin.defaults."com.apple.finder" = {
     AppleShowAllExtensions = true;
 
     ComputerViewSettings = dvs-with-ws;

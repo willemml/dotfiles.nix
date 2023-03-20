@@ -15,7 +15,7 @@
     ;
   inherit (flake-parts-lib) mkSubmoduleOptions;
 in {
-  imports = [./modules.nix ./users.nix ./configurations.nix];
+  imports = [./configurations.nix ./modules.nix ./users.nix];
 
   options = {
     flake = mkSubmoduleOptions {

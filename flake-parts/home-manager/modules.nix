@@ -10,13 +10,19 @@
 }: {
   flake.homeManagerModules = let
     modules = self.lib.importDirToAttrs ../../home-manager/modules;
+    non-darwin-modules = lib.filterAttrs (n: v: !(lib.hasInfix "darwin" n)) modules;
+    darwin-modules = lib.filterAttrs (n: v: (lib.hasInfix "darwin" n)) modules;
   in
     {
       default = {
-        imports = builtins.attrValues modules;
+        imports = builtins.attrValues non-darwin-modules;
       };
 
-      nixpkgs-Config = {
+      darwin = {
+        imports = builtins.attrValues darwin-modules;
+      };
+
+      nixpkgs-config = {
         nixpkgs.config.allowUnfreePredicate = _: true;
         nixpkgs.config.allowUnsupportedSystem = true;
         nixpkgs.overlays = builtins.attrValues self.overlays;

@@ -7,7 +7,6 @@
   emacsCommand = "emacsclient -c -nw";
 in rec {
   home = {
-    homeDirectory = "/Users/willem";
     keyboard = {
       layout = "us";
       variant = "colemak";
@@ -23,7 +22,5 @@ in rec {
       UBCDIR = "${ORGDIR}/ubc";
       MAILDIR = "${config.home.homeDirectory}/Maildir";
     };
-    stateVersion = "22.11";
-    username = "willem";
   };
 }

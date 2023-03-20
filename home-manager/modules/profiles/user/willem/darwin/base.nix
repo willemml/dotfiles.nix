@@ -4,8 +4,6 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
-  inherit (pkgs) stdenv;
   appCommands = {
     calibre = "Calibre";
     ical = "Calendar";
@@ -17,7 +15,7 @@
     zotero = "Zotero";
   };
 in {
-  home.file.".gnupg/gpg-agent.conf" = mkIf stdenv.isDarwin {
+  home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
       default-cache-ttl 30
@@ -25,7 +23,7 @@ in {
     '';
   };
 
-  home.file.".config/zsh/am.sh" = mkIf stdenv.isDarwin {
+  home.file.".config/zsh/am.sh" = {
     executable = true;
     source = builtins.fetchurl {
       url = "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
@@ -33,7 +31,8 @@ in {
     };
   };
 
-  programs.zsh.shellAliases = mkIf stdenv.isDarwin ({
+  programs.zsh.shellAliases =
+    {
       drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
       dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
       f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
@@ -41,12 +40,12 @@ in {
       oa = "open -a";
       pinentry = "pinentry-mac";
     }
-    // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands);
+    // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands;
 
-  programs.firefox.package = mkIf stdenv.isDarwin pkgs.firefox-mac;
-  programs.chromium.package = mkIf stdenv.isDarwin pkgs.chromium-mac;
+  programs.firefox.package = pkgs.firefox-mac;
+  programs.chromium.package = pkgs.chromium-mac;
 
-  targets.darwin = mkIf stdenv.isDarwin {
+  targets.darwin = {
     defaults = {
       NSGlobalDomain = {
         AppleLanguages = ["en-CA"];

@@ -16,6 +16,10 @@
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
+
+      home-manager = {
+        sharedModules = [self.homeManagerModules.user-willem-linux];
+      };
     };
 
     darwinModules.base = {config, ...}: {
@@ -28,6 +32,10 @@
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
+
+      home-manager = {
+        sharedModules = [self.homeManagerModules.user-willem-darwin];
+      };
     };
 
     nixosConfigurations.zeusvm = inputs.nixpkgs.lib.nixosSystem {
