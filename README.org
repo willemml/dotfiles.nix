@@ -128,3 +128,20 @@ Adds the inputs of this flake to the nix registry and ~NIX_PATH~.
 
 Taken from [[https://github.com/LnL7/nix-darwin/issues/277#issuecomment-992866471][LnL7/nix-darwin #277]].
 
+* Tasks
+
+** TODO Packages for different systems
+
+Packages are in the flake outputs for systems they are not compatible with.
+
+** TODO Break out emacs config
+
+Emacs configuration should be in it's own repository.
+Lisp code should be extracted into separate files or an org-babel setup.
+
+** TODO Test zeusasahi
+
+** TODO Services as modules
+
+Services should be converted to modules.
+These should ideally support both linux and darwin hosts (launchd and systemd).
