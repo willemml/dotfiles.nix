@@ -47,7 +47,7 @@
     in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [self.homeManagerModules."user-willem-${systemType}"];
+        modules = [self.homeManagerModules."user-willem-${systemType}" {nix.package = pkgs.nix;}];
       };
     packages = let
       activationPackages = builtins.mapAttrs (_: lib.getAttr "activationPackage") homeConfigurations;
