@@ -9,5 +9,6 @@ _final: prev: {
   pinentry-touchid = prev.callPackage ./pinentry-touchid.nix {};
   qbittorrent-mac = prev.callPackage ./qbittorrent-mac.nix {};
   spotify-mac = prev.callPackage ./spotify-mac.nix {};
+  vkquake = prev.callPackage ./vkquake {};
   vlc-mac = prev.callPackage ./vlc-mac.nix {};
 }

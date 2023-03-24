@@ -29,6 +29,7 @@
         pinentry-touchid
         qbittorrent-mac
         spotify-mac
+        vkquake
         vlc-mac
         ;
     };
