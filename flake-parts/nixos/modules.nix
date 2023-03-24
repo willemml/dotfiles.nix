@@ -25,6 +25,8 @@
         nix.registry.nixpkgs.flake = inputs.nixpkgs;
       };
 
+      nix-useCachix = ../../cachix/cachix.nix;
+
       home-manager-integration = {
         config.home-manager = {
           useGlobalPkgs = true;

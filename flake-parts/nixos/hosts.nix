@@ -6,11 +6,13 @@
   flake = {
     nixosModules.base = {config, ...}: {
       imports = [
+        ../../nixos/cachix
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux-common.nix
         inputs.home-manager.nixosModules.home-manager
         self.nixosModules.default
         self.nixosModules.home-manager-integration
+        self.nixosModules.nix-useCachix
         self.nixosModules.nixpkgs-useFlakeNixpkgs
       ];
 
@@ -28,6 +30,8 @@
         inputs.home-manager.darwinModules.home-manager
         self.nixosModules.custom-linkNixInputs
         self.nixosModules.home-manager-integration
+        self.nixosModules.nix-useCachix
+        self.nixosModules.nixpkgs-useFlakeNixpkgs
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;

@@ -32,6 +32,8 @@
         home.sessionVariables.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
         nix.registry.nixpkgs.flake = inputs.nixpkgs;
       };
+
+      nix-useCachix = ../../cachix/cachix.nix;
     }
     // modules;
 }

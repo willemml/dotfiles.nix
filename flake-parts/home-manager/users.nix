@@ -8,6 +8,7 @@
     homeManagerModules.user-willem = {
       imports = [
         self.homeManagerModules.default
+        self.homeManagerModules.nix-useCachix
         self.homeManagerModules.nixpkgs-useFlakeNixpkgs
         self.homeManagerModules.nixpkgs-config
       ];
