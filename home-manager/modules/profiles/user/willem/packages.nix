@@ -109,6 +109,7 @@ in {
       ripgrep
       rnix-lsp
       rsync
+      rust-analyzer
       rustup
       shellcheck
       shfmt

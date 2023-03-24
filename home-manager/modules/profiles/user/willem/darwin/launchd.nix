@@ -15,10 +15,20 @@
           "--fg-daemon"
         ];
         KeepAlive = true;
-        UserName = "${config.home.username}";
         ProcessType = "Adaptive";
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/emacs-stdout.log";
         StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/emacs-stderr.log";
+      };
+    };
+
+    agents.firefox = {
+      enable = true;
+      config = {
+        ProgramArguments = ["${config.programs.firefox.package}/bin/firefox"];
+        KeepAlive = true;
+        ProcessType = "Adaptive";
+        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/firefox-stdout.log";
+        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/firefoxn-stderr.log";
       };
     };
 
@@ -40,7 +50,6 @@
           "${pkgs.rss2email}/bin/r2e"
           "run"
         ];
-        UserName = "${config.home.username}";
         StartInterval = 3600;
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/rss2email-stdout.log";
         StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/rss2email-stderr.log";
