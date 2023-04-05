@@ -88,6 +88,7 @@ in {
       docker
       docker-compose
       fd
+      fenix.latest.toolchain
       findutils
       gawk
       gnuplot
@@ -109,8 +110,6 @@ in {
       ripgrep
       rnix-lsp
       rsync
-      rust-analyzer
-      rustup
       shellcheck
       shfmt
       spotify-tui
@@ -123,6 +122,7 @@ in {
       unp
       unrar
       unzip
+      vkquake
       wget
       yq
       zsh-completions

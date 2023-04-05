@@ -15,9 +15,20 @@
           "--fg-daemon"
         ];
         KeepAlive = true;
-        ProcessType = "Adaptive";
+        ProcessType = "Interactive";
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/emacs-stdout.log";
         StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/emacs-stderr.log";
+      };
+    };
+
+    agents.iterm2 = {
+      enable = true;
+      config = {
+        ProgramArguments = ["${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2"];
+        KeepAlive = true;
+        ProcessType = "Interactive";
+        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/iterm2-stdout.log";
+        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/iterm2-stderr.log";
       };
     };
 
@@ -26,9 +37,9 @@
       config = {
         ProgramArguments = ["${config.programs.firefox.package}/bin/firefox"];
         KeepAlive = true;
-        ProcessType = "Adaptive";
+        ProcessType = "Interactive";
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/firefox-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/firefoxn-stderr.log";
+        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/firefox-stderr.log";
       };
     };
 

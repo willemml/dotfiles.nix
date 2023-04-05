@@ -6,7 +6,6 @@
   flake = {
     nixosModules.base = {config, ...}: {
       imports = [
-        ../../nixos/cachix
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux-common.nix
         inputs.home-manager.nixosModules.home-manager

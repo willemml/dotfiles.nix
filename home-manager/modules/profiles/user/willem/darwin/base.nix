@@ -45,6 +45,15 @@ in {
   programs.firefox.package = pkgs.firefox-mac;
   programs.chromium.package = pkgs.chromium-mac;
 
+  home.packages = with pkgs; [
+    colima
+    freecad-mac
+    iterm2
+    qbittorrent-mac
+    utm
+    vlc-mac
+  ];
+
   targets.darwin = {
     defaults = {
       NSGlobalDomain = {

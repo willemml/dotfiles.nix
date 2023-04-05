@@ -16,21 +16,7 @@
 
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.systemPackages = with pkgs; [
-    colima
-    freecad-mac
-    iterm2
-    qbittorrent-mac
-    utm
-    vlc-mac
   ];
-
-  launchd.user.agents.iterm2 = {
-    command = "${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2";
-    serviceConfig = {
-      KeepAlive = true;
-      ProcessType = "Adaptive";
-    };
-  };
 
   programs.zsh.loginShellInit = ''
     reexec() {

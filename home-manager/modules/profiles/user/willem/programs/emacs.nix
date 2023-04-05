@@ -7,6 +7,8 @@
 in {
   programs.emacs.enable = true;
 
+  programs.emacs.package = pkgs.emacsGit;
+
   services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
     client.enable = true;
@@ -309,76 +311,76 @@ in {
         '';
       };
 
-      lsp-ivy = {
-        enable = true;
-        command = ["lsp-ivy-workspace-symbol"];
-      };
+      # lsp-ivy = {
+      #   enable = true;
+      #   command = ["lsp-ivy-workspace-symbol"];
+      # };
 
-      lsp-java = {
-        enable = true;
-        init = ''
-                                        ; -*-emacs-lisp-*-
-          (setq lsp-java-format-settings-url
-           "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-          (setq lsp-java-format-settings-profile
-           "GoogleStyle")
-          (setq lsp-java-jdt-download-url
-           "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
-        '';
-        hook = ["(java-mode . lsp)"];
-      };
+      # lsp-java = {
+      #   enable = true;
+      #   init = ''
+      #                                   ; -*-emacs-lisp-*-
+      #     (setq lsp-java-format-settings-url
+      #      "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+      #     (setq lsp-java-format-settings-profile
+      #      "GoogleStyle")
+      #     (setq lsp-java-jdt-download-url
+      #      "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
+      #   '';
+      #   hook = ["(java-mode . lsp)"];
+      # };
 
-      lsp-mode = {
-        enable = true;
-        after = ["format-all"];
-        command = ["lsp-format-buffer"];
-        extraConfig = ''
-            :preface
-            (defun my/format-document ()
-          	"Formats the buffer using 'lsp-format-buffer'.
-          Falls back to 'format-all-buffer' if LSP does not support formatting."
-          	(interactive)
-              (cond ((fboundp 'lsp-feature?)
-          	       (cond ((lsp-feature? "textDocument/formatting")
-          		          (lsp-format-buffer))
-          		         ((lsp-feature? "textDocument/rangeFormatting")
-          		          (lsp-format-buffer))
-          		         (t (format-all-buffer))))
-                    (t
-                       (format-all-buffer))))
-        '';
-        functions = ["lsp-deferred" "lsp-feature" "lsp-register-client"];
-        init = ''
-          (setq lsp-log-io nil)
-          (setq lsp-keymap-prefix "C-c l")
-        '';
-        config = ''
-          (lsp-treemacs-sync-mode 1)
-          (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-          (lsp-register-client
-           (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-          			:major-modes '(nix-mode)
-          			:server-id 'nix))
-        '';
-        hook = [
-          "(lsp-mode . company-mode)"
-          "(rust-mode . lsp)"
-          "(c-mode . lsp)"
-          "(javascript-mode . lsp)"
-          "(nix-mode . lsp)"
-        ];
-        bind = {"C-c C-y" = "my/format-document";};
-      };
+      # lsp-mode = {
+      #   enable = true;
+      #   after = ["format-all"];
+      #   command = ["lsp-format-buffer"];
+      #   extraConfig = ''
+      #       :preface
+      #       (defun my/format-document ()
+      #     	"Formats the buffer using 'lsp-format-buffer'.
+      #     Falls back to 'format-all-buffer' if LSP does not support formatting."
+      #     	(interactive)
+      #         (cond ((fboundp 'lsp-feature?)
+      #     	       (cond ((lsp-feature? "textDocument/formatting")
+      #     		          (lsp-format-buffer))
+      #     		         ((lsp-feature? "textDocument/rangeFormatting")
+      #     		          (lsp-format-buffer))
+      #     		         (t (format-all-buffer))))
+      #               (t
+      #                  (format-all-buffer))))
+      #   '';
+      #   functions = ["lsp-deferred" "lsp-feature" "lsp-register-client"];
+      #   init = ''
+      #     (setq lsp-log-io nil)
+      #     (setq lsp-keymap-prefix "C-c l")
+      #   '';
+      #   config = ''
+      #     (lsp-treemacs-sync-mode 1)
+      #     (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+      #     (lsp-register-client
+      #      (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+      #     			:major-modes '(nix-mode)
+      #     			:server-id 'nix))
+      #   '';
+      #   hook = [
+      #     "(lsp-mode . company-mode)"
+      #     "(rust-mode . lsp)"
+      #     "(c-mode . lsp)"
+      #     "(javascript-mode . lsp)"
+      #     "(nix-mode . lsp)"
+      #   ];
+      #   bind = {"C-c C-y" = "my/format-document";};
+      # };
 
-      lsp-treemacs = {
-        enable = true;
-        command = ["lsp-treemacs-errors-lisp"];
-      };
+      # lsp-treemacs = {
+      #   enable = true;
+      #   command = ["lsp-treemacs-errors-lisp"];
+      # };
 
-      lsp-ui = {
-        enable = true;
-        command = ["lsp-ui-mode"];
-      };
+      # lsp-ui = {
+      #   enable = true;
+      #   command = ["lsp-ui-mode"];
+      # };
 
       magit = {
         enable = true;
@@ -853,40 +855,40 @@ in {
         bind = {"C-s" = "swiper";};
       };
 
-      tree-sitter = {
-        enable = true;
-        package = epkgs: epkgs.tsc;
-        init = ''
-          (setq tree-sitter-major-mode-language-alist '((arduino-mode . c)))
-        '';
-        hook = [
-          "(rust-mode . tree-sitter-hl-mode)"
-          "(python-mode . tree-sitter-hl-mode)"
-          "(c-mode . tree-sitter-hl-mode)"
-          "(shell-mode . tree-sitter-hl-mode)"
-          "(javascript-mode . tree-sitter-hl-mode)"
-        ];
-      };
+      # tree-sitter = {
+      #   enable = true;
+      #   package = epkgs: epkgs.tsc;
+      #   init = ''
+      #     (setq tree-sitter-major-mode-language-alist '((arduino-mode . c)))
+      #   '';
+      #   hook = [
+      #     "(rust-mode . tree-sitter-hl-mode)"
+      #     "(python-mode . tree-sitter-hl-mode)"
+      #     "(c-mode . tree-sitter-hl-mode)"
+      #     "(shell-mode . tree-sitter-hl-mode)"
+      #     "(javascript-mode . tree-sitter-hl-mode)"
+      #   ];
+      # };
 
-      tree-sitter-langs = {
-        enable = true;
-        package = epkgs: epkgs.tree-sitter-langs;
-      };
+      # tree-sitter-langs = {
+      #   enable = true;
+      #   package = epkgs: epkgs.tree-sitter-langs;
+      # };
 
-      yasnippet = {
-        enable = true;
-        init = ''
-          (setq yas-snippet-dirs '("${config.home.sessionVariables.ORGDIR}/snippets"))
-          (yas-global-mode 1)
-        '';
-      };
+      # yasnippet = {
+      #   enable = true;
+      #   init = ''
+      #     (setq yas-snippet-dirs '("${config.home.sessionVariables.ORGDIR}/snippets"))
+      #     (yas-global-mode 1)
+      #   '';
+      # };
 
-      yasnippet-snippets = {
-        enable = true;
-        init = ''
-          (yas-reload-all)
-        '';
-      };
+      # yasnippet-snippets = {
+      #   enable = true;
+      #   init = ''
+      #     (yas-reload-all)
+      #   '';
+      # };
 
       arduino-mode = {
         enable = true;
