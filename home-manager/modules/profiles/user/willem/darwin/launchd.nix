@@ -11,7 +11,7 @@
       enable = true;
       config = {
         ProgramArguments = [
-          "${config.programs.emacs.finalPackage}/bin/emacs"
+          "${config.programs.emacs.package}/bin/emacs"
           "--fg-daemon"
         ];
         KeepAlive = true;

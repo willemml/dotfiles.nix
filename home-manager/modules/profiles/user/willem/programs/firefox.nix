@@ -86,7 +86,7 @@
         clearurls
         don-t-fuck-with-paste
         #dracula-dark-colorscheme
-        edit-with-emacs
+        #edit-with-emacs
         #fastforward
         i-dont-care-about-cookies
         musescore-downloader
