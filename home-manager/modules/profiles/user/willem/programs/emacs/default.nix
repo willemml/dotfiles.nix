@@ -3,107 +3,107 @@
   pkgs,
   ...
 }: let
+  emacsPackage =
+    (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
+    (epkgs:
+      (with epkgs; let
+        org-auctex = epkgs.trivialBuild {
+          pname = "org-auctex";
+          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+
+          buildInputs = [epkgs.auctex];
+
+          src = pkgs.fetchFromGitHub {
+            owner = "karthink";
+            repo = "org-auctex";
+            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+          };
+        };
+        mu4e-accounts = epkgs.trivialBuild {
+          pname = "mu4e-accounts";
+          version = "0.1";
+          buildInputs = [pkgs.mu];
+          src = let
+            smtpConfig = name: (
+              let
+                account = config.accounts.email.accounts.${name};
+                port = builtins.toString account.smtp.port;
+                host = account.smtp.host;
+              in ''
+                ("${name}"
+                     (mu4e-drafts-folder "/${name}/${account.folders.drafts}")
+                     (mu4e-sent-folder "/${name}/${account.folders.sent}")
+                     (mu4e-trash-folder "/${name}/${account.folders.trash}")
+                     ; (mu4e-maildir-shortcuts
+                     ;   '( (:maildir "/${name}/${account.folders.inbox}"  :key ?i)
+                     ;      (:maildir "/${name}/${account.folders.sent}"   :key ?s)
+                     ;      (:maildir "/${name}/${account.folders.drafts}" :key ?d)
+                     ;      (:maildir "/${name}/${account.folders.trash}"  :key ?t)))
+                     (smtpmail-default-smtp-server "${host}")
+                     (smtpmail-smtp-server "${host}")
+                     (smtpmail-smtp-service ${port} )
+                     (smtpmail-smtp-user "${account.userName}")
+                     (user-mail-address "${account.address}"))
+              ''
+            );
+            smtpAccountStrings = pkgs.lib.forEach (builtins.attrNames config.accounts.email.accounts) (account: " ${(smtpConfig account)} ");
+            smtpAccounts = "'( ${pkgs.lib.concatStrings smtpAccountStrings} )";
+          in
+            pkgs.writeText "mu4e-accounts.el" ''
+              (defvar my-mu4e-account-alist ${smtpAccounts} )
+              (provide 'mu4e-accounts)
+            '';
+        };
+      in [
+        all-the-icons
+        all-the-icons-dired
+        arduino-mode
+        async
+        auctex
+        calibredb
+        cdlatex
+        citeproc
+        company
+        counsel
+        editorconfig
+        edit-indirect
+        format-all
+        gnuplot
+        graphviz-dot-mode
+        htmlize
+        ivy
+        ivy-bibtex
+        magit
+        meow
+        mu4e-accounts
+        nix-mode
+        nix-update
+        org
+        org-auctex
+        org-contrib
+        org-download
+        org-modern
+        pdf-tools
+        plantuml-mode
+        rustic
+        separedit
+        solarized-theme
+        swiper
+        yasnippet
+      ])
+      ++ (with pkgs; [
+        gnuplot
+        mu
+        plantuml
+        sqlite
+      ]));
   emacsConfig = pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
 
     defaultInitFile = true;
 
-    package =
-      (pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages
-      (epkgs:
-        (with epkgs; let
-          org-auctex = epkgs.trivialBuild {
-            pname = "org-auctex";
-            version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-
-            buildInputs = [epkgs.auctex];
-
-            src = pkgs.fetchFromGitHub {
-              owner = "karthink";
-              repo = "org-auctex";
-              rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-              sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
-            };
-          };
-          mu4e-accounts = epkgs.trivialBuild {
-            pname = "mu4e-accounts";
-            version = "0.1";
-            buildInputs = [pkgs.mu];
-            src = let
-              smtpConfig = name: (
-                let
-                  account = config.accounts.email.accounts.${name};
-                  port = builtins.toString account.smtp.port;
-                  host = account.smtp.host;
-                in ''
-                  ("${name}"
-                       (mu4e-drafts-folder "/${name}/${account.folders.drafts}")
-                       (mu4e-sent-folder "/${name}/${account.folders.sent}")
-                       (mu4e-trash-folder "/${name}/${account.folders.trash}")
-                       ; (mu4e-maildir-shortcuts
-                       ;   '( (:maildir "/${name}/${account.folders.inbox}"  :key ?i)
-                       ;      (:maildir "/${name}/${account.folders.sent}"   :key ?s)
-                       ;      (:maildir "/${name}/${account.folders.drafts}" :key ?d)
-                       ;      (:maildir "/${name}/${account.folders.trash}"  :key ?t)))
-                       (smtpmail-default-smtp-server "${host}")
-                       (smtpmail-smtp-server "${host}")
-                       (smtpmail-smtp-service ${port} )
-                       (smtpmail-smtp-user "${account.userName}")
-                       (user-mail-address "${account.address}"))
-                ''
-              );
-              smtpAccountStrings = pkgs.lib.forEach (builtins.attrNames config.accounts.email.accounts) (account: " ${(smtpConfig account)} ");
-              smtpAccounts = "'( ${pkgs.lib.concatStrings smtpAccountStrings} )";
-            in
-              pkgs.writeText "mu4e-accounts.el" ''
-                (defvar my-mu4e-account-alist ${smtpAccounts} )
-                (provide 'mu4e-accounts)
-              '';
-          };
-        in [
-          all-the-icons
-          all-the-icons-dired
-          arduino-mode
-          async
-          auctex
-          calibredb
-          cdlatex
-          citeproc
-          company
-          company-quickhelp
-          counsel
-          editorconfig
-          edit-indirect
-          format-all
-          gnuplot
-          graphviz-dot-mode
-          htmlize
-          ivy
-          ivy-bibtex
-          magit
-          meow
-          mu4e-accounts
-          nix-mode
-          nix-update
-          org
-          org-auctex
-          org-contrib
-          org-download
-          org-modern
-          pdf-tools
-          plantuml-mode
-          rustic
-          separedit
-          solarized-theme
-          swiper
-          yasnippet
-        ])
-        ++ (with pkgs; [
-          gnuplot
-          mu
-          plantuml
-          sqlite
-        ]));
+    package = emacsPackage;
   };
 in {
   home.file.".emacs.d/early-init.el".source = ./early-init.el;

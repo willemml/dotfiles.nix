@@ -41,6 +41,23 @@
         "type": "github"
       }
     },
+    "emacs-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680780971,
+        "narHash": "sha256-c5aLVyuT8bK3bJfQSi+HNQGSJyWSvp7X+tr0bX3syZ4=",
+        "ref": "emacs-29",
+        "rev": "305246d9726bbe05a65ad3836880138db5c01dfa",
+        "revCount": 164964,
+        "type": "git",
+        "url": "https://git.savannah.gnu.org/git/emacs.git"
+      },
+      "original": {
+        "ref": "emacs-29",
+        "type": "git",
+        "url": "https://git.savannah.gnu.org/git/emacs.git"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -312,6 +329,7 @@
       "inputs": {
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
+        "emacs-src": "emacs-src",
         "fenix": "fenix",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

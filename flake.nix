@@ -7,6 +7,8 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-src.url = "git+https://git.savannah.gnu.org/git/emacs.git?ref=emacs-29";
+    emacs-src.flake = false;
     fenix.url = "github:nix-community/fenix";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager.url = "github:nix-community/home-manager";

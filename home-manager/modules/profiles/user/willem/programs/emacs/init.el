@@ -65,7 +65,6 @@
 (require 'cdlatex)
 (require 'citeproc)
 (require 'company)
-(require 'company-quickhelp)
 (require 'counsel)
 (require 'edit-indirect)
 (require 'editorconfig)
@@ -135,8 +134,6 @@
 (setq company-tooltip-offset-display 'lines)
 ;; Display text icon of type in company popup
 
-(company-quickhelp-mode)
-
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
@@ -156,8 +153,6 @@
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 (editorconfig-mode 1)
-
-(add-hook 'eglot-connect-hook 'company-mode)
 
 (global-set-key (kbd "C-c C-y") 'format-all-buffer)
 (setq-default format-all-formatters format-all-default-formatters)
