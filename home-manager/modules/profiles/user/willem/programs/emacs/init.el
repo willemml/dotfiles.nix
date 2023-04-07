@@ -12,9 +12,6 @@
 
 (setq inhibit-default-init t)
 
-;; Accept 'y' and 'n' rather than 'yes' and 'no'.
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 ;; Typically, I only want spaces when pressing the TAB key. I also
 ;; want 4 of them.
 (setq-default indent-tabs-mode nil
@@ -100,6 +97,7 @@
 (require 'ox-latex)
 (require 'pdf-tools)
 (require 'plantuml-mode)
+(require 'polymode)
 (require 'rustic)
 (require 'smtpmail-async)
 (require 'swiper)
@@ -122,9 +120,6 @@
 (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
 (setq calibredb-library-alist '(("~/Documents/calibre-library")))
 
-;; TODO: temporary fix for company-mode#1381
-(delete 'company-files company-backends)
-
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; Align company-mode tooltips to the right hand side
@@ -132,7 +127,6 @@
 ;; Display number of completions before and after current suggestions
 ;; in company-mode
 (setq company-tooltip-offset-display 'lines)
-;; Display text icon of type in company popup
 
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -315,7 +309,37 @@
 
 (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
-(add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
+(define-hostmode poly-nix-hostmode :mode 'nix-mode)
+
+(define-auto-innermode poly-any-expr-nix-innermode
+  :head-matcher (rx (zero-or-more blank) "/*" (zero-or-more blank) bow (one-or-more (or word punct)) eow (zero-or-more blank) "*/" (zero-or-more blank) "''\n")
+  :mode-matcher (cons (rx "/*" (zero-or-more blank) (submatch bow (one-or-more (or word punct)) eow) (zero-or-more blank) "*/") 1)
+  :tail-matcher (rx (zero-or-more blank) "'';\n")
+  :head-mode 'host
+  :tail-mode 'host
+  :fallback-mode 'text-mode)
+
+(define-innermode poly-elisp-expr-nix-innermode
+  :mode 'emacs-lisp-mode
+  :head-matcher (cons (rx (zero-or-more blank) "''\n" (submatch (zero-or-more blank) ";")) 1)
+  :tail-matcher (rx (zero-or-more blank) "'';\n")
+  :head-mode 'body
+  :tail-mode 'host)
+
+(define-innermode poly-sh-expr-nix-innermode
+  :mode 'sh-mode
+  :head-matcher (cons (rx (zero-or-more blank) "''\n" (submatch (zero-or-more blank) "#")) 1)
+  :tail-matcher (rx (zero-or-more blank) "'';\n")
+  :head-mode 'body
+  :tail-mode 'host)
+
+(define-polymode poly-nix-mode
+  :hostmode 'poly-nix-hostmode
+  :innermodes '(poly-any-expr-nix-innermode poly-sh-expr-nix-innermode poly-elisp-expr-nix-innermode))
+
+(add-to-list 'auto-mode-alist '("\\.nix$" . poly-nix-mode))
+
+(add-to-list 'format-all-default-formatters '("Nix" alejandra))
 
 (define-key nix-mode-map (kbd "C-c C-u") 'nix-update-fetch)
 
@@ -468,6 +492,9 @@ Opens in new window otherwise opens in current window."
 (global-set-key (kbd "C-s") 'swiper)
 
 (setq yas-snippet-dirs '((expand-file-name "snippets" org-directory)))
+
+;; Accept 'y' and 'n' rather than 'yes' and 'no'.
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (provide 'init)
 ;;; init.el ends here

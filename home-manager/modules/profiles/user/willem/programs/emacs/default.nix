@@ -86,6 +86,8 @@
         org-modern
         pdf-tools
         plantuml-mode
+        polymode
+        poly-org
         rustic
         separedit
         solarized-theme

@@ -74,6 +74,7 @@
 in {
   home.packages = with pkgs;
     [
+      alejandra
       autoconf
       automake
       bash
