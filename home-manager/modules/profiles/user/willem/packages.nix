@@ -124,7 +124,6 @@ in {
       yq
       zsh-completions
     ]
-    ++ lib.optionals stdenv.isDarwin darwin
     ++ lib.optionals stdenv.isLinux linux
     ++ node-packages;
 }

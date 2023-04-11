@@ -50,21 +50,6 @@ stdenv.mkDerivation {
     chmod -R a+rw vkQuake.app
     ls
     cp build/vkquake vkQuake.app/Contents/Resources/vkquake
-    mkdir vkQuake.app/Contents/Frameworks
-    otool -L build/vkquake |
-    	rg nix |
-    	cut -f1 -d' ' |
-    	awk '{$1=$1};1' |
-    	sort |
-    	uniq |
-    	xargs -I {} cp {} vkQuake.app/Contents/Frameworks/.
-    otool -L vkQuake.app/Contents/Frameworks/* |
-    	rg nix |
-    	cut -f1 -d' ' |
-    	awk '{$1=$1};1' |
-    	sort |
-    	uniq |
-    	xargs -I {} cp -u {} vkQuake.app/Contents/Frameworks/.
   '';
 
   installPhase = ''

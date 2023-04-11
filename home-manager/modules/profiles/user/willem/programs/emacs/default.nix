@@ -114,24 +114,16 @@
       ])
       ++ (with pkgs; [
         gnuplot
-        mu
         plantuml
         sqlite
       ]));
-  emacsConfig = pkgs.emacsWithPackagesFromUsePackage {
-    config = ./init.el;
-
-    defaultInitFile = true;
-
-    package = emacsPackage;
-  };
 in {
   home.file.".emacs.d/early-init.el".source = ./early-init.el;
   home.file.".emacs.d/init.el".source = ./init.el;
 
   programs.emacs.enable = true;
 
-  programs.emacs.package = emacsConfig;
+  programs.emacs.package = emacsPackage;
 
   services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
