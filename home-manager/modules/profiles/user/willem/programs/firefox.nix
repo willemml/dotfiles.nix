@@ -5,6 +5,51 @@
 }: {
   programs.firefox = {
     enable = true;
+    package = pkgs.stdenv.mkDerivation {
+      name = "firefox-with-policies";
+      src =
+        if pkgs.stdenv.isDarwin
+        then pkgs.firefox-mac
+        else pkgs.firefox;
+      policiesJson =
+        /*
+        json
+        */
+        ''
+          {
+              "policies": {
+                  "DisableAppUpdate": true,
+                  "DisableFirefoxAccounts": true,
+                  "DisableFirefoxStudies": true,
+                  "DisableTelemetry": true,
+                  "DisablePocket": true,
+                  "DontCheckDefaultBrowser": true,
+                  "PasswordManagerEnabled": false
+              }
+          }
+        '';
+      buildPhase =
+        /*
+        sh
+        */
+        ''
+          #
+          mkdir -p $out/bin
+          cp -r $src/Applications $out/Applications
+          export RESOURCESDIR="$out/Applications/Firefox.app/Contents/Resources"
+          chmod +w $RESOURCESDIR
+          mkdir $RESOURCESDIR/distribution
+          echo $policiesJson > $RESOURCESDIR/distribution/policies.json
+          chmod -w $RESOURCESDIR
+
+          cat <<EOF>>$out/bin/firefox
+          #! ${pkgs.bash}/bin/bash -e
+          exec "$out/Applications/Firefox.app/Contents/MacOS/Firefox"  "$@"
+          EOF
+
+          chmod +x $out/bin/firefox
+        '';
+    };
     profiles.primary = {
       id = 0;
       isDefault = true;
@@ -45,7 +90,6 @@
           };
 
           "Bing".metaData.hidden = true;
-          "Google".metaData.alias = "@g";
         };
       };
       settings = {
