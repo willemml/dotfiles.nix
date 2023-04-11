@@ -4,21 +4,25 @@
   ...
 }: let
   emacsPackage =
-    (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
+    (pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages
     (epkgs:
       (with epkgs; let
-        org-auctex = epkgs.trivialBuild {
-          pname = "org-auctex";
-          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-
-          buildInputs = [epkgs.auctex];
+        company-mode = epkgs.trivialBuild {
+          pname = "company-mode";
+          version = "4203cfb";
 
           src = pkgs.fetchFromGitHub {
-            owner = "karthink";
-            repo = "org-auctex";
-            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+            owner = "company-mode";
+            repo = "company-mode";
+            rev = "4203cfbe1303ca86e61ffa31cb88d75782dbb893";
+            sha256 = "sha256-wj0vXlVkNEA1gD1oT3phzK5Dr/LNkiE2oRzzRmLE+20=";
           };
+        };
+        mu4e = epkgs.trivialBuild {
+          pname = "mu4e";
+          version = pkgs.mu.version;
+
+          src = "${pkgs.mu}/share/emacs/site-lisp/mu4e";
         };
         mu4e-accounts = epkgs.trivialBuild {
           pname = "mu4e-accounts";
@@ -55,6 +59,19 @@
               (provide 'mu4e-accounts)
             '';
         };
+        org-auctex = epkgs.trivialBuild {
+          pname = "org-auctex";
+          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+
+          buildInputs = [epkgs.auctex];
+
+          src = pkgs.fetchFromGitHub {
+            owner = "karthink";
+            repo = "org-auctex";
+            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
+          };
+        };
       in [
         all-the-icons
         all-the-icons-dired
@@ -64,7 +81,7 @@
         calibredb
         cdlatex
         citeproc
-        company
+        company-mode
         counsel
         editorconfig
         edit-indirect
@@ -76,6 +93,7 @@
         ivy-bibtex
         magit
         meow
+        mu4e
         mu4e-accounts
         nix-mode
         nix-update

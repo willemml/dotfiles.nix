@@ -56,6 +56,8 @@
 (global-unset-key (kbd "C-<wheel-down>"))
 (global-unset-key (kbd "C-<wheel-up>"))
 
+(require 'all-the-icons)
+(require 'all-the-icons-dired)
 (require 'arduino-mode)
 (require 'async)
 (require 'calibredb)
@@ -95,6 +97,7 @@
 (require 'org-download)
 (require 'org-modern)
 (require 'ox-latex)
+(require 'ox-publish)
 (require 'pdf-tools)
 (require 'plantuml-mode)
 (require 'polymode)
@@ -106,27 +109,21 @@
 
 (setq org-directory (expand-file-name "~/Documents/org"))
 
-(when (display-graphic-p)
-  (require 'all-the-icons)
-  (require 'all-the-icons-dired)
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
 (setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
 
 (setq send-mail-function 'async-smtpmail-send-it
       message-send-mail-function 'async-smtpmail-send-it)
 
-(setq calibredb-root-dir "~/Documents/calibre-library")
+(setq calibredb-root-dir (expand-file-name "~/Documents/calibre-library"))
 (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
 (setq calibredb-library-alist '(("~/Documents/calibre-library")))
 
-(add-hook 'after-init-hook 'global-company-mode)
+(setq company-format-margin-function 'company-text-icons-margin)
+(setq company-text-icons-add-background t)
 
-;; Align company-mode tooltips to the right hand side
-(setq company-tooltip-align-annotations t)
-;; Display number of completions before and after current suggestions
-;; in company-mode
-(setq company-tooltip-offset-display 'lines)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -169,8 +166,11 @@
 (setq ivy-re-builders-alist
       '((ivy-bibtex . ivy--regex-ignore-order)
         (t . ivy--regex-plus)))
-(defvar ivy-bibtex-bibliography '((expand-file-name "zotero.bib" org-directory)))
-(setq reftex-default-bibliography '((expand-file-name "zotero.bib" org-directory)))
+
+(defvar zotero-bibliography (expand-file-name "zotero.bib" org-directory))
+
+(defvar ivy-bibtex-bibliography (list zotero-bibliography))
+(setq reftex-default-bibliography (list zotero-bibliography))
 (setq bibtex-completion-pdf-field "file")
 
 (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
@@ -312,30 +312,16 @@
 (define-hostmode poly-nix-hostmode :mode 'nix-mode)
 
 (define-auto-innermode poly-any-expr-nix-innermode
-  :head-matcher (rx (zero-or-more blank) "/*" (zero-or-more blank) bow (one-or-more (or word punct)) eow (zero-or-more blank) "*/" (zero-or-more blank) "''\n")
-  :mode-matcher (cons (rx "/*" (zero-or-more blank) (submatch bow (one-or-more (or word punct)) eow) (zero-or-more blank) "*/") 1)
-  :tail-matcher (rx (zero-or-more blank) "'';\n")
+  :head-matcher (rx (* blank) "/*" (* blank) bow (+ (or word punct)) eow (* blank) "*/" (* blank) "''\n")
+  :mode-matcher (cons (rx "/*" (* blank) (submatch bow (+ (or word punct)) eow) (* blank) "*/") 1)
+  :tail-matcher (rx bol (* blank) "'';" (* blank) eol)
   :head-mode 'host
   :tail-mode 'host
   :fallback-mode 'text-mode)
 
-(define-innermode poly-elisp-expr-nix-innermode
-  :mode 'emacs-lisp-mode
-  :head-matcher (cons (rx (zero-or-more blank) "''\n" (submatch (zero-or-more blank) ";")) 1)
-  :tail-matcher (rx (zero-or-more blank) "'';\n")
-  :head-mode 'body
-  :tail-mode 'host)
-
-(define-innermode poly-sh-expr-nix-innermode
-  :mode 'sh-mode
-  :head-matcher (cons (rx (zero-or-more blank) "''\n" (submatch (zero-or-more blank) "#")) 1)
-  :tail-matcher (rx (zero-or-more blank) "'';\n")
-  :head-mode 'body
-  :tail-mode 'host)
-
 (define-polymode poly-nix-mode
   :hostmode 'poly-nix-hostmode
-  :innermodes '(poly-any-expr-nix-innermode poly-sh-expr-nix-innermode poly-elisp-expr-nix-innermode))
+  :innermodes '(poly-any-expr-nix-innermode))
 
 (add-to-list 'auto-mode-alist '("\\.nix$" . poly-nix-mode))
 
@@ -419,19 +405,17 @@ Opens in new window otherwise opens in current window."
 
 (plist-put org-format-latex-options :scale 3)
 
-(setq org-agenda-files '(org-directory (expand-file-name "ubc" org-directory)))
+(setq org-agenda-files (list org-directory (expand-file-name "ubc" org-directory)))
 (setq org-agenda-tags-column 0)
 (setq org-auto-align-tags nil)
 (setq org-fold-catch-invisible-edits 'show-and-error)
-(setq org-cite-csl-styles-dir "~/Zotero/styles")
 (setq org-cite-export-processors '((t basic)))
-(setq org-cite-global-bibliography '((expand-file-name "zotero.bib" org-directory)))
+(setq org-cite-global-bibliography (list zotero-bibliography))
 (setq org-confirm-babel-evaluate nil)
 (setq org-ellipsis "…")
 (setq org-export-with-tags nil)
 (setq org-hide-emphasis-markers t)
 (setq org-highlight-latex-and-related '(latex))
-(setq org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
 (setq org-html-head-include-default-style nil)
 (setq org-html-head-include-scripts nil)
 (setq org-html-validation-link nil)
@@ -452,21 +436,23 @@ Opens in new window otherwise opens in current window."
         (800 1000 1200 1400 1600 1800 2000)
         " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
+(setq org-exports-dir (expand-file-name "exports" org-directory))
+
 (setq org-publish-project-alist
-      '(("html"
-         :base-directory org-directory
-         :base-extension "org"
-         :htmlized-source t
-         :recursive t
-         :publishing-directory (expand-file-name "exports" org-directory)
-         :publishing-function org-html-publish-to-html)
-        ("pdf"
-         :base-directory org-directory
-         :base-extension "org"
-         :recursive t
-         :publishing-directory (expand-file-name "exports" org-directory)
-         :publishing-function org-latex-publish-to-pdf)
-        ("all" :components ("html" "pdf"))))
+      (list (cons "html"
+                  (list :base-directory org-directory
+                        :base-extension "org"
+                        :htmlized-source t
+                        :recursive t
+                        :publishing-directory org-exports-dir
+                        :publishing-function 'org-html-publish-to-html))
+            (cons "pdf"
+                  (list :base-directory org-directory
+                        :base-extension "org"
+                        :recursive t
+                        :publishing-directory org-exports-dir
+                        :publishing-function 'org-latex-publish-to-pdf))
+            (cons "all" '(:components ("html" "pdf")))))
 
 (add-hook 'org-mode-hook 'org-auctex-mode)
 
@@ -491,7 +477,7 @@ Opens in new window otherwise opens in current window."
 
 (global-set-key (kbd "C-s") 'swiper)
 
-(setq yas-snippet-dirs '((expand-file-name "snippets" org-directory)))
+(setq yas-snippet-dirs (list (expand-file-name "snippets" org-directory)))
 
 ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
 (defalias 'yes-or-no-p 'y-or-n-p)
