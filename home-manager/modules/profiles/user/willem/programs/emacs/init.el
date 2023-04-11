@@ -146,6 +146,8 @@
 (editorconfig-mode 1)
 
 (global-set-key (kbd "C-c C-y") 'format-all-buffer)
+
+(add-to-list 'format-all-default-formatters '("Nix" alejandra))
 (setq-default format-all-formatters format-all-default-formatters)
 
 (autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)
@@ -324,8 +326,6 @@
   :innermodes '(poly-any-expr-nix-innermode))
 
 (add-to-list 'auto-mode-alist '("\\.nix$" . poly-nix-mode))
-
-(add-to-list 'format-all-default-formatters '("Nix" alejandra))
 
 (define-key nix-mode-map (kbd "C-c C-u") 'nix-update-fetch)
 

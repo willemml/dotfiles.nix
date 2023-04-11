@@ -23,14 +23,6 @@ in {
     '';
   };
 
-  home.file.".config/zsh/am.sh" = {
-    executable = true;
-    source = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/mcthomas/Apple-Music-CLI-Player/27353ec55abac8b5d73b8a061fb87f305c663adb/src/am.sh";
-      sha256 = "sha256-78zRpNg7/OR7p8dpsJt6Xc4j0Y+8zSUtm/PT94nf03M=";
-    };
-  };
-
   programs.zsh.shellAliases =
     {
       drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
@@ -62,17 +54,37 @@ in {
       NSGlobalDomain = {
         AppleLanguages = ["en-CA"];
         AppleLocale = "en_CA";
+        "com.apple.sound.beep.feedback" = 1;
+        AppleICUForce24HourTime = true;
+        AppleInterfaceStyle = "Dark";
+        AppleMeasurementUnits = "Centimeters";
+        AppleMetricUnits = true;
+        AppleShowAllExtensions = true;
+        AppleShowScrollBars = "WhenScrolling";
+        AppleTemperatureUnit = "Celsius";
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSAutomaticWindowAnimationsEnabled = false;
+        NSDocumentSaveNewDocumentsToCloud = false;
+        NSNavPanelExpandedStateForSaveMode = true;
+        NSNavPanelExpandedStateForSaveMode2 = true;
+        NSTableViewDefaultSizeMode = 1;
+        NSTextShowsControlCharacters = true;
+        NSWindowResizeTime = 0.0;
       };
-      "com.apple.Safari" = {
+      com.apple.Safari = {
         AutoOpenSafeDownloads = false;
         IncludeDevelopMenu = true;
         ShowFullURLInSmartSearchField = true;
       };
-      "com.apple.menuextra.clock" = {
+      com.apple.menuextra.clock = {
         DateFormat = "EEE d MMM HH:mm:ss";
         FlashDateSeparators = false;
       };
-      "com.apple.controlcenter" = {
+      com.apple.controlcenter = {
         "NSStatusItem Visible AccessibilityShortcuts" = false;
         "NSStatusItem Visible AirDrop" = false;
         "NSStatusItem Visible Battery" = true;
@@ -87,11 +99,31 @@ in {
         "NSStatusItem Visible UserSwitcher" = false;
         "NSStatusItem Visible WiFi" = true;
       };
-      "com.apple.systempreferences" = {
+      com.apple.systempreferences = {
         "com.apple.preference.battery".hasBeenWarnedAboutEnergyUsage = true;
       };
       com.apple.appleseed.FeedbackAssistant.Autogather = false;
       com.apple.TextEdit.RichText = false;
+      loginwindow = {
+        SHOWFULLNAME = false;
+        GuestEnabled = false;
+        DisableConsoleAccess = true;
+      };
+      LaunchServices.LSQuarantine = false;
+      com.apple.dock = {
+        autohide = true;
+        launchanim = false;
+        minimize-to-application = true;
+        mru-spaces = false;
+        orientation = "bottom";
+        static-only = true;
+        tilesize = 35;
+      };
+      com.apple.driver.AppleBluetoothMultitouch.trackpad = {
+        FirstClickThreshold = 0;
+        SecondClickThreshold = 2;
+        Clicking = true;
+      };
     };
     currentHostDefaults = {
       "com.apple.controlcenter".BatteryShowPercentage = true;
