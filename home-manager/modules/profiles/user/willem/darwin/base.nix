@@ -38,18 +38,21 @@ in {
       f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
       o = "open";
       oa = "open -a";
-      pinentry = "pinentry-mac";
+      pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
     }
     // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands;
 
-  programs.firefox.package = pkgs.firefox-mac;
   programs.chromium.package = pkgs.chromium-mac;
 
   home.packages = with pkgs; [
     colima
     freecad-mac
     iterm2
+    pinentry-mac
+    pinentry-touchid
+    pngpaste
     qbittorrent-mac
+    spoof-mac
     utm
     vlc-mac
   ];

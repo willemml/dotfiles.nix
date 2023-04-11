@@ -3,12 +3,6 @@
   lib,
   ...
 }: let
-  darwin = with pkgs; [
-    pngpaste
-    pinentry-touchid
-    pinentry-mac
-    spoof-mac
-  ];
   linux = with pkgs; [];
   python-wp = pkgs.python310.withPackages (p:
     with p; [
@@ -96,6 +90,7 @@ in {
       graphviz
       htop
       jq
+      mu
       nix-review
       nix-zsh-completions
       nixfmt
@@ -104,6 +99,7 @@ in {
       nodejs
       octave-wp
       openssh
+      pinentry
       plantuml
       poppler
       pv
