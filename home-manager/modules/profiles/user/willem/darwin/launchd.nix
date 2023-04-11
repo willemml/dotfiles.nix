@@ -3,7 +3,9 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  logFile = name: "${config.home.homeDirectory}/Library/Logs/${name}.log";
+in {
   launchd = {
     enable = true;
 
@@ -16,19 +18,8 @@
         ];
         KeepAlive = true;
         ProcessType = "Interactive";
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/emacs-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/emacs-stderr.log";
-      };
-    };
-
-    agents.iterm2 = {
-      enable = true;
-      config = {
-        ProgramArguments = ["${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2"];
-        KeepAlive = true;
-        ProcessType = "Interactive";
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/iterm2-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/iterm2-stderr.log";
+        StandardOutPath = logFile "emacs";
+        StandardErrorPath = logFile "emacs";
       };
     };
 
@@ -38,8 +29,19 @@
         ProgramArguments = ["${config.programs.firefox.package}/bin/firefox"];
         KeepAlive = true;
         ProcessType = "Interactive";
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/firefox-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/firefox-stderr.log";
+        StandardOutPath = logFile "firefox";
+        StandardErrorPath = logFile "firefox";
+      };
+    };
+
+    agents.iterm2 = {
+      enable = true;
+      config = {
+        ProgramArguments = ["${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2"];
+        KeepAlive = true;
+        ProcessType = "Interactive";
+        StandardOutPath = logFile "iterm2";
+        StandardErrorPath = logFile "iterm2";
       };
     };
 
@@ -49,8 +51,8 @@
         ProgramArguments = ["${pkgs.offlineimap}/bin/offlineimap"];
         UserName = "${config.home.username}";
         StartInterval = 900;
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/offlineimap-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/offlineimap-stderr.log";
+        StandardOutPath = logFile "offlineimap";
+        StandardErrorPath = logFile "offlineimap";
       };
     };
 
@@ -62,8 +64,8 @@
           "run"
         ];
         StartInterval = 3600;
-        StandardOutPath = "${config.home.homeDirectory}/Library/Logs/rss2email-stdout.log";
-        StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/rss2email-stderr.log";
+        StandardOutPath = logFile "rss2email";
+        StandardErrorPath = logFile "rss2email";
       };
     };
   };
