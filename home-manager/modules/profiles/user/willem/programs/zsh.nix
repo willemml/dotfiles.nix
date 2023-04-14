@@ -88,7 +88,7 @@
         spotify = "${web} https://open.spotify.com/";
         ubc = "cd ${config.home.sessionVariables.UBCDIR} ";
         ubcmail = "${web} https://webmail.student.ubc.ca";
-        web = "${pkgs.coreutils-full}/bin/nohup ${config.programs.firefox.package}/bin/firefox &> ${config.home.homeDirectory}/.firefox.log";
+        web = "${config.programs.firefox.package}/bin/firefox";
       }
       // (
         if pkgs.stdenv.isLinux

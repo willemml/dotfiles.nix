@@ -377,6 +377,8 @@ Opens in new window otherwise opens in current window."
 
 (global-set-key (kbd "C-c n a") 'org-agenda)
 
+(setq org-agenda-start-on-weekday nil)
+
 (define-key org-mode-map (kbd "C-c C-o") 'my/follow-org-link)
 (define-key org-mode-map (kbd "C-c C-y") 'my/indent-org-block-automatically)
 (define-key org-mode-map (kbd "C-c ]") 'org-cite-insert)

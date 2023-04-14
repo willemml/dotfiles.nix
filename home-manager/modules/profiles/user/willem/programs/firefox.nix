@@ -44,7 +44,7 @@
 
           cat <<EOF>>$out/bin/firefox
           #! ${pkgs.bash}/bin/bash -e
-          exec "$out/Applications/Firefox.app/Contents/MacOS/Firefox"  "$@"
+          exec "$out/Applications/Firefox.app/Contents/MacOS/Firefox"  "\$@"
           EOF
 
           chmod +x $out/bin/firefox
