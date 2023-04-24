@@ -89,6 +89,7 @@ in {
       gnuplot
       graphviz
       htop
+      iaito
       jq
       mu
       nix-review
@@ -104,6 +105,7 @@ in {
       poppler
       pv
       python-wp
+      radare2
       ripgrep
       rnix-lsp
       rsync

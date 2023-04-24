@@ -24,6 +24,7 @@
         darwin-zsh-completions
         firefox-mac
         freecad-mac
+        iaito
         org-auctex
         pinentry-mac
         pinentry-touchid

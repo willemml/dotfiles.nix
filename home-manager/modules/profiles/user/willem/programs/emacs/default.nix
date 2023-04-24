@@ -3,6 +3,7 @@
   pkgs,
   ...
 }: let
+  aspellPackage = pkgs.aspellWithDicts (d: [d.en d.en-science d.en-computers d.fr]);
   emacsPackage =
     (pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages
     (epkgs:
@@ -113,6 +114,7 @@
         yasnippet
       ])
       ++ (with pkgs; [
+        aspellPackage
         gnuplot
         plantuml
         sqlite
