@@ -82,6 +82,7 @@
         email = "${ew} -n --eval '(mu4e)'";
         emw = "emacs";
         ew = "emacsclient -c";
+        getmail = "${pkgs.offlineimap}/bin/offlineimap -f INBOX";
         l = "ls -1";
         np = "nix-shell -p";
         org = "cd ${config.home.sessionVariables.ORGDIR} ";

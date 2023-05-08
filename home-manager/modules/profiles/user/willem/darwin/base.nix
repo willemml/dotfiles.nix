@@ -38,7 +38,6 @@ in {
 
   home.packages = with pkgs; [
     colima
-    freecad-mac
     iterm2
     pinentry-mac
     pinentry-touchid

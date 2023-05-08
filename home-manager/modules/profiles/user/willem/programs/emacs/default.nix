@@ -83,6 +83,7 @@
         cdlatex
         citeproc
         company-mode
+        company-sourcekit
         counsel
         editorconfig
         edit-indirect
@@ -110,6 +111,7 @@
         rustic
         separedit
         solarized-theme
+        swift-mode
         swiper
         yasnippet
       ])
