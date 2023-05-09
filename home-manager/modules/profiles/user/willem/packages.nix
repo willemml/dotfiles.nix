@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  linux = with pkgs; [];
+  linux = with pkgs; [gcc-arm-embedded];
   python-wp = pkgs.python310.withPackages (p:
     with p; [
       keyring
@@ -65,6 +65,10 @@
       xkeyval
       ;
   };
+  fenix-rust = pkgs.fenix.combine (with pkgs.fenix; [
+    latest.toolchain
+    targets.thumbv7em-none-eabihf.latest.rust-std
+  ]);
 in {
   home.packages = with pkgs;
     [
@@ -83,7 +87,7 @@ in {
       docker
       docker-compose
       fd
-      fenix.latest.toolchain
+      fenix-rust
       findutils
       gawk
       gnuplot
