@@ -54,7 +54,7 @@
         push.autoSetupRemote = true;
       };
       lfs.enable = true;
-      package = pkgs.gitAndTools.gitFull;
+      package = pkgs.gitFull;
       userName = "willemml";
       userEmail = "willem@leit.so";
     };

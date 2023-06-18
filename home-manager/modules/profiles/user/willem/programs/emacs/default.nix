@@ -5,7 +5,7 @@
 }: let
   aspellPackage = pkgs.aspellWithDicts (d: [d.en d.en-science d.en-computers d.fr]);
   emacsPackage =
-    (pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages
+    (pkgs.emacsPackagesFor pkgs.emacs-git).emacsWithPackages
     (epkgs:
       (with epkgs; let
         company-mode = epkgs.trivialBuild {
@@ -73,6 +73,14 @@
             sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
           };
         };
+        rustic = epkgs.rustic.overrideAttrs (old: {
+          patches = [
+            (builtins.fetchurl {
+              url = "https://github.com/yuuyins/rustic/commit/12a3a962ff4aad605bfdfcc2ded99878b2d7de6e.patch";
+              sha256 = "sha256-x4JI0zwjj/3jP4ArVt6WTXfuNdbZX8ah9ZEcRiOKW5U=";
+            })
+          ];
+        });
       in [
         all-the-icons
         all-the-icons-dired

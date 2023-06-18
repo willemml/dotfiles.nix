@@ -102,6 +102,7 @@
 (require 'plantuml-mode)
 (require 'polymode)
 (require 'rustic)
+(require 'rust-ts-mode)
 (require 'smtpmail-async)
 (require 'swiper)
 (require 'tex)
@@ -311,6 +312,9 @@
 
 (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "firefox")
+
 (define-hostmode poly-nix-hostmode :mode 'nix-mode)
 
 (define-auto-innermode poly-any-expr-nix-innermode
@@ -468,8 +472,16 @@ Opens in new window otherwise opens in current window."
 
 (setq plantuml-default-exec-mode 'executable)
 
-(define-key rustic-mode-map (kbd "C-c C-y") 'eglot-format-buffer)
+(define-key eglot-mode-map (kbd "C-c C-y") 'eglot-format-buffer)
+(define-key eglot-mode-map (kbd "C-c C-a") 'eglot-code-actions)
+(setq eglot-extend-to-xref t)
 (setq rustic-lsp-client 'eglot)
+
+(setq rustic-treesitter-derive t)
+
+(setq auto-mode-alist (rassq-delete-all 'rust-mode auto-mode-alist))
+(setq auto-mode-alist (rassq-delete-all 'rust-ts-mode auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rustic-mode))
 
 (defvar separedit-preserve-string-indentation t)
 (global-set-key (kbd "C-c '") 'separedit)

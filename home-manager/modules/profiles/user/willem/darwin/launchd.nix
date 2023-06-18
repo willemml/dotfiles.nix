@@ -55,18 +55,5 @@ in {
         StandardErrorPath = logFile "offlineimap";
       };
     };
-
-    agents.rss2email = {
-      enable = true;
-      config = {
-        ProgramArguments = [
-          "${pkgs.rss2email}/bin/r2e"
-          "run"
-        ];
-        StartInterval = 3600;
-        StandardOutPath = logFile "rss2email";
-        StandardErrorPath = logFile "rss2email";
-      };
-    };
   };
 }

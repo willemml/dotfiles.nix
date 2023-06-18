@@ -104,6 +104,7 @@ in {
       nodejs
       octave-wp
       openssh
+      pass-git-helper
       pinentry
       plantuml
       poppler
@@ -127,6 +128,7 @@ in {
       unzip
       vkquake
       wget
+      xquartz
       yq
       zsh-completions
     ]

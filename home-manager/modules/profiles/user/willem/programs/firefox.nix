@@ -18,7 +18,6 @@
         ''
           {
               "policies": {
-                  "DisableAppUpdate": true,
                   "DisableFirefoxAccounts": true,
                   "DisableFirefoxStudies": true,
                   "DisableTelemetry": true,
@@ -93,7 +92,7 @@
         };
       };
       settings = {
-        "app.update.auto" = false;
+        "app.update.auto" = true;
         "app.update.checkInstallTime" = false;
         "app.update.silent" = true;
         "browser.aboutConfig.showWarning" = false;

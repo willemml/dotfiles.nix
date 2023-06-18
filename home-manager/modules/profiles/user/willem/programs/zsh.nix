@@ -81,7 +81,7 @@
         em = "emacs -nw";
         email = "${ew} -n --eval '(mu4e)'";
         emw = "emacs";
-        ew = "emacsclient -c";
+        ew = "emacsclient -c -n";
         getmail = "${pkgs.offlineimap}/bin/offlineimap -f INBOX";
         l = "ls -1";
         np = "nix-shell -p";
