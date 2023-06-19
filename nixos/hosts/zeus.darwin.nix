@@ -1,6 +1,12 @@
 {pkgs, ...}: {
   imports = [../profiles/common.nix];
 
+  nix = {
+    generateNixPathFromInputs = true;
+    generateRegistryFromInputs = true;
+    linkInputs = true;
+  };
+
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
     (allow default)

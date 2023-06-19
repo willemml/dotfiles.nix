@@ -35,18 +35,15 @@ in {
     // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands;
 
   programs.chromium.package = pkgs.chromium-mac;
+  programs.firefox.package = pkgs.firefox-mac;
 
   home.packages = with pkgs;
     [
       colima
-      iterm2
       pinentry-mac
       pinentry-touchid
       pngpaste
-      qbittorrent-mac
       spoof-mac
-      utm
-      vlc-mac
     ]
     ++ (let
       pkgs_x86_only = pkgs // {system = "x86_64-darwin";};

@@ -17,7 +17,7 @@
 
   services.udev.enable = true;
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.11";
 
   users.users.willem = {
     isNormalUser = true;

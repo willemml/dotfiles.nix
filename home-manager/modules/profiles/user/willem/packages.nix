@@ -78,7 +78,6 @@ in {
       bash
       bat
       black
-      cachix
       clang-tools
       cmake
       comma
@@ -126,9 +125,7 @@ in {
       unp
       unrar
       unzip
-      vkquake
       wget
-      xquartz
       yq
       zsh-completions
     ]

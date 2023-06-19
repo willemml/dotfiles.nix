@@ -7,27 +7,23 @@
     nixosModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
-        ../../nixos/profiles/linux-common.nix
+        ../../nixos/profiles/linux/base.nix
         inputs.home-manager.nixosModules.home-manager
-        self.nixosModules.default
         self.nixosModules.home-manager-integration
-        self.nixosModules.nix-useCachix
         self.nixosModules.nixpkgs-useFlakeNixpkgs
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
 
-      home-manager = {
-        sharedModules = [self.homeManagerModules.user-willem-linux];
-      };
+      home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
     darwinModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
         inputs.home-manager.darwinModules.home-manager
-        self.nixosModules.custom-linkNixInputs
+        self.nixosModules.linkNixInputs
         self.nixosModules.home-manager-integration
         self.nixosModules.nix-useCachix
         self.nixosModules.nixpkgs-useFlakeNixpkgs
@@ -36,9 +32,7 @@
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
 
-      home-manager = {
-        sharedModules = [self.homeManagerModules.user-willem-darwin];
-      };
+      home-manager.users.willem = self.homeManagerModules.user-willem-darwin;
     };
 
     nixosConfigurations.zeusvm = inputs.nixpkgs.lib.nixosSystem {

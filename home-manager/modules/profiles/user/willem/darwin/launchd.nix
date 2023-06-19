@@ -23,28 +23,6 @@ in {
       };
     };
 
-    agents.firefox = {
-      enable = true;
-      config = {
-        ProgramArguments = ["${config.programs.firefox.package}/bin/firefox"];
-        KeepAlive = true;
-        ProcessType = "Interactive";
-        StandardOutPath = logFile "firefox";
-        StandardErrorPath = logFile "firefox";
-      };
-    };
-
-    agents.iterm2 = {
-      enable = true;
-      config = {
-        ProgramArguments = ["${pkgs.iterm2}/Applications/iTerm2.app/Contents/MacOS/iTerm2"];
-        KeepAlive = true;
-        ProcessType = "Interactive";
-        StandardOutPath = logFile "iterm2";
-        StandardErrorPath = logFile "iterm2";
-      };
-    };
-
     agents.offlineimap = {
       enable = true;
       config = {

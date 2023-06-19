@@ -8,19 +8,18 @@
     homeManagerModules.user-willem = {
       imports = [
         self.homeManagerModules.default
-        self.homeManagerModules.nix-useCachix
-        self.homeManagerModules.nixpkgs-useFlakeNixpkgs
-        self.homeManagerModules.nixpkgs-config
       ];
 
       home.username = "willem";
-      home.stateVersion = "22.11";
+      home.stateVersion = "23.11";
     };
 
     homeManagerModules.user-willem-darwin = {
       imports = [
         self.homeManagerModules.darwin
         self.homeManagerModules.user-willem
+        self.homeManagerModules.nixpkgs-config
+        self.homeManagerModules.nixpkgs-useFlakeNixpkgs
       ];
 
       home.homeDirectory = "/Users/willem";
