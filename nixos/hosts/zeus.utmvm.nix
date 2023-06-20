@@ -1,9 +1,5 @@
 {pkgs, ...}: {
-  imports = [
-    ../profiles/desktop.nix
-    ../profiles/gnome.nix
-    ../profiles/linux-common.nix
-  ];
+  imports = [../profiles/linux/gnome.nix];
 
   boot.extraModulePackages = [];
 

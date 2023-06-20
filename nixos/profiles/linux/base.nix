@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  imports = [./common.nix];
+  imports = [../common.nix];
 
   console.keyMap = "colemak";
 

@@ -26,7 +26,10 @@
     };
 
     homeManagerModules.user-willem-linux = {
-      imports = [self.homeManagerModules.user-willem];
+      imports = [
+        self.homeManagerModules.user-willem
+        self.homeManagerModules.linux
+      ];
 
       home.homeDirectory = "/home/willem";
     };

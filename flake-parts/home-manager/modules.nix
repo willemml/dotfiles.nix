@@ -9,17 +9,22 @@
   ...
 }: {
   flake.homeManagerModules = let
-    modules = self.lib.importDirToAttrs ../../home-manager/modules;
-    non-darwin-modules = lib.filterAttrs (n: v: !(lib.hasInfix "darwin" n)) modules;
+    modules = self.lib.importDirToAttrs ../../home-manager;
+    non-specific-modules = lib.filterAttrs (n: v: (!(lib.hasInfix "darwin" n) && !(lib.hasInfix "linux" n))) modules;
     darwin-modules = lib.filterAttrs (n: v: (lib.hasInfix "darwin" n)) modules;
+    linux-modules = lib.filterAttrs (n: v: (lib.hasInfix "linux" n)) modules;
   in
     {
       default = {
-        imports = builtins.attrValues non-darwin-modules;
+        imports = builtins.attrValues non-specific-modules;
       };
 
       darwin = {
         imports = builtins.attrValues darwin-modules;
+      };
+
+      linux = {
+        imports = builtins.attrValues linux-modules;
       };
 
       nixpkgs-config = {
