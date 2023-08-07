@@ -33,6 +33,13 @@
       ''
         export GPG_TTY=$(tty)
 
+        if [ -n "$INSIDE_EMACS" ]; then
+            chpwd() {
+                print -P "\032/$(pwd)"
+            }
+        fi
+
+
         function s() {
             ${shellAliases.web} "https://google.com/search?q=$(echo $@ | sed -e 's/ /%20/g')"
         }
