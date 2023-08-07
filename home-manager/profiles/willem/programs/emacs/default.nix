@@ -5,7 +5,7 @@
 }: let
   aspellPackage = pkgs.aspellWithDicts (d: [d.en d.en-science d.en-computers d.fr]);
   emacsPackage =
-    (pkgs.emacsPackagesFor pkgs.emacs-git).emacsWithPackages
+    (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages
     (epkgs:
       (with epkgs; let
         company-mode = epkgs.trivialBuild {

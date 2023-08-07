@@ -95,7 +95,7 @@ in {
       iaito
       jq
       mu
-      nix-review
+      # nix-review
       nix-zsh-completions
       nixfmt
       nixpkgs-fmt

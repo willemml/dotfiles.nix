@@ -19,7 +19,6 @@
         then config.programs.emacs.finalPackage
         else pkgs.emacs;
       client.enable = true;
-      defaultEditor = true;
       startWithUserSession = true;
     };
   };

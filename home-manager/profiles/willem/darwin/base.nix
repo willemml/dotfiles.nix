@@ -25,8 +25,8 @@ in {
 
   programs.zsh.shellAliases =
     {
-      drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-      dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+      drs = "nix run nix-darwin -- switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+      dbs = "nix run nix-darwin -- build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
       f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
       o = "open";
       oa = "open -a";
