@@ -7,6 +7,7 @@
 ;;
 ;;; Code:
 
+;; Make sure nix installed binaries are in the PATH
 (setenv "PATH" (concat "/Users/willem/.nix-profile/bin:" (getenv "PATH")))
 (add-to-list 'exec-path "/Users/willem/.nix-profile/bin")
 
@@ -38,6 +39,10 @@
 ;; Enable highlighting of current line.
 (global-hl-line-mode 1)
 
+;; Make it easier to enter tildes and backticks
+(global-set-key (kbd "M-n") "~")
+(global-set-key (kbd "M-N") "`")
+
 (defun with-buffer-name-prompt-and-make-subdirs ()
   "Offer to create parent directory when finding file in a non-existent directory."
   (let ((parent-directory (file-name-directory buffer-file-name)))
@@ -45,9 +50,6 @@
                (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
       (make-directory parent-directory t))))
 (add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
-
-(global-set-key (kbd "M-n") "~")
-(global-set-key (kbd "M-N") "`")
 
 ;; Don't warn when cannot guess python indent level
 (setq-default python-indent-guess-indent-offset-verbose nil)
@@ -58,9 +60,6 @@
 
 (require 'all-the-icons)
 (require 'all-the-icons-dired)
-(require 'arduino-mode)
-(require 'async)
-(require 'calibredb)
 (require 'cdlatex)
 (require 'citeproc)
 (require 'company)
@@ -112,20 +111,12 @@
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-(setq arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino")
-
-(setq send-mail-function 'async-smtpmail-send-it
-      message-send-mail-function 'async-smtpmail-send-it)
-
-(setq calibredb-root-dir (expand-file-name "~/Documents/calibre-library"))
-(setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-(setq calibredb-library-alist '(("~/Documents/calibre-library")))
-
 (setq company-format-margin-function 'company-text-icons-margin)
 (setq company-text-icons-add-background t)
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; Configure Ivy/Swiper
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
@@ -271,12 +262,22 @@
 (meow-setup)
 (meow-global-mode 1)
 
-(define-key mu4e-main-mode-map (kbd "C-c C-u") 'my-mu4e-set-account)
+
+;; Configure mu4e
+
+;; Setup sending email with mu4e
+(setq send-mail-function 'smtpmail-send-it
+      message-send-mail-function 'smtpmail-send-it)
+
 (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
 (defvar starttls-use-gnutls t)
 (setq message-kill-buffer-on-exit t
       mail-user-agent 'mu4e-user-agent)
+
+
+(define-key mu4e-main-mode-map (kbd "C-c C-u") 'my-mu4e-set-account)
+
 
 (set-variable 'read-mail-command 'mu4e)
 
@@ -310,10 +311,7 @@
         (:name "Feed" :query "maildir:/feeds" :key ?f)
         (:name "XKCD" :query "list:xkcd.localhost" :key ?x)))
 
-(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
-
-(setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "firefox")
+;; Polymode config (add support for nix files with commented strings)
 
 (define-hostmode poly-nix-hostmode :mode 'nix-mode)
 
@@ -331,6 +329,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.nix$" . poly-nix-mode))
 
+
+;; Automatically update hash for nix fetch functions
 (define-key nix-mode-map (kbd "C-c C-u") 'nix-update-fetch)
 
 (setq org-babel-octave-shell-command "octave -q")

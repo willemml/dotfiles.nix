@@ -5,7 +5,7 @@
 }: let
   aspellPackage = pkgs.aspellWithDicts (d: [d.en d.en-science d.en-computers d.fr]);
   emacsPackage =
-    (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages
+    (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
     (epkgs:
       (with epkgs; let
         company-mode = epkgs.trivialBuild {
@@ -48,6 +48,11 @@
                      (smtpmail-default-smtp-server "${host}")
                      (smtpmail-smtp-server "${host}")
                      (smtpmail-smtp-service ${port} )
+                     ${
+                  if account.flavor == "gmail.com"
+                  then "(mu4e-sent-messages-behavior 'delete)"
+                  else ""
+                }
                      (smtpmail-smtp-user "${account.userName}")
                      (user-mail-address "${account.address}"))
               ''
@@ -84,10 +89,7 @@
       in [
         all-the-icons
         all-the-icons-dired
-        arduino-mode
-        async
         auctex
-        calibredb
         cdlatex
         citeproc
         company-mode

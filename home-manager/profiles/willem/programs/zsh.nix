@@ -11,9 +11,9 @@
     dotDir = ".config/zsh";
     enableAutosuggestions = true;
     enableCompletion = true;
-    syntaxHighlighting = {
-      enable = true;
-    };
+    # syntaxHighlighting = {
+    #   enable = true;
+    # };
     enableVteIntegration = true;
 
     initExtraBeforeCompInit = ''
