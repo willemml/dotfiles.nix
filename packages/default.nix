@@ -1,7 +1,6 @@
 _final: prev: {
   chromium-mac = prev.callPackage ./chromium-mac.nix {};
   darwin-zsh-completions = prev.callPackage ./darwin-zsh-completions.nix {};
-  firefox-mac = prev.callPackage ./firefox-mac.nix {};
   freecad-mac = prev.callPackage ./freecad-mac.nix {};
   iaito = prev.libsForQt5.callPackage ./iaito.nix {};
   mkMacBinPackage = import ./mk-mac-binpkg.nix prev;

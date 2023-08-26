@@ -3,18 +3,7 @@
   pkgs,
   lib,
   ...
-}: let
-  appCommands = {
-    calibre = "Calibre";
-    ical = "Calendar";
-    im = "Messages";
-    maps = "Maps";
-    music = "Music";
-    safari = "Safari";
-    settings = "System Settings";
-    zotero = "Zotero";
-  };
-in {
+}: {
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
@@ -23,19 +12,13 @@ in {
     '';
   };
 
-  programs.zsh.shellAliases =
-    {
-      drs = "nix run nix-darwin -- switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-      dbs = "nix run nix-darwin -- build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-      f = "open \"$(${config.programs.fzf.package}/bin/fzf)\"";
-      o = "open";
-      oa = "open -a";
-      pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
-    }
-    // lib.attrsets.mapAttrs (name: value: "open -a '" + value + "'") appCommands;
-
-  programs.chromium.package = pkgs.chromium-mac;
-  programs.firefox.package = pkgs.firefox-mac;
+  programs.zsh.shellAliases = {
+    drs = "nix run nix-darwin -- switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    dbs = "nix run nix-darwin -- build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    o = "open";
+    oa = "open -a";
+    pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
+  };
 
   home.packages = with pkgs;
     [

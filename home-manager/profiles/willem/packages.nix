@@ -3,7 +3,6 @@
   lib,
   ...
 }: let
-  linux = with pkgs; [gcc-arm-embedded];
   python-wp = pkgs.python310.withPackages (p:
     with p; [
       keyring
@@ -95,7 +94,6 @@ in {
       iaito
       jq
       mu
-      # nix-review
       nix-zsh-completions
       nixfmt
       nixpkgs-fmt
@@ -129,6 +127,5 @@ in {
       yq
       zsh-completions
     ]
-    ++ lib.optionals stdenv.isLinux linux
     ++ node-packages;
 }

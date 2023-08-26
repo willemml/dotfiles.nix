@@ -7,22 +7,6 @@
   programs = {
     bash.enableCompletion = true;
 
-    browserpass = {
-      enable = true;
-      browsers = [
-        "chromium"
-        "firefox"
-      ];
-    };
-
-    chromium = {
-      enable = true;
-      extensions = [
-        {id = "naepdomgkenhinolocfifgehidddafch";} # browserpass
-        {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-      ];
-    };
-
     direnv = {
       enable = true;
       enableBashIntegration = true;
