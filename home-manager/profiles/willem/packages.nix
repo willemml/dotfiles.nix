@@ -84,6 +84,7 @@ in {
       curl
       docker
       docker-compose
+      elan
       fd
       fenix-rust
       findutils

@@ -8,15 +8,15 @@
     (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
     (epkgs:
       (with epkgs; let
-        company-mode = epkgs.trivialBuild {
+        company-mode = epkgs.trivialBuild rec {
           pname = "company-mode";
-          version = "4203cfb";
+          version = "7c24dc8668af5aea8a5d07aeceda5fac7a2a85b5";
 
           src = pkgs.fetchFromGitHub {
-            owner = "company-mode";
-            repo = "company-mode";
-            rev = "4203cfbe1303ca86e61ffa31cb88d75782dbb893";
-            sha256 = "sha256-wj0vXlVkNEA1gD1oT3phzK5Dr/LNkiE2oRzzRmLE+20=";
+            owner = pname;
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-6aX2S4cUop1rdxweIF5f1qrgNmYd1mtWgT9T1Q1s2h8=";
           };
         };
         mu4e = epkgs.trivialBuild {
@@ -65,7 +65,7 @@
               (provide 'mu4e-accounts)
             '';
         };
-        org-auctex = epkgs.trivialBuild {
+        org-auctex = epkgs.trivialBuild rec {
           pname = "org-auctex";
           version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
 
@@ -73,19 +73,28 @@
 
           src = pkgs.fetchFromGitHub {
             owner = "karthink";
-            repo = "org-auctex";
-            rev = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
+            repo = pname;
+            rev = version;
             sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
           };
         };
-        rustic = epkgs.rustic.overrideAttrs (old: {
-          patches = [
-            (builtins.fetchurl {
-              url = "https://github.com/yuuyins/rustic/commit/12a3a962ff4aad605bfdfcc2ded99878b2d7de6e.patch";
-              sha256 = "sha256-x4JI0zwjj/3jP4ArVt6WTXfuNdbZX8ah9ZEcRiOKW5U=";
-            })
-          ];
-        });
+        lean4-mode = epkgs.trivialBuild rec {
+          pname = "lean4-mode";
+          version = "d1c936409ade7d93e67107243cbc0aa55cda7fd5";
+
+          buildInputs = [epkgs.dash epkgs.f epkgs.magit-section epkgs.lsp-mode epkgs.s epkgs.flycheck];
+
+          postInstall = ''
+            cp -r data $out/share/emacs/site-lisp/data
+          '';
+
+          src = pkgs.fetchFromGitHub {
+            owner = "leanprover";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-tD5Ysa24fMIS6ipFc50OjabZEUge4riSb7p4BR05ReQ=";
+          };
+        };
       in [
         all-the-icons
         all-the-icons-dired
@@ -95,15 +104,21 @@
         company-mode
         company-sourcekit
         counsel
+        dash
         editorconfig
         edit-indirect
+        f
+        flycheck
         format-all
         gnuplot
         graphviz-dot-mode
         htmlize
         ivy
         ivy-bibtex
+        lean4-mode
+        lsp-mode
         magit
+        magit-section
         meow
         mu4e
         mu4e-accounts
@@ -119,6 +134,7 @@
         polymode
         poly-org
         rustic
+        s
         separedit
         solarized-theme
         swift-mode

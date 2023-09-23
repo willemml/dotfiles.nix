@@ -74,6 +74,7 @@
 (require 'htmlize)
 (require 'ivy)
 (require 'ivy-bibtex)
+(require 'lean4-mode)
 (require 'magit)
 (require 'meow)
 (require 'mu4e)

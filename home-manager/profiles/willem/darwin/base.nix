@@ -20,6 +20,18 @@
     pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
   };
 
+  programs.zsh.envExtra = ''
+    export WINEPREFIX="${config.home.homeDirectory}/.gptk_wineprefix"
+
+    if [ "$(arch)" = "arm64" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        wine-gptk(){ arch -x86_64 /bin/zsh -c "WINEESYNC=1 \$(brew --prefix game-porting-toolkit)/bin/wine64 $@"; }
+    else
+        eval "$(/usr/local/bin/brew shellenv)"
+        wine-gptk(){ WINEESYNC=1 $(brew --prefix game-porting-toolkit)/bin/wine64 "$@"; }
+    fi
+  '';
+
   home.packages = with pkgs;
     [
       colima
