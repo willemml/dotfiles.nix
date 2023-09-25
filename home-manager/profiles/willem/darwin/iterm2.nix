@@ -259,36 +259,6 @@ in {
           "Working Directory" = "/Users/willem";
         }
         // profile_defaults)
-      ({
-          "Columns" = 120;
-          "Command" = "";
-          "Custom Command" = "No";
-          "Custom Directory" = "No";
-          "Default Bookmark" = "No";
-          "Description" = "Default";
-          "Disable Window Resizing" = true;
-          "Guid" = "00A17AC2-1885-4AE2-B941-A47A5D8C36B4";
-          "Has Hotkey" = true;
-          "HotKey Activated By Modifier" = false;
-          "HotKey Alternate Shortcuts" = {};
-          "HotKey Characters Ignoring Modifiers" = " ";
-          "HotKey Characters" = " ";
-          "HotKey Key Code" = 49;
-          "HotKey Modifier Activation" = 3;
-          "HotKey Modifier Flags" = 1048576;
-          "HotKey Window Animates" = false;
-          "HotKey Window AutoHides" = true;
-          "HotKey Window Dock Click Action" = 0;
-          "HotKey Window Floats" = true;
-          "HotKey Window Reopens On Activation" = false;
-          "Name" = "Hotkey Window";
-          "Rows" = 25;
-          "Screen" = -1;
-          "Space" = -1;
-          "Tags" = [];
-          "Working Directory" = "/Users/willem";
-        }
-        // profile_defaults)
     ];
   };
 }

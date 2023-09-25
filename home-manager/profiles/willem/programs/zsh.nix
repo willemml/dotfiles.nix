@@ -47,7 +47,7 @@
             direnv allow
           fi
           if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
-            cat > default.nix <<'EOF'
+            cat > default.nix <<EOF
         with import <nixpkgs> {};
         mkShell {
           nativeBuildInputs = [
@@ -56,7 +56,7 @@
           ];
         }
         EOF
-            ${config.home.sessionVariables.EDITOR} default.nix
+            '${config.home.sessionVariables.EDITOR}' default.nix
           fi
         }
 
@@ -67,7 +67,7 @@
             echo "use flake" > .envrc
             direnv allow
           fi
-          ${config.home.sessionVariables.EDITOR} flake.nix
+          '${config.home.sessionVariables.EDITOR}' flake.nix
         }
       '';
 

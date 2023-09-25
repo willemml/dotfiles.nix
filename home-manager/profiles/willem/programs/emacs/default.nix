@@ -19,12 +19,6 @@
             sha256 = "sha256-6aX2S4cUop1rdxweIF5f1qrgNmYd1mtWgT9T1Q1s2h8=";
           };
         };
-        mu4e = epkgs.trivialBuild {
-          pname = "mu4e";
-          version = pkgs.mu.version;
-
-          src = "${pkgs.mu}/share/emacs/site-lisp/mu4e";
-        };
         mu4e-accounts = epkgs.trivialBuild {
           pname = "mu4e-accounts";
           version = "0.1";
@@ -117,6 +111,7 @@
         ivy-bibtex
         lean4-mode
         lsp-mode
+        lua-mode
         magit
         magit-section
         meow

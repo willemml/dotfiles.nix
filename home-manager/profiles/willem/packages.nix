@@ -68,6 +68,7 @@
     latest.toolchain
     targets.thumbv7em-none-eabihf.latest.rust-std
   ]);
+  lua_p = pkgs.lua5_4.withPackages (p: with p; [luacheck]);
 in {
   home.packages = with pkgs;
     [
@@ -94,6 +95,8 @@ in {
       htop
       iaito
       jq
+      lua_p
+      lua-language-server
       mu
       nix-zsh-completions
       nixfmt
@@ -117,6 +120,7 @@ in {
       spotify-tui
       spotifyd
       sqlite
+      stylua
       texinfo
       texliveset
       tldr

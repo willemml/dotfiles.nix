@@ -20,17 +20,23 @@
     pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
   };
 
-  programs.zsh.envExtra = ''
-    export WINEPREFIX="${config.home.homeDirectory}/.gptk_wineprefix"
+  programs.zsh.envExtra =
+    /*
+    sh
+    */
+    ''
+      export WINEPREFIX="${config.home.homeDirectory}/.gptk_wineprefix"
 
-    if [ "$(arch)" = "arm64" ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-        wine-gptk(){ arch -x86_64 /bin/zsh -c "WINEESYNC=1 \$(brew --prefix game-porting-toolkit)/bin/wine64 $@"; }
-    else
-        eval "$(/usr/local/bin/brew shellenv)"
-        wine-gptk(){ WINEESYNC=1 $(brew --prefix game-porting-toolkit)/bin/wine64 "$@"; }
-    fi
-  '';
+      if [ "$(arch)" = "arm64" ]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+          wine-gptk(){ arch -x86_64 /bin/zsh -c "WINEESYNC=1 \$(brew --prefix game-porting-toolkit)/bin/wine64 $@"; }
+      else
+          eval "$(/usr/local/bin/brew shellenv)"
+          wine-gptk(){ WINEESYNC=1 $(brew --prefix game-porting-toolkit)/bin/wine64 "$@"; }
+      fi
+
+      gptk-steam(){ wine-gptk "${config.home.homeDirectory}/.gptk_wineprefix/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe"; }
+    '';
 
   home.packages = with pkgs;
     [
