@@ -22,16 +22,5 @@ in {
         StandardErrorPath = logFile "emacs";
       };
     };
-
-    agents.offlineimap = {
-      enable = true;
-      config = {
-        ProgramArguments = ["${pkgs.offlineimap}/bin/offlineimap"];
-        UserName = "${config.home.username}";
-        StartInterval = 900;
-        StandardOutPath = logFile "offlineimap";
-        StandardErrorPath = logFile "offlineimap";
-      };
-    };
   };
 }

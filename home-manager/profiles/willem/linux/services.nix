@@ -22,18 +22,4 @@
       startWithUserSession = true;
     };
   };
-
-  systemd.user.services = {
-    offlineimap = {
-      Unit = {
-        Description = "Runs offlineimap to get email every 15 minutes.";
-      };
-
-      Service = {
-        ExecStart = "${pkgs.offlineimap}/bin/offlineimap";
-        RestartSec = "15min";
-        Restart = "always";
-      };
-    };
-  };
 }
