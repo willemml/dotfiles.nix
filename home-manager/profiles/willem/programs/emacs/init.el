@@ -77,8 +77,6 @@
 (require 'lean4-mode)
 (require 'magit)
 (require 'meow)
-(require 'mu4e)
-(require 'mu4e-accounts)
 (require 'nix-mode)
 (require 'nix-update)
 (require 'ob-dot)
@@ -103,7 +101,6 @@
 (require 'polymode)
 (require 'rustic)
 (require 'rust-ts-mode)
-(require 'smtpmail-async)
 (require 'swiper)
 (require 'tex)
 (require 'yasnippet)
@@ -263,54 +260,6 @@
 (meow-setup)
 (meow-global-mode 1)
 
-
-;; Configure mu4e
-
-;; Setup sending email with mu4e
-(setq send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'smtpmail-send-it)
-
-(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
-
-(defvar starttls-use-gnutls t)
-(setq message-kill-buffer-on-exit t
-      mail-user-agent 'mu4e-user-agent)
-
-
-(define-key mu4e-main-mode-map (kbd "C-c C-u") 'my-mu4e-set-account)
-
-
-(set-variable 'read-mail-command 'mu4e)
-
-(mapc #'(lambda (var)
-          (set (car var) (cadr var)))
-      (cdr (assoc "leitso" my-mu4e-account-alist)))
-
-(defun my-mu4e-set-account ()
-  "Set the account for composing a message."
-  (let* ((account
-          (if mu4e-compose-parent-message
-              (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                (string-match "/\\(.*?\\)/" maildir)
-                (match-string 1 maildir))
-            (completing-read (format "Compose with account: (%s) "
-                                     (mapconcat #'(lambda (var) (car var))
-                                                my-mu4e-account-alist "/"))
-                             (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                             nil t nil nil (caar my-mu4e-account-alist))))
-         (account-vars (cdr (assoc account my-mu4e-account-alist))))
-    (if account-vars
-        (mapc #'(lambda (var)
-                  (set (car var) (cadr var)))
-              account-vars)
-      (error "No email account found"))))
-
-(setq mu4e-bookmarks
-      '((:name "Unread messages" :query "flag:unread AND NOT (flag:trashed OR maildir:/feeds)" :key ?u)
-        (:name "Today's messages" :query "date:today..now AND NOT maildir:/feeds" :key ?t)
-        (:name "Last 7 days" :query "date:7d..now AND NOT maildir:/feeds" :key ?w)
-        (:name "Feed" :query "maildir:/feeds" :key ?f)
-        (:name "XKCD" :query "list:xkcd.localhost" :key ?x)))
 
 ;; Polymode config (add support for nix files with commented strings)
 
