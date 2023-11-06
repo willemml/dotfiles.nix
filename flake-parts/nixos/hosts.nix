@@ -52,6 +52,24 @@
       ];
     };
 
+    nixosConfigurations.m1-installer-live = inputs.nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        self.nixosModules.appleSilicon
+        self.nixosModules.base
+        ../../nixos/hosts/live.nix
+        ../../nixos/hosts/asahi-live.nix
+      ];
+    };
+
+    nixosConfigurations.arm-live = inputs.nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        self.nixosModules.base
+        ../../nixos/hosts/live.nix
+      ];
+    };
+
     darwinConfigurations.zeus = inputs.darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [

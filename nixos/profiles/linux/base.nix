@@ -2,6 +2,7 @@
   imports = [../common.nix];
 
   console.keyMap = "colemak";
+  console.packages = [pkgs.terminus_font];
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -22,5 +23,8 @@
   users.users.willem = {
     isNormalUser = true;
     extraGroups = ["networkmanager" "wheel"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBx1z962nl87rmOk/vw3EBSgqU/VlCqON8zTeLHQcSBp willem@zeus"
+    ];
   };
 }

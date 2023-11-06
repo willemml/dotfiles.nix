@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  imports = [../profiles/linux/base.nix];
-
   boot.extraModulePackages = [];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod"];

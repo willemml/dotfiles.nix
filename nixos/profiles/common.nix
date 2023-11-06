@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   environment.pathsToLink = ["/share/zsh"];
   environment.shells = [pkgs.bashInteractive pkgs.zsh];
-  environment.systemPackages = [pkgs.coreutils-full];
+  environment.systemPackages = [pkgs.coreutils-full pkgs.git];
   environment.variables.LANG = "en_US.UTF-8";
   environment.variables.LANGUAGE = "en_US.UTF-8";
   environment.variables.LC_ALL = "en_US.UTF-8";
@@ -21,6 +21,7 @@
     export PS1=$'\n'"\e[0mbash: \e[34;1m\w"$'\n'"\e[32m\\$\e[0m "
   '';
 
+  documentation.enable = true;
   documentation.man.enable = true;
 
   programs.zsh.enable = true;
