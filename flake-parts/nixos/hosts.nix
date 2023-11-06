@@ -26,16 +26,12 @@
     darwinModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
-        inputs.home-manager.darwinModules.home-manager
         self.nixosModules.linkNixInputs
-        self.nixosModules.home-manager-integration
         self.nixosModules.useFlakeNixpkgs
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
-
-      home-manager.users.willem = self.homeManagerModules.user-willem-darwin;
     };
 
     nixosConfigurations.zeusvm = inputs.nixpkgs.lib.nixosSystem {
