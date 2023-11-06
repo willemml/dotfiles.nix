@@ -4,12 +4,10 @@
   ...
 }: {
   flake = {
-    nixosModules.base = {config, ...}: {
+    nixosModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux/base.nix
-        inputs.home-manager.nixosModules.home-manager
-        self.nixosModules.home-manager-integration
         self.nixosModules.nixpkgs-useFlakeNixpkgs
       ];
 
@@ -19,7 +17,15 @@
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    darwinModules.base = {config, ...}: {
+    nixosModules.willem-home = {...}: {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+        self.nixosModules.home-manager-integration
+      ];
+      home-manager.users.willem = self.homeManagerModules.user-willem-linux;
+    };
+
+    darwinModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
         inputs.home-manager.darwinModules.home-manager
@@ -39,6 +45,7 @@
       system = "aarch64-linux";
       modules = [
         self.nixosModules.base
+        self.nixosModules.willem-home
         ../../nixos/hosts/zeus.utmvm.nix
       ];
     };
@@ -48,6 +55,7 @@
       modules = [
         self.nixosModules.appleSilicon
         self.nixosModules.base
+        self.nixosModules.willem-home
         ../../nixos/hosts/zeus.asahi.nix
       ];
     };
