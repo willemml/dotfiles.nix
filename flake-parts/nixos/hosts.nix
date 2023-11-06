@@ -8,7 +8,7 @@
       imports = [
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux/base.nix
-        self.nixosModules.nixpkgs-useFlakeNixpkgs
+        self.nixosModules.useFlakeNixpkgs
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
@@ -18,7 +18,7 @@
     nixosModules.willem-home = {...}: {
       imports = [
         inputs.home-manager.nixosModules.home-manager
-        self.nixosModules.home-manager-integration
+        self.nixosModules.homeManagerIntegration
       ];
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
@@ -29,8 +29,7 @@
         inputs.home-manager.darwinModules.home-manager
         self.nixosModules.linkNixInputs
         self.nixosModules.home-manager-integration
-        self.nixosModules.nix-useCachix
-        self.nixosModules.nixpkgs-useFlakeNixpkgs
+        self.nixosModules.useFlakeNixpkgs
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
@@ -82,6 +81,7 @@
         self.darwinModules.base
         ../../nixos/hosts/zeus.darwin.nix
       ];
+      specialArgs = {inherit inputs;};
     };
   };
 }
