@@ -2,25 +2,17 @@
   pkgs,
   lib,
   config,
+  modulesPath,
   ...
 }: {
+  imports = [
+    (modulesPath + "/installer/cd-dvd/iso-image.nix")
+    (modulesPath + "/profiles/minimal.nix")
+    (modulesPath + "/profiles/installation-device.nix")
+  ];
   networking.hostName = "nixos-live";
 
   isoImage.makeEfiBootable = true;
-
-  documentation.nixos.enable = true;
-
-  users.users.willem.initialHashedPassword = "";
-  users.users.root.initialHashedPassword = "";
-
-  security.sudo = {
-    enable = true;
-    wheelNeedsPassword = false;
-  };
-
-  services.getty.autologinUser = "willem";
-
-  services.openssh.enable = true;
 
   environment.systemPackages = with pkgs; [
     curl
