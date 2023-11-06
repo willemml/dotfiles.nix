@@ -5,6 +5,7 @@
     generateNixPathFromInputs = true;
     generateRegistryFromInputs = true;
     linkInputs = true;
+    linux-builder.enable = true;
   };
 
   environment.etc."nix/user-sandbox.sb".text = ''
