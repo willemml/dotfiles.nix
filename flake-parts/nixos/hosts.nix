@@ -4,7 +4,7 @@
   ...
 }: {
   flake = {
-    nixosModules.base = {...}: {
+    nixosModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux/base.nix
@@ -17,7 +17,7 @@
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    nixosModules.willem-home = {...}: {
+    nixosModules.willem-home = {config, ...}: {
       imports = [
         inputs.home-manager.nixosModules.home-manager
         self.nixosModules.home-manager-integration
@@ -25,7 +25,7 @@
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    darwinModules.base = {...}: {
+    darwinModules.base = {config, ...}: {
       imports = [
         ../../nixos/profiles/common.nix
         inputs.home-manager.darwinModules.home-manager
