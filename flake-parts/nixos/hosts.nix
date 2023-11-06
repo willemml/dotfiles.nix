@@ -4,7 +4,7 @@
   ...
 }: {
   flake = {
-    nixosModules.base = {config, ...}: {
+    nixosModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux/base.nix
@@ -13,11 +13,9 @@
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
-
-      home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    nixosModules.willem-home = {config, ...}: {
+    nixosModules.willem-home = {...}: {
       imports = [
         inputs.home-manager.nixosModules.home-manager
         self.nixosModules.home-manager-integration
@@ -25,7 +23,7 @@
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    darwinModules.base = {config, ...}: {
+    darwinModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
         inputs.home-manager.darwinModules.home-manager
