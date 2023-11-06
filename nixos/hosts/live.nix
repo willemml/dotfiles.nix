@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   networking.hostName = "nixos-live";
 
   isoImage.makeEfiBootable = true;

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   boot.postBootCommands = let
     inherit (config.hardware.asahi.pkgs) asahi-fwextract;
   in ''
