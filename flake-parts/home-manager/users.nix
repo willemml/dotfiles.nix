@@ -11,7 +11,6 @@
       ];
 
       home.username = "willem";
-      home.stateVersion = "23.11";
     };
 
     homeManagerModules.user-willem-darwin = {

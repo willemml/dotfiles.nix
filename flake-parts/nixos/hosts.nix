@@ -54,6 +54,8 @@
         self.nixosModules.willem-hyprland
         ../../nixos/hosts/winbox.nix
       ];
+      home-manager.users.willem.home.stateVersion = "23.05";
+
       specialArgs = {inherit inputs;};
     };
 
