@@ -17,53 +17,6 @@
     yarn
   ];
   octave-wp = pkgs.octave.withPackages (p: with p; [symbolic]);
-  texliveset = pkgs.texlive.combine {
-    inherit
-      (pkgs.texlive)
-      scheme-basic
-      babel
-      amscls
-      amsmath
-      biber
-      biblatex
-      biblatex-mla
-      block
-      cancel
-      caption
-      capt-of
-      csquotes
-      enotez
-      enumitem
-      etex
-      etoolbox
-      fancyhdr
-      float
-      fontaxes
-      graphics
-      hanging
-      hyperref
-      latex
-      latexindent
-      latexmk
-      logreq
-      metafont
-      mlacls
-      newtx
-      pdflscape
-      pdfpages
-      preprint
-      psnfss
-      ragged2e
-      titlesec
-      tools
-      translations
-      ulem
-      url
-      wrapfig
-      xstring
-      xkeyval
-      ;
-  };
   fenix-rust = pkgs.fenix.combine (with pkgs.fenix; [
     latest.toolchain
     targets.thumbv7em-none-eabihf.latest.rust-std

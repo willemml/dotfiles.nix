@@ -23,4 +23,16 @@ in rec {
       MAILDIR = "${config.home.homeDirectory}/Maildir";
     };
   };
+
+  custom.enableOrgTex = lib.mkDefault true;
+
+  home.file = {
+    ".config/nixpkgs/config.nix".text = ''
+      # -*-nix-*-
+      {
+        nixpkgs.config.allowUnfreePredicate = (_: true);
+        allowUnfree = true;
+      }
+    '';
+  };
 }

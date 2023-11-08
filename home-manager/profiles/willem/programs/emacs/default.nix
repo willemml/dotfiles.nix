@@ -3,7 +3,6 @@
   pkgs,
   ...
 }: let
-  aspellPackage = pkgs.aspellWithDicts (d: [d.en d.en-science d.en-computers d.fr]);
   emacsPackage =
     (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
     (epkgs:
@@ -17,19 +16,6 @@
             repo = pname;
             rev = version;
             sha256 = "sha256-6aX2S4cUop1rdxweIF5f1qrgNmYd1mtWgT9T1Q1s2h8=";
-          };
-        };
-        org-auctex = epkgs.trivialBuild rec {
-          pname = "org-auctex";
-          version = "e1271557b9f36ca94cabcbac816748e7d0dc989c";
-
-          buildInputs = [epkgs.auctex];
-
-          src = pkgs.fetchFromGitHub {
-            owner = "karthink";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-cMAhwybnq5HA1wOaUqDPML3nnh5m1iwEETTPWqPbAvw=";
           };
         };
         lean4-mode = epkgs.trivialBuild rec {
@@ -52,9 +38,6 @@
       in [
         all-the-icons
         all-the-icons-dired
-        auctex
-        cdlatex
-        citeproc
         company-mode
         company-sourcekit
         counsel
@@ -64,11 +47,7 @@
         f
         flycheck
         format-all
-        gnuplot
-        graphviz-dot-mode
-        htmlize
         ivy
-        ivy-bibtex
         lean4-mode
         lsp-mode
         lua-mode
@@ -78,12 +57,7 @@
         nix-mode
         nix-update
         org
-        org-auctex
-        org-contrib
-        org-download
         org-modern
-        pdf-tools
-        plantuml-mode
         polymode
         poly-org
         rustic
@@ -95,9 +69,6 @@
         yasnippet
       ])
       ++ (with pkgs; [
-        aspellPackage
-        gnuplot
-        plantuml
         sqlite
       ]));
 in {
