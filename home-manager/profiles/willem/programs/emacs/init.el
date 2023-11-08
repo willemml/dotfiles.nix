@@ -67,7 +67,6 @@
 (require 'eglot)
 (require 'format-all)
 (require 'ivy)
-(require 'lean4-mode)
 (require 'magit)
 (require 'meow)
 (require 'nix-mode)
@@ -80,7 +79,7 @@
 (require 'swiper)
 (require 'yasnippet)
 
-(let ((org-config (expand-file-name "~/.emacs.d/org-init.el")))
+(let ((org-config (expand-file-name "~/.emacs.d/org-tex-cfg.el")))
  (when (file-exists-p org-config)
    (load-file org-config))
 )

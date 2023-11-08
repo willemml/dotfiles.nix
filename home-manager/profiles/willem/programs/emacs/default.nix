@@ -1,11 +1,17 @@
 {
-  config,
   pkgs,
+  lib,
   ...
-}: let
-  emacsPackage =
-    (pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages
-    (epkgs:
+}: {
+  programs.emacs = {
+    earlyInitFile = ./early-init.el;
+    initFile = ./init.el;
+
+    enable = true;
+
+    package = pkgs.emacs29;
+
+    extraPackages = epkgs:
       (with epkgs; let
         company-mode = epkgs.trivialBuild rec {
           pname = "company-mode";
@@ -16,23 +22,6 @@
             repo = pname;
             rev = version;
             sha256 = "sha256-6aX2S4cUop1rdxweIF5f1qrgNmYd1mtWgT9T1Q1s2h8=";
-          };
-        };
-        lean4-mode = epkgs.trivialBuild rec {
-          pname = "lean4-mode";
-          version = "d1c936409ade7d93e67107243cbc0aa55cda7fd5";
-
-          buildInputs = [epkgs.dash epkgs.f epkgs.magit-section epkgs.lsp-mode epkgs.s epkgs.flycheck];
-
-          postInstall = ''
-            cp -r data $out/share/emacs/site-lisp/data
-          '';
-
-          src = pkgs.fetchFromGitHub {
-            owner = "leanprover";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-tD5Ysa24fMIS6ipFc50OjabZEUge4riSb7p4BR05ReQ=";
           };
         };
       in [
@@ -48,9 +37,7 @@
         flycheck
         format-all
         ivy
-        lean4-mode
         lsp-mode
-        lua-mode
         magit
         magit-section
         meow
@@ -70,16 +57,10 @@
       ])
       ++ (with pkgs; [
         sqlite
-      ]));
-in {
-  home.file.".emacs.d/early-init.el".source = ./early-init.el;
-  home.file.".emacs.d/init.el".source = ./init.el;
+      ]);
+  };
 
-  programs.emacs.enable = true;
-
-  programs.emacs.package = emacsPackage;
-
-  services.emacs = pkgs.lib.mkIf pkgs.stdenv.isLinux {
+  services.emacs = lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
     client.enable = true;
     startWithUserSession = true;

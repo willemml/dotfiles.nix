@@ -24,8 +24,6 @@ in rec {
     };
   };
 
-  custom.enableOrgTex = lib.mkDefault true;
-
   home.file = {
     ".config/nixpkgs/config.nix".text = ''
       # -*-nix-*-

@@ -75,7 +75,6 @@ in {
       sqlite
       stylua
       texinfo
-      texliveset
       tldr
       units
       unp
