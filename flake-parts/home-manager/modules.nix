@@ -37,6 +37,13 @@
         home.sessionVariables.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
         nix.registry.nixpkgs.flake = inputs.nixpkgs;
       };
+
+      hyprland = {
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          {wayland.windowManager.hyprland.enable = true;}
+        ];
+      };
     }
     // modules;
 }

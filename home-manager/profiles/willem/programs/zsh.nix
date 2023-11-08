@@ -72,7 +72,7 @@
       '';
 
     localVariables = {
-      PROMPT = "\n%B%F{blue}%~\n%F{green}$ %f%b";
+      PROMPT = "\n%B%F{cyan}%m:%F{blue}%~\n%F{green}$ %f%b";
       RPROMPT = "%B%F{red}%*%f%b";
     };
 

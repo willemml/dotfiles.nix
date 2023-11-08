@@ -9,10 +9,15 @@
         ../../nixos/profiles/common.nix
         ../../nixos/profiles/linux/base.nix
         self.nixosModules.useFlakeNixpkgs
+        self.nixosModules.users-willem
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;
       nixpkgs.config.allowUnfree = true;
+    };
+
+    nixosModules.darwinArmVM = {...}: {
+      virtualisation.host.pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
     };
 
     nixosModules.willem-home = {...}: {
@@ -21,6 +26,14 @@
         self.nixosModules.homeManagerIntegration
       ];
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
+    };
+
+    nixosModules.willem-hyprland = {...}: {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+        self.nixosModules.homeManagerIntegration
+      ];
+      home-manager.users.willem = self.homeManagerModules.user-willem-linux // self.homeManagerModules.hyprland;
     };
 
     darwinModules.base = {...}: {
@@ -34,33 +47,14 @@
       nixpkgs.config.allowUnfree = true;
     };
 
-    nixosConfigurations.zeusvm = inputs.nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
+    nixosConfigurations.winbox = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
       modules = [
         self.nixosModules.base
-        self.nixosModules.willem-home
-        ../../nixos/hosts/zeus.utmvm.nix
+        self.nixosModules.willem-hyprland
+        ../../nixos/hosts/winbox.nix
       ];
-    };
-
-    nixosConfigurations.zeusasahi = inputs.nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
-      modules = [
-        self.nixosModules.appleSilicon
-        self.nixosModules.base
-        self.nixosModules.willem-home
-        ../../nixos/hosts/zeus.asahi.nix
-      ];
-    };
-
-    nixosConfigurations.m1-installer-live = inputs.nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
-      modules = [
-        self.nixosModules.appleSilicon
-        self.nixosModules.base
-        ../../nixos/hosts/live.nix
-        ../../nixos/hosts/asahi-live.nix
-      ];
+      specialArgs = {inherit inputs;};
     };
 
     nixosConfigurations.arm-live = inputs.nixpkgs.lib.nixosSystem {
@@ -69,6 +63,18 @@
         self.nixosModules.base
         ../../nixos/hosts/live.nix
       ];
+      specialArgs = {inherit inputs;};
+    };
+
+    nixosConfigurations.darwinArmMinimalVM = inputs.nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        self.nixosModules.users-willemVm
+        self.nixosModules.base
+        self.nixosModules.headlessVm
+        self.nixosModules.darwinArmVM
+      ];
+      specialArgs = {inherit inputs;};
     };
 
     darwinConfigurations.zeus = inputs.darwin.lib.darwinSystem {
@@ -79,5 +85,7 @@
       ];
       specialArgs = {inherit inputs;};
     };
+
+    packages.aarch64-darwin.minimalVM = self.nixosConfigurations.darwinArmMinimalVM.config.system.build.vm;
   };
 }

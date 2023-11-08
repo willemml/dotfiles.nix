@@ -1,7 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   environment.pathsToLink = ["/share/zsh"];
   environment.shells = [pkgs.bashInteractive pkgs.zsh];
-  environment.systemPackages = [pkgs.coreutils-full pkgs.git];
+  environment.systemPackages = [pkgs.coreutils pkgs.git];
   environment.variables.LANG = "en_US.UTF-8";
   environment.variables.LANGUAGE = "en_US.UTF-8";
   environment.variables.LC_ALL = "en_US.UTF-8";
@@ -25,10 +29,11 @@
   documentation.man.enable = true;
 
   programs.zsh.enable = true;
+  programs.zsh.shellInit = lib.mkDefault "zsh-newuser-install() { :; }";
   programs.zsh.enableBashCompletion = true;
-  programs.zsh.promptInit = ''
+  programs.zsh.promptInit = lib.mkDefault ''
     autoload -U promptinit && promptinit
-    export PROMPT=$'\n'"%B%F{blue}%3~"$'\n'"%F{green}%(!.#.$) %f%b"
+    export PROMPT=$'\n'"%B%F{cyan}%m:%F{blue}%~"$'\n'"%F{green}%(!.#.$) %f%b"
     export RPROMPT="%B%F{red}%*%f%b"
   '';
 

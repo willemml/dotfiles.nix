@@ -34,11 +34,10 @@ in {
       clang-tools
       cmake
       comma
-      coreutils-full
+      coreutils
       curl
       docker
       docker-compose
-      elan
       fd
       fenix-rust
       findutils
@@ -46,10 +45,7 @@ in {
       gnuplot
       graphviz
       htop
-      iaito
       jq
-      lua_p
-      lua-language-server
       mu
       nix-zsh-completions
       nixfmt
@@ -61,23 +57,18 @@ in {
       pass-git-helper
       pinentry
       plantuml
-      poppler
       pv
       python-wp
-      radare2
       ripgrep
       rnix-lsp
       rsync
       shellcheck
       shfmt
-      spotify-tui
-      spotifyd
       sqlite
       stylua
       texinfo
       tldr
       units
-      unp
       unrar
       unzip
       wget

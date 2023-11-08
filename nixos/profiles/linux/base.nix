@@ -19,12 +19,4 @@
   services.udev.enable = true;
 
   system.stateVersion = "23.11";
-
-  users.users.willem = {
-    isNormalUser = true;
-    extraGroups = ["networkmanager" "wheel" "video" "udev"];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBx1z962nl87rmOk/vw3EBSgqU/VlCqON8zTeLHQcSBp willem@zeus"
-    ];
-  };
 }

@@ -22,6 +22,8 @@
         self.homeManagerModules.nixpkgs-useFlakeNixpkgs
       ];
 
+      programs.emacs.enableOrgTex = true;
+
       home.homeDirectory = "/Users/willem";
     };
 
@@ -30,6 +32,8 @@
         self.homeManagerModules.user-willem
         self.homeManagerModules.linux
       ];
+
+      programs.emacs.enableOrgTex = false;
 
       home.homeDirectory = "/home/willem";
     };
@@ -51,6 +55,7 @@
         inherit pkgs;
         modules = [self.homeManagerModules."user-willem-${systemType}" {nix.package = pkgs.nix;}];
       };
+
     packages = let
       activationPackages = builtins.mapAttrs (_: lib.getAttr "activationPackage") homeConfigurations;
     in

@@ -12,8 +12,6 @@
   ];
   networking.hostName = "nixos-live";
 
-  isoImage.makeEfiBootable = true;
-
   environment.systemPackages = with pkgs; [
     curl
     ddrescue
@@ -39,7 +37,6 @@
     wget
     w3m-nographics
     zip
-    mesa
   ];
 
   # Include support for various filesystems and tools to create / manipulate them.
@@ -49,6 +46,11 @@
 
   boot.enableContainers = false;
 
+  # get rid of mdadm warning
+  boot.swraid.mdadmConf = ''
+    PROGRAM ${pkgs.coreutils}/bin/true
+  '';
+
   # Configure host id for ZFS to work
-  networking.hostId = lib.mkDefault "8425e349";
+  networking.hostId = lib.mkDefault "deadbeef";
 }
