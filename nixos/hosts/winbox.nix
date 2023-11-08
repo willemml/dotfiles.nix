@@ -14,6 +14,9 @@
   boot.kernelModules = ["amdgpu"];
   boot.extraModulePackages = [];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   hardware.opengl.driSupport = true;
 
   hardware.opengl.extraPackages = with pkgs; [

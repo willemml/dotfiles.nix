@@ -7,8 +7,6 @@
     "${modulesPath}/virtualisation/qemu-vm.nix"
   ];
 
-  system.stateVersion = lib.mkDefault "23.05";
-
   console.keyMap = lib.mkDefault "colemak";
 
   security.sudo.wheelNeedsPassword = false;

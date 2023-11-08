@@ -7,6 +7,7 @@
   emacsCommand = "emacsclient -c -nw";
 in rec {
   home = {
+    stateVersion = "23.05";
     keyboard = {
       layout = "us";
       variant = "colemak";

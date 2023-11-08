@@ -28,14 +28,6 @@
       home-manager.users.willem = self.homeManagerModules.user-willem-linux;
     };
 
-    nixosModules.willem-hyprland = {...}: {
-      imports = [
-        inputs.home-manager.nixosModules.home-manager
-        self.nixosModules.homeManagerIntegration
-      ];
-      home-manager.users.willem = self.homeManagerModules.user-willem-linux // self.homeManagerModules.hyprland;
-    };
-
     darwinModules.base = {...}: {
       imports = [
         ../../nixos/profiles/common.nix
@@ -51,10 +43,9 @@
       system = "x86_64-linux";
       modules = [
         self.nixosModules.base
-        self.nixosModules.willem-hyprland
+        self.nixosModules.willem-home
         ../../nixos/hosts/winbox.nix
       ];
-      home-manager.users.willem.home.stateVersion = "23.05";
 
       specialArgs = {inherit inputs;};
     };
