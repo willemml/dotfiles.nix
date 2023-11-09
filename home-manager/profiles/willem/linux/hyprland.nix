@@ -15,25 +15,19 @@
     qt6ct
     xdg-desktop-portal-hyprland
     xdg-desktop-portal
+    rofi-wayland
   ];
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "FlatColor";
-    };
-  };
 
   services.mako.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [pkgs.rofi-wayland];
   };
 
   wayland.windowManager.hyprland.extraConfig = ''
     bind = SHIFT_SUPER, SPACE, exec, alacritty
-    bind = SUPER, SPACE, exec, rofy
+    bind = SUPER, SPACE, exec, rofi -modes "ssh,drun,window" -show drun
+    bind = ALT, SPACE, exec, rofi -show window
 
     input {
       kb_layout=us
