@@ -37,6 +37,8 @@
 
   networking.useDHCP = lib.mkDefault true;
 
+  networking.hostName = "nixbox";
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
