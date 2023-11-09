@@ -31,6 +31,7 @@
       imports = [
         self.homeManagerModules.user-willem
         self.homeManagerModules.linux
+        inputs.hyprland.homeManagerModules.default
       ];
 
       programs.emacs.enableOrgTex = false;

@@ -40,11 +40,12 @@
       nixpkgs.config.allowUnfree = true;
     };
 
-    nixosConfigurations.winbox = inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixbox = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         self.nixosModules.base
         self.nixosModules.willem-home
+        self.nixosModules.hyprland
         ../../nixos/hosts/nixbox.nix
       ];
 
