@@ -28,7 +28,6 @@
         all-the-icons
         all-the-icons-dired
         company-mode
-        company-sourcekit
         counsel
         dash
         editorconfig
@@ -51,7 +50,6 @@
         s
         separedit
         solarized-theme
-        swift-mode
         swiper
         yasnippet
       ])

@@ -38,6 +38,12 @@
       gptk-steam(){ wine-gptk "${config.home.homeDirectory}/.gptk_wineprefix/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe"; }
     '';
 
+  programs.emacs.extraPackages = epkgs:
+    with epkgs; [
+      swift-mode
+      company-sourcekit
+    ];
+
   home.packages = with pkgs;
     [
       colima
