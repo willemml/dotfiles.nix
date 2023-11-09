@@ -10,6 +10,7 @@
         ../../nixos/profiles/linux/base.nix
         self.nixosModules.useFlakeNixpkgs
         self.nixosModules.users-willem
+        inputs.nix-index-database.nixosModules.nix-index
       ];
 
       nixpkgs.overlays = builtins.attrValues self.overlays;

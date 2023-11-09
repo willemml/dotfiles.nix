@@ -8,6 +8,7 @@
     homeManagerModules.user-willem = {
       imports = [
         self.homeManagerModules.default
+        inputs.nix-index-database.hmModules.nix-index
       ];
 
       home.username = "willem";
