@@ -24,11 +24,16 @@
     };
   };
 
-  wayland.windowManager.hyprland.enable = true;
   services.mako.enable = true;
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    plugins = [pkgs.rofi-wayland];
+  };
+
   wayland.windowManager.hyprland.extraConfig = ''
-    bind = SUPER, SPACE, exec, alacritty
+    bind = SHIFT_SUPER, SPACE, exec, alacritty
+    bind = SUPER, SPACE, exec, rofy
 
     input {
       kb_layout=us
