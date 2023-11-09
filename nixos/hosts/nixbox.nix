@@ -7,6 +7,9 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../profiles/hyprland.nix
+    ../profiles/default.nix
+    ../modules/users/willem/home.nix
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
