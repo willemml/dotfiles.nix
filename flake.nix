@@ -68,7 +68,7 @@
 
         mkHome = system: config: (home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
-          specialArgs = {
+          extraSpecialArgs = {
             inherit globals inputs;
             overlays = self.overlays;
           };
@@ -77,7 +77,7 @@
             config
           ];
         });
-      in rec {
+      in {
         nixosConfigurations.x86_64-live = mkNixos "x86_64" ./nixos/hosts/x86_64-live.nix;
         nixosConfigurations.aarch64-live = mkNixos "aarch64" ./nixos/hosts/aarch64-live.nix;
 
@@ -88,11 +88,13 @@
 
         darwinConfigurations.zeus = mkDarwin "aarch64" ./nixos/hosts/zeus.nix;
 
-        homeConfigurations.willem-darwin = mkHome "aarch64-darwin" ./home/darwin/default.nix;
-        homeConfigurations.willem-linux = mkHome "aarch64-linux" ./home/linux/default.nix;
+        homeConfigurations.willem-aarch64-darwin = mkHome "aarch64-darwin" ./home/darwin/default.nix;
+
+        packages.aarch64-darwin.home = self.homeConfigurations.willem-aarch64-darwin.activationPackage;
 
         packages.aarch64-darwin.minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
         packages.aarch64-darwin.homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
+
         packages.x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
         packages.aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
       };

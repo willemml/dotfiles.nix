@@ -7,11 +7,14 @@
   imports = [
     ../modules/nix/use-flake-pkgs.nix
     ../modules/nix/pkgs-config.nix
+    ../default.nix
     ./finder.nix
     ./iterm2.nix
     ./keybinds.nix
     ./launchd.nix
   ];
+
+  home.homeDirectory = "/Users/willem";
 
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''

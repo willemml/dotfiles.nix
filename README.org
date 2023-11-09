@@ -1,12 +1,12 @@
 #+title: dotfiles.nix
 
-My dotfiles using Nix.
-System configuration done using [[https://github.com/LnL7/nix-darwin][nix-darwin]] and [[https://nixos.org/][NixOS]].
-User configuration using [[https://github.com/nix-community/home-manager][home-manager]].
-This repo is put together as a flake using [[https://github.com/hercules-ci/flake-parts][flake-parts]].
+My dotfiles using Nix. System configuration done using [[https://github.com/LnL7/nix-darwin][nix-darwin]] and
+[[https://nixos.org/][NixOS]]. User configuration using [[https://github.com/nix-community/home-manager][home-manager]]. This repo is put
+together as a flake using [[https://github.com/hercules-ci/flake-parts][flake-parts]]. On NixOS home-manager is used
+as a NixOS module, on Darwin it is used separately from nix-darwin.
 
-Much of the structure of dotfiles.nix is taken from [[https://github.com/terlar/nix-config/tree/main][terlar/nix-config]] with other ideas taken from [[https://sr.ht/~rycee/configurations/][~rycee/configurations]].
-Another notable info source is [[https://github.com/hlissner/dotfiles][hlissner/dotfiles]].
+dotfiles.nix is inspired by [[https://github.com/terlar/nix-config/tree/main][terlar/nix-config]], [[https://sr.ht/~rycee/configurations/][~rycee/configurations]]
+and [[https://github.com/hlissner/dotfiles][hlissner/dotfiles]].
 
 All Nix code in this repo is formatted using [[https://github.com/kamadorueda/alejandra][alejandra]].
 
@@ -21,25 +21,25 @@ nix flake show
 Switch both system (NixOS) and home:
 
 #+begin_src shell
-nix run .#nixos-switch
+nixos-rebuild switch --flake .
 #+end_src
 
-Switch both system (nix-darwin) and home:
+Switch system (nix-darwin):
 
 #+begin_src shell
-nix run .#darwin-switch
+darwin-rebuild switch --flake .
 #+end_src
 
-Switch home only:
+Switch home only (on Darwin):
 
 #+begin_src shell
-nix run .#home-switch
+nix run .#home
 #+end_src
 
 Build home without switching:
 
 #+begin_src shell
-nix run .#home-switch
+nix build .#home
 #+end_src
 
 Update all inputs:
@@ -66,80 +66,12 @@ Enter the dev shell (if not using [[https://github.com/nix-community/nix-direnv]
 nix develop
 #+end_src
 
-* Outputs
-
-** Home Configurations
-
-Due to the way the ~homeConfigurations~ output is structured (each user configuration is generated for each system,) the ~home-manager switch --flake~ command cannot be used as per usual, instead the ~FLAKE_CONFIG_URI~ variable needs to be set. See [[./apps/home-switch.nix]] for an example.
-
-All home configurations are exposed under both ~packages.SYSTEM.home-USER~ and ~homeConfiguration.SYSTEM.USER~.
-
-** Apps
-
-These packages make some operations simpler or more intuitive, to use an app, run the following command from within the flake directory: ~nix run .#APPNAME~.
-
-*** darwin-switch
-
-Build and switch to the nix-darwin configuration for the current host (only on Darwin.)
-The configuration is defined under ~darwinConfigurations.HOSTNAME~.
-
-*** nixos-switch
-
-Build and switch to the nixos configuration for the current host (only on NixOS.)
-The configurations are defined under ~nixosConfigurations.HOSTNAME~.
-
-*** home-switch & home-build
-
-Build and or switch to the home-manager configuration for the current user.
-Home configurations are defined under ~homeConfigurations.SYSTEM.USER~.
-
-** Packages
-
-This flake exposes several package definitions I have created, most of them are binary sourced applications for macOS, most importantly Firefox.
-
-** Darwin Configurations
-
-System configurations for macOS.
-
-*** zeus
-
-My primary computer.
-
-** NixOS Configurations
-
-System configurations for NixOS.
-
-*** zeusvm
-
-Linux VM for my macOS machine (~darwinConfigurations.zeus~).
-
-*** zeusasahi
-
-NixOS configuration for my M1 MacBook Pro, uses [[https://github.com/tpwrules/nixos-apple-silicon][tpwrules/nixos-apple-silicon]].
-Currently untested, WIP.
-
-** NixOS Modules
-
-Modules for NixOS configurations, most of these should also work for Darwin.
-
-*** custom-linkNixInputs
-
-Adds the inputs of this flake to the nix registry and ~NIX_PATH~.
-
-Taken from [[https://github.com/LnL7/nix-darwin/issues/277#issuecomment-992866471][LnL7/nix-darwin #277]].
-
 * Tasks
-
-** TODO Packages for different systems
-
-Packages are in the flake outputs for systems they are not compatible with.
 
 ** TODO Break out emacs config
 
 Emacs configuration should be in it's own repository.
 Lisp code should be extracted into separate files or an org-babel setup.
-
-** TODO Test zeusasahi
 
 ** TODO Services as modules
 

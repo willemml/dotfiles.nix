@@ -7,11 +7,16 @@
   environment.pathsToLink = ["/share/zsh"];
   environment.shells = [pkgs.bashInteractive pkgs.zsh];
   environment.systemPackages = [pkgs.coreutils pkgs.git];
-  environment.variables.LANG = "en_US.UTF-8";
-  environment.variables.LANGUAGE = "en_US.UTF-8";
-  environment.variables.LC_ALL = "en_US.UTF-8";
-  environment.variables.LC_CTYPE = "en_US.UTF-8";
-  environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
+
+  environment.variables = let
+    lang = globals.language;
+  in {
+    LANG = lang;
+    LANGUAGE = lang;
+    LC_ALL = lang;
+    LC_CTYPE = lang;
+    SHELL = "${pkgs.zsh}/bin/zsh";
+  };
 
   nix = {
     package = pkgs.nix;
