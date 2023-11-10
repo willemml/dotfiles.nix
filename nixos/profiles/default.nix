@@ -16,8 +16,6 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs.command-not-found.enable = true;
-
   programs.zsh.loginShellInit = ''
     reexec() {
         unset __NIX_OS_SET_ENVIRONMENT_DONE

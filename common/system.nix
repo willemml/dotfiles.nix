@@ -24,7 +24,7 @@
     settings.trusted-users = ["root" "willem"];
   };
 
-  programs.nix-index.enable = false;
+  programs.command-not-found.enable = false;
 
   programs.bash.enableCompletion = true;
   programs.bash.interactiveShellInit = ''

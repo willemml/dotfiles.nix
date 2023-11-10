@@ -16,6 +16,8 @@
 
   home.homeDirectory = "/Users/willem";
 
+  programs.command-not-found.enable = true;
+
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
