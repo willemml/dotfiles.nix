@@ -16,7 +16,7 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs.command-not-found.enable = false;
+  programs.command-not-found.enable = true;
 
   programs.zsh.loginShellInit = ''
     reexec() {

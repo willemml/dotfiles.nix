@@ -12,6 +12,8 @@
   programs = {
     bash.enableCompletion = true;
 
+    command-not-found.enable = true;
+
     direnv = {
       enable = true;
       enableBashIntegration = true;
