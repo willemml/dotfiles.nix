@@ -27,20 +27,24 @@
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-github-actions.url = "github:nix-community/nix-github-actions";
+    nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
+    darwin,
     flake-parts,
     home-manager,
+    nix-github-actions,
     nixpkgs,
     pre-commit-hooks,
-    darwin,
     self,
     ...
   } @ inputs: let
     globals = import ./common/globals.nix;
   in
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} rec {
       imports = [
         ./flake/home-manager.nix
         ./flake/overlays.nix
@@ -77,6 +81,7 @@
             config
           ];
         });
+        forAllSystems = nixpkgs.lib.genAttrs systems;
       in {
         nixosConfigurations.x86_64-live = mkNixos "x86_64" ./nixos/hosts/x86_64-live.nix;
         nixosConfigurations.aarch64-live = mkNixos "aarch64" ./nixos/hosts/aarch64-live.nix;
@@ -88,15 +93,19 @@
 
         darwinConfigurations.zeus = mkDarwin "aarch64" ./nixos/hosts/zeus.nix;
 
-        homeConfigurations.willem-aarch64-darwin = mkHome "aarch64-darwin" ./home/darwin/default.nix;
-
-        packages.aarch64-darwin.home = self.homeConfigurations.willem-aarch64-darwin.activationPackage;
+        homeConfigurations = forAllSystems (system: {willem = mkHome system ./home/${builtins.replaceStrings ["aarch64-" "x86_64-"] ["" ""] system}/default.nix;});
 
         packages.aarch64-darwin.minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
         packages.aarch64-darwin.homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
 
         packages.x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
         packages.aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
+
+        checks.x86_64-linux.nixbox = self.nixosConfigurations.nixbox.config.system.build.topLevel;
+
+        githubActions = nix-github-actions.lib.mkGithubMatrix {
+          checks = nixpkgs.lib.getAttrs ["x86_64-linux" "x86_64-darwin"] self.checks;
+        };
       };
 
       perSystem = {
@@ -112,6 +121,10 @@
             alejandra.enable = true;
           };
         };
+
+        checks.home = self'.packages.home;
+
+        packages.home = self.homeConfigurations.${system}.willem.activationPackage;
 
         devShells.default = pkgs.mkShell {
           inherit (self'.checks.pre-commit-check) shellHook;
