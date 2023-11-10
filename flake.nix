@@ -101,7 +101,7 @@
         packages.x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
         packages.aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
 
-        checks.x86_64-linux.nixbox = self.nixosConfigurations.nixbox.config.system.build.topLevel;
+        checks.x86_64-linux.nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
 
         githubActions = nix-github-actions.lib.mkGithubMatrix {
           checks = nixpkgs.lib.getAttrs ["x86_64-linux" "x86_64-darwin"] self.checks;
