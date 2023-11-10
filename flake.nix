@@ -104,7 +104,7 @@
         checks.x86_64-linux.nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
 
         githubActions = nix-github-actions.lib.mkGithubMatrix {
-          checks = nixpkgs.lib.getAttrs ["x86_64-linux" "x86_64-darwin"] self.checks;
+          checks = nixpkgs.lib.getAttrs ["x86_64-linux"] self.checks;
         };
       };
 
