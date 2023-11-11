@@ -1,0 +1,40 @@
+{...}: {
+  programs.ssh = {
+    enable = true;
+
+    forwardAgent = true;
+
+    extraConfig = ''
+      IgnoreUnknown UseKeychain
+      AddKeysToAgent yes
+      UseKeychain yes
+      IdentityFile ~/.ssh/id_ed25519
+    '';
+
+    matchBlocks = {
+      "zeus" = {
+        host = "10.1.2.16";
+        user = "willem";
+      };
+      "nixbox" = {
+        host = "10.1.2.175";
+        user = "willem";
+      };
+      "ubc" = {
+        host = "remote.students.cs.ubc.ca";
+        user = "willemml";
+      };
+      "*.students.cs.ubc.ca" = {
+        user = "willemml";
+      };
+      "github.com" = {
+        host = "ssh.github.com";
+        port = 443;
+      };
+      "orlia-nas" = {
+        host = "192.168.1.251";
+        user = "willem";
+      };
+    };
+  };
+}

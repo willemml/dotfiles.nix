@@ -5,8 +5,9 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
     ./emacs
+    ./ssh.nix
+    ./zsh.nix
   ];
 
   programs = {

@@ -18,6 +18,8 @@
 
   programs.command-not-found.enable = true;
 
+  programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
+
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
