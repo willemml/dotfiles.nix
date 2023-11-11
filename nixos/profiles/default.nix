@@ -29,7 +29,7 @@
   services.udev.enable = true;
 
   services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 
   system.stateVersion = "23.05";
 
