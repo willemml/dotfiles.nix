@@ -13,26 +13,26 @@
 
     matchBlocks = {
       "zeus" = {
-        host = "10.1.2.16";
+        hostname = "10.1.2.16";
         user = "willem";
       };
       "nixbox" = {
-        host = "10.1.2.175";
+        hostname = "10.1.2.175";
         user = "willem";
       };
       "ubc" = {
-        host = "remote.students.cs.ubc.ca";
+        hostname = "remote.students.cs.ubc.ca";
         user = "willemml";
       };
       "*.students.cs.ubc.ca" = {
         user = "willemml";
       };
       "github.com" = {
-        host = "ssh.github.com";
+        hostname = "ssh.github.com";
         port = 443;
       };
       "orlia-nas" = {
-        host = "192.168.1.251";
+        hostname = "192.168.1.251";
         user = "willem";
       };
     };
