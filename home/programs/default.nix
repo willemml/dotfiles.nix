@@ -58,6 +58,11 @@
       };
     };
 
+    hishtory = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     java = {
       enable = true;
       package = pkgs.jdk;

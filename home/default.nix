@@ -8,6 +8,7 @@
 in rec {
   imports = [
     ./modules/emacs.nix
+    ./modules/hishtory.nix
     ./packages.nix
     ./programs/default.nix
   ];

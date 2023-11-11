@@ -45,7 +45,6 @@ in {
       gawk
       gnuplot
       graphviz
-      hishtory
       htop
       jq
       mu
