@@ -38,14 +38,6 @@ in rec {
     };
   };
 
-  home.file.".gnupg/gpg-agent.conf" = {
-    text = ''
-      pinentry-program "${pkgs.pinentry.out}/bin/pinentry"
-      default-cache-ttl 30
-      max-cache-ttl 600
-    '';
-  };
-
   home.file.".config/nixpkgs/config.nix".text = ''
     # -*-nix-*-
     {
