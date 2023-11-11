@@ -3,6 +3,7 @@
     ../../common/system.nix
     ../modules/nix/link-inputs.nix
     ../modules/nix/use-flake-pkgs.nix
+    ../modules/darwin/hosts.nix
   ];
 
   nix = {
@@ -11,6 +12,9 @@
     linkInputs = true;
     linux-builder.enable = true;
   };
+
+  networking.hostName = "zeus";
+  networking.computerName = "Zeus";
 
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)

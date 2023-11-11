@@ -18,6 +18,11 @@
     SHELL = "${pkgs.zsh}/bin/zsh";
   };
 
+  networking.hostFiles = [
+    ./hosts/ubc
+    ./hosts/zerotier
+  ];
+
   nix = {
     package = pkgs.nix;
     settings.experimental-features = ["nix-command" "flakes" "repl-flake"];
