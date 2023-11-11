@@ -24,9 +24,12 @@
     }
   '';
 
+  programs.command-not-found.enable = false;
+
   services.udev.enable = true;
 
   services.openssh.enable = true;
+  services.openssh.passwordAuthentication = false;
 
   system.stateVersion = "23.05";
 

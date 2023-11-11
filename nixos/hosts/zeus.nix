@@ -1,5 +1,9 @@
 {pkgs, ...}: {
-  imports = [../profiles/common.nix];
+  imports = [
+    ../../common/system.nix
+    ../modules/nix/link-inputs.nix
+    ../modules/nix/use-flake-pkgs.nix
+  ];
 
   nix = {
     generateNixPathFromInputs = true;

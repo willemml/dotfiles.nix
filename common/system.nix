@@ -24,8 +24,6 @@
     settings.trusted-users = ["root" "willem"];
   };
 
-  programs.command-not-found.enable = false;
-
   programs.bash.enableCompletion = true;
   programs.bash.interactiveShellInit = ''
     export PS1=$'\n'"\e[0mbash: \e[34;1m\w"$'\n'"\e[32m\\$\e[0m "
