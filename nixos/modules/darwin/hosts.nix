@@ -1,4 +1,7 @@
 # copied from https://github.com/NixOS/nixpkgs/blob/85f1ba3e51676fa8cc604a3d863d729026a6b8eb/nixos/modules/config/networking.nix
+#
+# if you get an error saying operation not permitted, run the following command:
+# sudo chflags nouchg,noschg /etc/hosts
 {
   config,
   lib,
