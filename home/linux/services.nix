@@ -5,6 +5,8 @@
   ...
 }: {
   services = {
+    ssh-agent.enable = true;
+
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
@@ -13,6 +15,7 @@
       maxCacheTtl = 600;
       pinentryFlavor = "tty";
     };
+
     emacs = {
       enable = true;
       package =
