@@ -108,7 +108,7 @@
           };
           checks.x86_64-darwin = {
             home = self.checks.x86_64-darwin.home;
-            system = self.darwinConfigurations.zeus.config.system.build.toplevel;
+            system = (mkDarwin "x86_64" ./nixos/hosts/zeus.nix).config.system.build.toplevel;
           };
         };
       };
