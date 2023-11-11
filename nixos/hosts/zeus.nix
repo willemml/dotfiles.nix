@@ -3,7 +3,6 @@
     ../../common/system.nix
     ../modules/nix/link-inputs.nix
     ../modules/nix/use-flake-pkgs.nix
-    ../modules/darwin/hosts.nix
   ];
 
   nix = {
