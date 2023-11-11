@@ -20,20 +20,11 @@
 
   programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
 
-  home.file.".gnupg/gpg-agent.conf" = {
-    text = ''
-      pinentry-program "${pkgs.pinentry-touchid}/bin/pinentry-touchid"
-      default-cache-ttl 30
-      max-cache-ttl 600
-    '';
-  };
-
   programs.zsh.shellAliases = {
     drs = "nix run nix-darwin -- switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     dbs = "nix run nix-darwin -- build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     o = "open";
     oa = "open -a";
-    pinentry = "${pkgs.pinentry-mac}/bin/pinentry-mac";
   };
 
   programs.zsh.envExtra =
@@ -63,8 +54,6 @@
   home.packages = with pkgs;
     [
       colima
-      pinentry-mac
-      pinentry-touchid
       pngpaste
       spoof-mac
     ]

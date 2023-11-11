@@ -2,6 +2,7 @@
   inputs,
   globals,
   config,
+  pkgs,
   ...
 }: let
   emacsCommand = "emacsclient -c -nw";
@@ -35,6 +36,14 @@ in rec {
       UBCDIR = "${ORGDIR}/ubc";
       MAILDIR = "${config.home.homeDirectory}/Maildir";
     };
+  };
+
+  home.file.".gnupg/gpg-agent.conf" = {
+    text = ''
+      pinentry-program "${pkgs.pinentry.out}/bin/pinentry"
+      default-cache-ttl 30
+      max-cache-ttl 600
+    '';
   };
 
   home.file.".config/nixpkgs/config.nix".text = ''
