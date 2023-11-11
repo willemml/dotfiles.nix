@@ -101,10 +101,15 @@
         packages.x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
         packages.aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
 
-        checks.x86_64-linux.nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
-
         githubActions = nix-github-actions.lib.mkGithubMatrix {
-          checks = nixpkgs.lib.getAttrs ["x86_64-linux"] self.checks;
+          checks.x86_64-linux = {
+            nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
+            pre-commit-check = self.checks.x86_64-linux.pre-commit-check;
+          };
+          checks.x86_64-darwin = {
+            home = self.checks.x86_64-darwin.home;
+            system = self.darwinConfigurations.zeus.config.system.build.toplevel;
+          };
         };
       };
 
