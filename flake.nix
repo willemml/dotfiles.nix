@@ -14,7 +14,7 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:willemml/home-manager?ref=feat/programs.hishtory";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
