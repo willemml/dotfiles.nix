@@ -10,7 +10,6 @@
 
   home-manager.users.willem = {
     imports = [
-      inputs.nix-index-database.hmModules.nix-index
       ../../../../home/linux/default.nix
     ];
   };
