@@ -7,7 +7,7 @@
   imports = [
     ../../common/system.nix
     ../modules/nix/use-flake-pkgs.nix
-    ../modules/users/willem/default.nix
+    ../users/willem/default.nix
     inputs.nix-index-database.nixosModules.nix-index
   ];
 

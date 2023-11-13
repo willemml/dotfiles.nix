@@ -10,7 +10,7 @@
 
   home-manager.users.willem = {
     imports = [
-      ../../../../home/linux/default.nix
+      ../../../home/linux/default.nix
     ];
   };
 

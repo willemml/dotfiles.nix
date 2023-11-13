@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../../../modules/users/willem/home.nix
+    ../../../users/willem/home.nix
     ./minimal.nix
   ];
 }

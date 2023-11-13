@@ -9,7 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/hyprland.nix
     ../profiles/default.nix
-    ../modules/users/willem/home.nix
+    ../users/willem/home.nix
     ../modules/zerotier.nix
   ];
 
