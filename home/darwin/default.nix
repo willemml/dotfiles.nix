@@ -16,8 +16,6 @@
 
   home.homeDirectory = "/Users/willem";
 
-  programs.command-not-found.enable = true;
-
   programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
 
   home.file.".gnupg/gpg-agent.conf" = {

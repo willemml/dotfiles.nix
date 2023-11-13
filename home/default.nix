@@ -11,6 +11,7 @@ in rec {
     ./modules/emacs.nix
     ./packages.nix
     ./programs/default.nix
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
   home = {

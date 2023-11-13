@@ -93,7 +93,9 @@
 
         darwinConfigurations.zeus = mkDarwin "aarch64" ./nixos/hosts/zeus.nix;
 
-        homeConfigurations = forAllSystems (system: {willem = mkHome system ./home/${builtins.replaceStrings ["aarch64-" "x86_64-"] ["" ""] system}/default.nix;});
+        homeConfigurations = forAllSystems (system: {
+          willem = mkHome system ./home/${builtins.replaceStrings ["aarch64-" "x86_64-"] ["" ""] system}/default.nix;
+        });
 
         packages.aarch64-darwin.minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
         packages.aarch64-darwin.homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
