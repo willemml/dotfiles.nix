@@ -14,6 +14,9 @@
       defaultCacheTtl = 30;
       maxCacheTtl = 600;
       pinentryFlavor = "curses";
+      extraConfig = ''
+        allow-emacs-pinentry
+      '';
     };
 
     emacs = {

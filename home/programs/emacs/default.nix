@@ -44,6 +44,7 @@
         nix-update
         org
         org-modern
+        pinentry
         polymode
         poly-org
         rustic

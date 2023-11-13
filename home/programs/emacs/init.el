@@ -73,11 +73,15 @@
 (require 'nix-update)
 (require 'org)
 (require 'org-modern)
+(require 'pinentry)
 (require 'polymode)
 (require 'rustic)
 (require 'rust-ts-mode)
 (require 'swiper)
 (require 'yasnippet)
+
+(setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(pinentry-start)
 
 (let ((org-config (expand-file-name "~/.emacs.d/org-tex-cfg.el")))
  (when (file-exists-p org-config)

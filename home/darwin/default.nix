@@ -21,6 +21,7 @@
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry.out}/bin/pinentry"
+      allow-emacs-pinentry
       default-cache-ttl 30
       max-cache-ttl 600
     '';
