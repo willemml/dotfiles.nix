@@ -9,7 +9,6 @@
     ../modules/nix/pkgs-config.nix
     ../default.nix
     ./finder.nix
-    ./iterm2.nix
     ./keybinds.nix
     ./launchd.nix
   ];

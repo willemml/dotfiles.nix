@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./emacs
+    ./kitty
     ./ssh.nix
     ./zsh.nix
   ];
