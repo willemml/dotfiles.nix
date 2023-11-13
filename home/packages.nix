@@ -47,6 +47,7 @@ in {
       graphviz
       htop
       jq
+      kitty
       mu
       nix-zsh-completions
       nixfmt

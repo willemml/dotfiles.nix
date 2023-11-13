@@ -175,11 +175,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1699767369,
-        "narHash": "sha256-0hXDV5ANHsWxsr6YL7Nr9pVISn2MwxokrainqZTWpWE=",
+        "lastModified": 1699770800,
+        "narHash": "sha256-nywbJ5pEqMx5CZkhlkQ9iWJJ4qbAGNqTI/qNuLQlQMw=",
         "owner": "willemml",
         "repo": "home-manager",
-        "rev": "cd8a2d388d8d80a790de8937b22cfb9a5f5aba42",
+        "rev": "d08f04acae4b7ed2414e5f4d0bc6f1101d20a6ee",
         "type": "github"
       },
       "original": {

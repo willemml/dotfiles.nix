@@ -76,10 +76,7 @@
             inherit globals inputs;
             overlays = self.overlays;
           };
-          modules = [
-            {nix.package = nixpkgs.legacyPackages.${system}.nix;}
-            config
-          ];
+          modules = [{nix.package = nixpkgs.legacyPackages.${system}.nix;} config];
         });
         forAllSystems = nixpkgs.lib.genAttrs systems;
       in {
