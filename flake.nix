@@ -83,6 +83,7 @@
         nixosConfigurations.x86_64-live = mkNixos "x86_64" ./nixos/hosts/x86_64-live.nix;
         nixosConfigurations.aarch64-live = mkNixos "aarch64" ./nixos/hosts/aarch64-live.nix;
 
+        nixosConfigurations.p4box = mkNixos "i686" ./nixos/hosts/p4box.nix;
         nixosConfigurations.nixbox = mkNixos "x86_64" ./nixos/hosts/nixbox.nix;
         nixosConfigurations.thinkpad = mkNixos "x86_64" ./nixos/hosts/thinkpad.nix;
 

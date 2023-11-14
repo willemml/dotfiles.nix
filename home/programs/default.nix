@@ -63,8 +63,6 @@
     hishtory = {
       enable = true;
       enableZshIntegration = true;
-      enableConfig = true;
-      settings.enable-control-r = true;
     };
 
     java = {
