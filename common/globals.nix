@@ -12,4 +12,6 @@
   timezone = "America/Vancouver";
 
   username = "willem";
+
+  sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus];
 }
