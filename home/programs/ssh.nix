@@ -20,6 +20,10 @@
         hostname = "10.1.2.175";
         user = "willem";
       };
+      "thinkpad" = {
+        hostname = "10.1.2.152";
+        user = "willem";
+      };
       "ubc" = {
         hostname = "remote.students.cs.ubc.ca";
         user = "willemml";

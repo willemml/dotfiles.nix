@@ -8,7 +8,6 @@
     ../../common/system.nix
     ../modules/nix/use-flake-pkgs.nix
     ../users/willem/default.nix
-    inputs.nix-index-database.nixosModules.nix-index
   ];
 
   console.keyMap = "colemak";

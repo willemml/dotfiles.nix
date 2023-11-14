@@ -84,6 +84,7 @@
         nixosConfigurations.aarch64-live = mkNixos "aarch64" ./nixos/hosts/aarch64-live.nix;
 
         nixosConfigurations.nixbox = mkNixos "x86_64" ./nixos/hosts/nixbox.nix;
+        nixosConfigurations.thinkpad = mkNixos "x86_64" ./nixos/hosts/thinkpad.nix;
 
         nixosConfigurations.darwin-arm-minimal-vm = mkNixos "aarch64" ./nixos/hosts/vms/aarch64-darwin-host/minimal.nix;
         nixosConfigurations.darwin-arm-homeconsole-vm = mkNixos "aarch64" ./nixos/hosts/vms/aarch64-darwin-host/home-console.nix;
