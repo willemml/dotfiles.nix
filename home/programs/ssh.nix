@@ -20,6 +20,10 @@
         hostname = "10.1.2.175";
         user = "willem";
       };
+      "pizero" = {
+        hostname = "10.1.2.171";
+        user = "willem";
+      };
       "thinkpad" = {
         hostname = "10.1.2.152";
         user = "willem";
