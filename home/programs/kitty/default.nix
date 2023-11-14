@@ -8,6 +8,7 @@
     enable = true;
     extraConfig = ''
       include themes/draculaplus.conf
+      editor "${config.programs.emacs.finalPackage.out}/bin/emacsclient" -c
     '';
     shellIntegration.enableZshIntegration = true;
 

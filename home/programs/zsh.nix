@@ -77,6 +77,8 @@
     };
 
     shellAliases = rec {
+      s = "kitten ssh";
+      ke = "kitten edit-in-kitty";
       cd = "z";
       dotd = "cd ${config.home.sessionVariables.DOTDIR} ";
       e = "emacsclient -c -nw";
@@ -84,6 +86,7 @@
       emw = "emacs";
       ew = "emacsclient -c -n";
       l = "ls -1";
+      lh = "ls --hyperlink";
       np = "nix-shell -p";
       org = "cd ${config.home.sessionVariables.ORGDIR} ";
       ubc = "cd ${config.home.sessionVariables.UBCDIR} ";
