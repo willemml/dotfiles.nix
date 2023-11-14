@@ -106,10 +106,6 @@
             nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
             pre-commit-check = self.checks.x86_64-linux.pre-commit-check;
           };
-          checks.x86_64-darwin = {
-            home = self.checks.x86_64-darwin.home;
-            system = (mkDarwin "x86_64" ./nixos/hosts/zeus.nix).config.system.build.toplevel;
-          };
         };
       };
 
