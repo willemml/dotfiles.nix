@@ -17,10 +17,19 @@
   security.rtkit.enable = true;
 
   services.xserver = {
+    enable = true;
+
     layout = globals.keyboard.layout;
-    libinput.mouse.naturalScrolling = true;
-    libinput.touchpad.naturalScrolling = true;
     xkbVariant = globals.keyboard.variant;
+
+    libinput = {
+      enable = true;
+      touchpad.tapping = true;
+      touchpad.naturalScrolling = true;
+      touchpad.scrollMethod = "twofinger";
+      touchpad.disableWhileTyping = true;
+      touchpad.clickMethod = "clickfinger";
+    };
   };
 
   sound.enable = true;
