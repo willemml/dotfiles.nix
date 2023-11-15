@@ -7,12 +7,10 @@
     ../default.nix
     ./services.nix
     ./hyprland.nix
-    ../modules/nix/pkgs-config.nix
-    ../modules/nix/use-flake-pkgs.nix
   ];
 
   programs.zsh.shellAliases = {
-    nrs = "nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     nbs = "nixos-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
   };
 

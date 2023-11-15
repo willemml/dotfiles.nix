@@ -5,15 +5,11 @@
   ...
 }: {
   imports = [
-    ../modules/nix/use-flake-pkgs.nix
-    ../modules/nix/pkgs-config.nix
     ../default.nix
     ./finder.nix
     ./keybinds.nix
     ./launchd.nix
   ];
-
-  home.homeDirectory = "/Users/willem";
 
   programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
 
@@ -27,8 +23,8 @@
   };
 
   programs.zsh.shellAliases = {
-    drs = "nix run nix-darwin -- switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
-    dbs = "nix run nix-darwin -- build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    drs = "darwin-rebuild switch --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
+    dbs = "darwin-rebuild build --flake ${config.home.homeDirectory}/.config/dotfiles.nix#";
     o = "open";
     oa = "open -a";
   };

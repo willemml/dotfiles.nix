@@ -13,5 +13,7 @@
 
   username = "willem";
 
+  dotrepopath = "~/.config/dotfiles.nix";
+
   sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus];
 }

@@ -7,11 +7,14 @@
   imports = [
     ../../common/system.nix
     ../modules/nix/use-flake-pkgs.nix
-    ../users/willem/default.nix
+    ../modules/nix/optimise.nix
+    ../users/willem/linux.nix
   ];
 
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
+
+  nix.gc.dates = "daily";
 
   i18n.defaultLocale = "en_US.UTF-8";
 

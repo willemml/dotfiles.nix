@@ -3,7 +3,7 @@
     ../../common/system.nix
     ../modules/nix/link-inputs.nix
     ../modules/nix/use-flake-pkgs.nix
-    ../users/willem/base.nix
+    ../users/willem/home/darwin.nix
   ];
 
   nix = {
@@ -15,6 +15,8 @@
 
   networking.hostName = "zeus";
   networking.computerName = "Zeus";
+
+  nix.gc.interval.Hour = 5;
 
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
@@ -46,10 +48,4 @@
   '';
 
   services.nix-daemon.enable = true;
-
-  users.users.willem = {
-    home = "/Users/willem";
-    isHidden = false;
-    name = "willem";
-  };
 }

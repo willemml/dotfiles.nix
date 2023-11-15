@@ -1,7 +1,6 @@
 {...}: {
-  imports = [./base.nix];
+  imports = [./sshkeys.nix];
   users.users.willem = {
-    extraGroups = ["networkmanager" "wheel" "video" "udev"];
-    isNormalUser = true;
+    name = "willem";
   };
 }

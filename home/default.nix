@@ -11,6 +11,8 @@ in rec {
     ./modules/emacs.nix
     ./packages.nix
     ./programs/default.nix
+    ./modules/nix/pkgs-config.nix
+    ./modules/nix/use-flake-pkgs.nix
     inputs.nix-index-database.hmModules.nix-index
   ];
 
