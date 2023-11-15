@@ -22,6 +22,8 @@
     layout = globals.keyboard.layout;
     xkbVariant = globals.keyboard.variant;
 
+    synaptics.enable = false;
+
     libinput = {
       enable = true;
       touchpad.tapping = true;

@@ -19,6 +19,26 @@
   services.mako.enable = true;
 
   wayland.windowManager.hyprland = {
+    settings = {
+      input = {
+        sensitivity = 0.4;
+        accel_profile = "adaptive";
+        touchpad = {
+          natural_scroll = true;
+          scroll_factor = 0.45;
+          tap-and-drag = true;
+        };
+      };
+
+      gestures = {
+        workspace_swipe = true;
+        workspace_swipe_fingers = 3;
+        workspace_swipe_cancel_ratio = 0.5;
+        workspace_swipe_distance = 2000;
+        workspace_swipe_invert = true;
+      };
+    };
+
     enable = true;
   };
 
