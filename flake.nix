@@ -7,9 +7,6 @@
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
     fenix.url = "github:nix-community/fenix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";

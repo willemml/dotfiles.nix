@@ -83,8 +83,6 @@
       dotd = "cd ${config.home.sessionVariables.DOTDIR} ";
       e = "emacsclient -c -nw";
       em = "emacs -nw";
-      emw = "emacs";
-      ew = "emacsclient -c -n";
       l = "ls -1";
       lh = "ls --hyperlink";
       np = "nix-shell -p";
