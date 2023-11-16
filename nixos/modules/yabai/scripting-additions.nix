@@ -21,6 +21,14 @@
   environment.systemPackages = [pkgs.skhd];
   services.skhd.enable = true;
 
+  system.activationScripts.postUserActivation = {
+    enable = true;
+    text = ''
+      echo Reloading skhd config
+      ${config.services.skhd.package}/bin/skhd --reload
+    '';
+  };
+
   services.skhd.skhdConfig = let
     yabai = "${pkgs.yabai}/bin/yabai";
     # Don't use nix emacs. Homebrew has a better version
@@ -98,8 +106,8 @@
     ${ctrl} - 0 : ${yabai} -m space --focus 10
 
     # Make window native fullscreen
-    ${ctrl} - f         : ${yabai} -m window --toggle zoom-fullscreen
-    shift + ${ctrl} - f : ${yabai} -m window --toggle native-fullscreen
+    #${ctrl} - f        : ${yabai} -m window --toggle zoom-fullscreen
+    shift + ${ctrl} - f : ${yabai} -m window --toggle zoom-fullscreen
 
     # Float / Unfloat window
     ${ctrl} + shift - space : \
@@ -107,7 +115,7 @@
         ${yabai} -m window --toggle border
 
     # Open Emacs
-    ${ctrl} + shift - n : ${config.home-manager.users.willem.programs.emacs.finalPackage}/bin/emacsclient -c -n
+    ${ctrl} + shift - n : ${kitty} --single-instance ${config.home-manager.users.willem.programs.emacs.finalPackage}/bin/emacsclient -nw -c
     # Open Firefox window
     ${ctrl} + shift - f : /Applications/Firefox.app/Contents/MacOS/firefox -new-window
   '';
