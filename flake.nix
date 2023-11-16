@@ -89,6 +89,7 @@
         githubActions = nix-github-actions.lib.mkGithubMatrix {
           checks.x86_64-linux = {
             nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
+            thinkpad = self.nixosConfigurations.thinkpad.config.system.build.toplevel;
             pre-commit-check = self.checks.x86_64-linux.pre-commit-check;
           };
         };
