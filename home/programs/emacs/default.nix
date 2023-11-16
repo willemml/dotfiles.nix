@@ -36,7 +36,6 @@
         flycheck
         format-all
         ivy
-        lsp-mode
         magit
         magit-section
         meow
