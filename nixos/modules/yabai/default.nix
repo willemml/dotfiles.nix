@@ -29,6 +29,7 @@ in {
     enableScriptingAddition = true;
 
     config = {
+      window_origin_display = "focused";
       window_placement = "second_child";
       window_shadow = "on";
       window_border = "off";
@@ -70,7 +71,6 @@ in {
         set +x
 
         echo "yabai configuration loaded.."
-
       '';
   };
 

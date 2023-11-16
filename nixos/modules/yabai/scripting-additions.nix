@@ -3,7 +3,12 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  home = config.home-manager.users.willem;
+  homeDir = config.users.users.willem.home;
+  emacsCfg = home.programs.emacs;
+  kittyCfg = home.programs.kitty;
+in {
   services.yabai = {
     enableScriptingAddition = true;
     extraConfig = ''
@@ -14,7 +19,7 @@
 
   environment.etc = {
     "sudoers.d/yabai".text = ''
-      willem ALL=(root) NOPASSWD: ${pkgs.yabai}/bin/yabai --load-sa
+      %admin ALL=(root) NOPASSWD: ${pkgs.yabai}/bin/yabai --load-sa
     '';
   };
 
@@ -29,10 +34,10 @@
   };
 
   services.skhd.skhdConfig = let
-    yabai = "${pkgs.yabai}/bin/yabai";
+    yabai = "${config.services.yabai.package}/bin/yabai";
     # Don't use nix emacs. Homebrew has a better version
     # emacs = "${pkgs.emacs}/bin/emacs";
-    kitty = "${pkgs.kitty}/bin/kitty";
+    kitty = "${kittyCfg.package}/bin/kitty";
     # Handle any weird inversion bindings
     cmd = "cmd";
     ctrl = "ctrl";
@@ -42,7 +47,7 @@
     cmd - m : :
     rcmd - w : :
 
-    ${ctrl} - return : ${kitty} --single-instance
+    ${ctrl} - return : ${kitty} --single-instance --working-directory ${homeDir}
 
     # Close window
     ${cmd} + shift - c : osascript -e 'tell application "System Events" to perform action "AXPress" of (first button whose subrole is "AXCloseButton") of (first window whose subrole is "AXStandardWindow") of (first process whose frontmost is true)'
@@ -114,8 +119,8 @@
         ${yabai} -m window --toggle border
 
     # Open Emacs
-    ${ctrl} + shift - n : ${kitty} --single-instance ${config.home-manager.users.willem.programs.emacs.finalPackage}/bin/emacsclient -nw -c
+    ${ctrl} + shift - n : ${kitty} --single-instance ${emacsCfg.finalPackage}/bin/emacsclient -nw
     # Open Firefox window
-    ${ctrl} + shift - f : /Applications/Firefox.app/Contents/MacOS/firefox -new-window
+    ${ctrl} + shift - b : /Applications/Firefox.app/Contents/MacOS/firefox -new-window
   '';
 }
