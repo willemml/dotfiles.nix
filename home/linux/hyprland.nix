@@ -2,8 +2,13 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: {
+  imports = [
+    inputs.hyprland.homeManagerModules.default
+  ];
+
   home.packages = with pkgs; [
     firefox
     lxappearance
