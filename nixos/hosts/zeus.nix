@@ -4,6 +4,8 @@
     ../modules/nix/link-inputs.nix
     ../modules/nix/use-flake-pkgs.nix
     ../users/willem/home/darwin.nix
+    ../modules/yabai/default.nix
+    ../modules/yabai/scripting-additions.nix
   ];
 
   nix = {
