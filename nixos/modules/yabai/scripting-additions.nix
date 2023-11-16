@@ -13,8 +13,8 @@
   };
 
   environment.etc = {
-    "sudoers.d/10-yabai".text = ''
-      %admin ALL=(root) NOPASSWD: ${pkgs.yabai}/bin/yabai --load-sa
+    "sudoers.d/yabai".text = ''
+      willem ALL=(root) NOPASSWD: ${pkgs.yabai}/bin/yabai --load-sa
     '';
   };
 
@@ -22,7 +22,6 @@
   services.skhd.enable = true;
 
   system.activationScripts.postUserActivation = {
-    enable = true;
     text = ''
       echo Reloading skhd config
       ${config.services.skhd.package}/bin/skhd --reload

@@ -68,7 +68,7 @@ in {
       sqlite
       stylua
       texinfo
-      tldr
+      tealdeer
       units
       unrar
       unzip
