@@ -7,6 +7,9 @@
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
     fenix.url = "github:nix-community/fenix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -16,17 +19,17 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
-    nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
-
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-github-actions.url = "github:nix-community/nix-github-actions";
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
+    nix-github-actions.url = "github:nix-community/nix-github-actions";
+
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database.url = "github:nix-community/nix-index-database";
+
+    nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
   outputs = {
@@ -42,11 +45,6 @@
     globals = import ./common/globals.nix;
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} rec {
-      imports = [
-        ./flake/home-manager.nix
-        ./flake/overlays.nix
-      ];
-
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
@@ -69,22 +67,34 @@
 
         forAllSystems = nixpkgs.lib.genAttrs systems;
       in {
-        nixosConfigurations.x86_64-live = mkNixos "x86_64" [./nixos/hosts/x86_64-live.nix];
-        nixosConfigurations.aarch64-live = mkNixos "aarch64" [./nixos/hosts/aarch64-live.nix];
+        overlays = {
+          default = import ./packages;
+          fenix = inputs.fenix.overlays.default;
+          emacs = inputs.emacs-overlay.overlays.default;
+        };
 
-        nixosConfigurations.nixbox = mkNixos "x86_64" [./nixos/hosts/nixbox.nix];
-        nixosConfigurations.thinkpad = mkNixos "x86_64" [./nixos/hosts/thinkpad.nix];
+        nixosConfigurations = {
+          x86_64-live = mkNixos "x86_64" [./nixos/hosts/x86_64-live.nix];
+          aarch64-live = mkNixos "aarch64" [./nixos/hosts/aarch64-live.nix];
 
-        nixosConfigurations.darwin-arm-minimal-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/minimal.nix];
-        nixosConfigurations.darwin-arm-homeconsole-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/home-console.nix];
+          nixbox = mkNixos "x86_64" [./nixos/hosts/nixbox.nix];
+          thinkpad = mkNixos "x86_64" [./nixos/hosts/thinkpad.nix];
+
+          darwin-arm-minimal-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/minimal.nix];
+          darwin-arm-homeconsole-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/home-console.nix];
+        };
 
         darwinConfigurations.zeus = mkDarwin "aarch64" [./nixos/hosts/zeus.nix];
 
-        packages.aarch64-darwin.minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
-        packages.aarch64-darwin.homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
+        packages = {
+          aarch64-darwin = {
+            minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
+            homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
+          };
 
-        packages.x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
-        packages.aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
+          x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
+          aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
+        };
 
         githubActions = nix-github-actions.lib.mkGithubMatrix {
           checks.x86_64-linux = {
@@ -108,10 +118,6 @@
             alejandra.enable = true;
           };
         };
-
-        checks.home = self'.packages.home;
-
-        packages.home = self.homeConfigurations.${system}.willem.activationPackage;
 
         devShells.default = pkgs.mkShell {
           inherit (self'.checks.pre-commit-check) shellHook;
