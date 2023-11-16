@@ -13,6 +13,8 @@
     ../users/willem/linux.nix
   ];
 
+  programs.command-not-found.enable = false;
+
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
 
