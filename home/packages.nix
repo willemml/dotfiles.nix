@@ -34,7 +34,6 @@ in {
       cachix
       clang-tools
       cmake
-      comma
       coreutils
       curl
       docker

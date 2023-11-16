@@ -1,8 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../../common/system.nix
     ../modules/nix/link-inputs.nix
+    ../modules/nix/optimise.nix
     ../modules/nix/use-flake-pkgs.nix
+    ../modules/nix/cachix.nix
+    ../modules/comma.nix
     ../users/willem/home/darwin.nix
     ../modules/yabai/default.nix
     ../modules/yabai/scripting-additions.nix

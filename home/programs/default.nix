@@ -12,6 +12,8 @@
   ];
 
   programs = {
+    nix-index-database.comma.enable = true;
+
     bash.enableCompletion = true;
 
     direnv = {

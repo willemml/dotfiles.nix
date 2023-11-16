@@ -8,6 +8,8 @@
     ../../common/system.nix
     ../modules/nix/use-flake-pkgs.nix
     ../modules/nix/optimise.nix
+    ../modules/nix/cachix.nix
+    ../modules/comma.nix
     ../users/willem/linux.nix
   ];
 
@@ -25,8 +27,6 @@
         exec $SHELL -c 'echo >&2 "reexecuting shell: $SHELL" && exec $SHELL -l'
     }
   '';
-
-  programs.command-not-found.enable = false;
 
   services.udev.enable = true;
 
