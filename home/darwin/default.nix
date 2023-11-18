@@ -34,36 +34,14 @@
     sh
     */
     ''
-      export WINEPREFIX="${config.home.homeDirectory}/.gptk_wineprefix"
-
       if [ "$(arch)" = "arm64" ]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
-          wine-gptk(){ arch -x86_64 /bin/zsh -c "WINEESYNC=1 \$(brew --prefix game-porting-toolkit)/bin/wine64 $@"; }
       else
           eval "$(/usr/local/bin/brew shellenv)"
-          wine-gptk(){ WINEESYNC=1 $(brew --prefix game-porting-toolkit)/bin/wine64 "$@"; }
       fi
-
-      gptk-steam(){ wine-gptk "${config.home.homeDirectory}/.gptk_wineprefix/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe"; }
     '';
 
-  programs.emacs.extraPackages = epkgs:
-    with epkgs; [
-      swift-mode
-      company-sourcekit
-    ];
-
-  home.packages = with pkgs;
-    [
-      colima
-      pngpaste
-      spoof-mac
-    ]
-    ++ (let
-      pkgs_x86_only = pkgs // {system = "x86_64-darwin";};
-    in (with pkgs_x86_only; [
-      gcc-arm-embedded
-    ]));
+  home.packages = [pkgs.colima];
 
   targets.darwin = {
     defaults = {

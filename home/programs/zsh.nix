@@ -41,25 +41,6 @@
             }
         fi
 
-        nixifypy() {
-          if [ ! -e ./.envrc ]; then
-            echo "use nix" > .envrc
-            direnv allow
-          fi
-          if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
-            cat > default.nix <<EOF
-        with import <nixpkgs> {};
-        mkShell {
-          nativeBuildInputs = [
-            bashInteractive
-            (pkgs.python310.withPackages (p: with p; [  ]))
-          ];
-        }
-        EOF
-            '${config.home.sessionVariables.EDITOR}' default.nix
-          fi
-        }
-
         flakify() {
           if [ ! -e flake.nix ]; then
             nix flake new -t github:nix-community/nix-direnv .

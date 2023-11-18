@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  emacsCommand = "emacsclient -c -nw";
+  emacsCommand = "${config.programs.emacs.finalPackage}/bin/emacsclient -nw";
 in rec {
   imports = [
     ./modules/emacs.nix
