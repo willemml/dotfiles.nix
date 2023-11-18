@@ -5,11 +5,6 @@
 }: {
   imports = [./desktop.nix];
 
-  home-manager.sharedModules = [
-    {wayland.windowManager.hyprland.enable = true;}
-    inputs.hyprland.homeManagerModules.default
-  ];
-
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
