@@ -17,6 +17,7 @@
 
     alacritty.enable = true;
     alacritty.settings.font.normal.style = lib.mkForce "Book";
+    alacritty.settings.window.decorations = "None";
 
     direnv = {
       enable = true;
