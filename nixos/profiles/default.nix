@@ -2,6 +2,7 @@
   inputs,
   overlays,
   pkgs,
+  globals,
   ...
 }: {
   imports = [
@@ -11,7 +12,10 @@
     ../modules/nix/cachix.nix
     ../modules/comma.nix
     ../users/willem/linux.nix
+    inputs.stylix.nixosModules.stylix
   ];
+
+  stylix.image = pkgs.fetchurl globals.wallpapers.current;
 
   programs.command-not-found.enable = false;
 

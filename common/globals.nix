@@ -13,5 +13,7 @@
 
   username = "willem";
 
+  wallpapers = import ./wallpapers.nix;
+
   sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus];
 }
