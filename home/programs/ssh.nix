@@ -20,6 +20,10 @@
         hostname = "10.1.2.175";
         user = "willem";
       };
+      "bsdremote" = {
+        hostname = "10.1.2.134";
+        user = "willem";
+      };
       "pizero" = {
         hostname = "10.1.2.171";
         user = "willem";
