@@ -16,6 +16,22 @@
     inputs.stylix.darwinModules.stylix
   ];
 
+  homebrew = {
+    enable = true;
+    casks = [
+      "blackhole-16ch"
+      "zerotier-one"
+      "discord"
+      "nordvpn"
+      "obs"
+      "steam"
+      "vial"
+      "whisky"
+      "homebrew/cask-versions/firefox-esr"
+      "UTM"
+    ];
+  };
+
   nix = {
     generateNixPathFromInputs = true;
     generateRegistryFromInputs = true;
