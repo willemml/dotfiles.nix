@@ -28,9 +28,37 @@
 
     settings = {
       bind = [
-        "SHIFT_SUPER, SPACE, exec, alacritty"
         "SUPER, SPACE, exec, rofi -modes \"ssh,drun,window\" -show drun"
         "ALT, SPACE, exec, rofi -show window"
+
+        "CONTROL, RETURN, exec, alacritty"
+
+        "SUPER_SHIFT, C, killactive"
+
+        "CONTROL, left, movefocus, l"
+        "CONTROL, right, movefocus, r"
+        "CONTROL, up, movefocus, u"
+        "CONTROL, down, movefocus, d"
+
+        "CONTROL_SUPER, h, movefocus, l"
+        "CONTROL_SUPER, i, movefocus, r"
+        "CONTROL_SUPER, e, movefocus, u"
+        "CONTROL_SUPER, n, movefocus, d"
+
+        "SHIFT_CONTROL, left, movewindow, l"
+        "SHIFT_CONTROL, right, movewindow, r"
+        "SHIFT_CONTROL, up, movewindow, u"
+        "SHIFT_CONTROL, down, movewindow, d"
+
+        "SHIFT_CONTROL, h, movewindow, l"
+        "SHIFT_CONTROL, i, movewindow, r"
+        "SHIFT_CONTROL, e, movewindow, u"
+        "SHIFT_CONTROL, n, movewindow, d"
+
+        "SUPER, left, resizeactive, -10 0"
+        "SUPER, right, resizeactive, 10 0"
+        "SUPER, up, resizeactive, 0 -10"
+        "SUPER, down, resizeactive, 0 10"
       ];
 
       input = {
