@@ -14,11 +14,9 @@
 (setq inhibit-default-init t)
 
 ;; Transparent background for Emacs in terminal windows.
-(defun on-after-init ()
-  (unless (display-graphic-p (selected-frame))
-    (set-face-background 'default "unspecified-bg" (selected-frame))))
-
-(add-hook 'window-setup-hook 'on-after-init)
+(add-hook 'server-switch-hook
+          (lambda ()
+            (set-face-background 'default "unspecified-bg" (selected-frame))))
 
 ;; Typically, I only want spaces when pressing the TAB key. I also
 ;; want 4 of them.
@@ -91,13 +89,13 @@
 (pinentry-start)
 
 (let ((org-config (expand-file-name "~/.emacs.d/org-tex-cfg.el")))
- (when (file-exists-p org-config)
-   (load-file org-config))
-)
+  (when (file-exists-p org-config)
+    (load-file org-config))
+  )
 (let ((nix-extraconfig (expand-file-name "~/.emacs.d/nix-extraconfig.el")))
- (when (file-exists-p nix-extraconfig)
-   (load-file nix-extraconfig))
-)
+  (when (file-exists-p nix-extraconfig)
+    (load-file nix-extraconfig))
+  )
 
 (setq org-directory (expand-file-name "~/Documents/org"))
 
