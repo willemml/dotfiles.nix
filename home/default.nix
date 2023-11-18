@@ -14,10 +14,9 @@ in rec {
     ./modules/nix/pkgs-config.nix
     ./modules/nix/use-flake-pkgs.nix
     inputs.nix-index-database.hmModules.nix-index
-    inputs.stylix.homeManagerModules.stylix
   ];
 
-  stylix.image = pkgs.fetchurl globals.wallpapers.current;
+  stylix.opacity.terminal = 0.80;
 
   home = {
     username = globals.username;

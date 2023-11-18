@@ -16,6 +16,9 @@
 
     bash.enableCompletion = true;
 
+    alacritty.enable = true;
+    alacritty.settings.font.normal.style = lib.mkForce "Book";
+
     direnv = {
       enable = true;
       enableBashIntegration = true;

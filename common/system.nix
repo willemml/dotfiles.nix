@@ -4,6 +4,9 @@
   globals,
   ...
 }: {
+  stylix.image = pkgs.fetchurl globals.wallpapers.current;
+  stylix.polarity = "dark";
+
   environment.pathsToLink = ["/share/zsh"];
   environment.shells = [pkgs.bashInteractive pkgs.zsh];
   environment.systemPackages = [pkgs.coreutils pkgs.git];

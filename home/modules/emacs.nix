@@ -40,6 +40,7 @@ in {
 
     programs.emacs.extraPackages = mkIf cfg.enableOrgTex cfg.texEmacsPackages;
 
+    home.file.".emacs.d/nix-extraconfig.el".text = cfg.extraConfig;
     home.file.".emacs.d/org-tex-cfg.el" = mkIf cfg.enableOrgTex (fileFromPathOrText cfg.orgTexConfigFile);
     home.file.".emacs.d/early-init.el" = fileFromPathOrText cfg.earlyInitFile;
     home.file.".emacs.d/init.el" = fileFromPathOrText cfg.initFile;

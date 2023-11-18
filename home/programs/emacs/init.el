@@ -87,6 +87,10 @@
  (when (file-exists-p org-config)
    (load-file org-config))
 )
+(let ((nix-extraconfig (expand-file-name "~/.emacs.d/nix-extraconfig.el")))
+ (when (file-exists-p nix-extraconfig)
+   (load-file nix-extraconfig))
+)
 
 (setq org-directory (expand-file-name "~/Documents/org"))
 
@@ -258,8 +262,6 @@
 (defvar separedit-preserve-string-indentation t)
 (global-set-key (kbd "C-c '") 'separedit)
 (add-hook 'separedit-buffer-creation-hook 'normal-mode)
-
-(load-theme 'solarized-gruvbox-dark t)
 
 (global-set-key (kbd "C-s") 'swiper)
 

@@ -13,6 +13,7 @@
     ../users/willem/home/darwin.nix
     ../modules/yabai/default.nix
     ../modules/yabai/scripting-additions.nix
+    inputs.stylix.darwinModules.stylix
   ];
 
   nix = {

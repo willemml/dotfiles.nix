@@ -49,7 +49,6 @@
         rustic
         s
         separedit
-        solarized-theme
         swiper
         yasnippet
       ])

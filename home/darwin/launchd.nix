@@ -13,8 +13,6 @@ in {
       enable = true;
       config = {
         EnvironmentVariables = {
-          TERM = "xterm-kitty";
-          TERMINFO = "${config.programs.kitty.package}/Applications/kitty.app/Contents/Resources/kitty/terminfo";
           TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo:/run/current-system/sw/share/terminfo:/nix/var/nix/profiles/default/share/terminfo:/usr/share/terminfo";
         };
         ProgramArguments = [

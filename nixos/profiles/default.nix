@@ -15,8 +15,6 @@
     inputs.stylix.nixosModules.stylix
   ];
 
-  stylix.image = pkgs.fetchurl globals.wallpapers.current;
-
   programs.command-not-found.enable = false;
 
   console.keyMap = "colemak";
