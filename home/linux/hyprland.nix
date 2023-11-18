@@ -22,6 +22,10 @@
   wayland.windowManager.hyprland = {
     enable = true;
 
+    extraConfig = ''
+      exec = ${pkgs.swaybg}/bin/swaybg -i ${config.stylix.image} -m fill
+    '';
+
     settings = {
       bind = [
         "SHIFT_SUPER, SPACE, exec, alacritty"
