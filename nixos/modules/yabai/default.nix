@@ -24,6 +24,8 @@
 
   floating-rules-str = strings.concatStringsSep "\n" floating-rules;
 in {
+  imports = [./scripting-additions.nix];
+
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
@@ -37,7 +39,7 @@ in {
       active_window_border_color = "0xff$CACTV";
       normal_window_border_color = "0xff$CNORM";
       insert_window_border_color = "0xff$CINSE";
-      mouse_follows_focus = "off";
+      mouse_follows_focus = "on";
       focus_follows_mouse = "autofocus";
       window_opacity = "off";
       window_opacity_duration = "0.0";

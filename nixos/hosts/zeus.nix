@@ -11,8 +11,7 @@
     ../modules/nix/cachix.nix
     ../modules/comma.nix
     ../users/willem/home/darwin.nix
-    ../modules/yabai/default.nix
-    ../modules/yabai/scripting-additions.nix
+    ../modules/yabai
     inputs.stylix.darwinModules.stylix
   ];
 
