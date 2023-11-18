@@ -7,7 +7,7 @@
   home = config.home-manager.users.willem;
   homeDir = config.users.users.willem.home;
   emacsCfg = home.programs.emacs;
-  kittyCfg = home.programs.kitty;
+  alacrittyCfg = home.programs.alacritty;
 in {
   services.yabai = {
     enableScriptingAddition = true;
@@ -37,7 +37,7 @@ in {
     yabai = "${config.services.yabai.package}/bin/yabai";
     # Don't use nix emacs. Homebrew has a better version
     # emacs = "${pkgs.emacs}/bin/emacs";
-    kitty = "${kittyCfg.package}/bin/kitty";
+    alacritty = "${alacrittyCfg.package}/Applications/Alacritty.app/Contents/MacOS/alacritty";
     # Handle any weird inversion bindings
     cmd = "cmd";
     ctrl = "ctrl";
@@ -47,7 +47,7 @@ in {
     cmd - m : :
     rcmd - w : :
 
-    ${ctrl} - return : ${kitty} --single-instance --working-directory ${homeDir}
+    ${ctrl} - return : ${alacritty} msg create-window || ${alacritty}
 
     # Close window
     ${cmd} + shift - c : osascript -e 'tell application "System Events" to perform action "AXPress" of (first button whose subrole is "AXCloseButton") of (first window whose subrole is "AXStandardWindow") of (first process whose frontmost is true)'
@@ -119,7 +119,7 @@ in {
         ${yabai} -m window --toggle border
 
     # Open Emacs
-    ${ctrl} + shift - n : ${kitty} --single-instance ${emacsCfg.finalPackage}/bin/emacsclient -nw
+    ${ctrl} + shift - n : ${alacritty} msg create-window -e ${emacsCfg.finalPackage}/bin/emacsclient -nw || alacritty -e ${emacsCfg.finalPackage}/bin/emacsclient -nwOA
     # Open Firefox window
     ${ctrl} + shift - b : /Applications/Firefox.app/Contents/MacOS/firefox -new-window
   '';

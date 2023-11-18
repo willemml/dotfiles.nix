@@ -13,6 +13,13 @@
 
 (setq inhibit-default-init t)
 
+;; Transparent background for Emacs in terminal windows.
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'on-after-init)
+
 ;; Typically, I only want spaces when pressing the TAB key. I also
 ;; want 4 of them.
 (setq-default indent-tabs-mode nil
