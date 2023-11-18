@@ -15,9 +15,23 @@
 
     bash.enableCompletion = true;
 
-    alacritty.enable = true;
-    alacritty.settings.font.normal.style = lib.mkForce "Book";
-    alacritty.settings.window.decorations = "None";
+    alacritty = {
+      enable = true;
+      settings = {
+        font.normal.style = lib.mkForce "Book";
+        window = {
+          decorations = "None";
+          option_as_alt = "Both";
+        };
+        key_bindings = [
+          {
+            key = "Slash";
+            mods = "Control";
+            chars = "\\x1b[47;5u";
+          }
+        ];
+      };
+    };
 
     direnv = {
       enable = true;
