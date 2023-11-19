@@ -42,6 +42,7 @@ in {
       fenix-rust
       findutils
       gawk
+      git-crypt
       gnuplot
       graphviz
       htop

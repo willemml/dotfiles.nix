@@ -1,0 +1,1 @@
+common/secrets.nix filter=git-crypt diff=git-crypt
