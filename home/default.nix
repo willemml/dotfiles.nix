@@ -33,7 +33,6 @@ in rec {
     };
 
     sessionVariables = rec {
-      GCTESTSECRET = globals.secrets.test_secret;
       DOTDIR = "${config.home.homeDirectory}/.config/dotfiles.nix";
       EDITOR = emacsCommand;
       VISUAL = emacsCommand;

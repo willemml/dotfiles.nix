@@ -11,6 +11,7 @@
     ../profiles/default.nix
     ../users/willem/home/linux.nix
     ../modules/zerotier.nix
+    ../modules/nordvpn.nix
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
