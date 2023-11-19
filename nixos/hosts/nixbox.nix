@@ -21,7 +21,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.supportedFilesystems = ["zfs"];
+  boot.zfs.forceImportRoot = false;
+  networking.hostId = "06818aaa";
+
   hardware.opengl.driSupport = true;
+  hardware.opengl.enable = true;
 
   hardware.opengl.extraPackages = with pkgs; [
     amdvlk
@@ -36,6 +41,33 @@
     device = "/dev/disk/by-uuid/4FEE-904E";
     fsType = "vfat";
   };
+
+  fileSystems."/zpool" = {
+    device = "zpool";
+    fsType = "zfs";
+  };
+
+  environment.systemPackages = [pkgs.zfs];
+
+  services.jellyfin.enable = true;
+  services.jellyfin.openFirewall = true;
+
+  services.transmission = {
+    enable = true;
+
+    settings = rec {
+      download-dir = "/zpool/torrents/complete";
+      incomplete-dir = "/zpool/torrents/incomplete";
+      incomplete-dir-enabled = true;
+      rpc-enabled = true;
+      rpc-bind-address = "0.0.0.0";
+      rpc-whitelist-enabled = false;
+      rpc-host-whitelist-enabled = false;
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [9091];
+  networking.firewall.allowedUDPPorts = [9091];
 
   swapDevices = [];
 
