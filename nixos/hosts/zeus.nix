@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -14,6 +15,10 @@
     ../modules/yabai
     inputs.stylix.darwinModules.stylix
   ];
+
+  system.activationScripts.extraActivation.text = ''
+    osascript -e 'tell application "System Events" to tell every desktop to set picture to "${config.stylix.image}"'
+  '';
 
   homebrew = {
     enable = true;

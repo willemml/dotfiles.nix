@@ -16,6 +16,7 @@
     "Dictionary"
     "mpv"
     "Software Update"
+    "Set Desktop Background"
   ];
 
   floating-rules = lists.forEach floating-apps (
