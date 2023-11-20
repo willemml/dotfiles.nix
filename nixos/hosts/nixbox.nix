@@ -70,7 +70,77 @@
   networking.firewall.allowedTCPPorts = [9091];
   networking.firewall.allowedUDPPorts = [9091];
 
+  networking.firewall.logRefusedConnections = true;
+  networking.firewall.logRefusedPackets = true;
+
+  networking.nftables.enable = true;
+  networking.nftables.flushRuleset = true;
+
+  networking.nftables.tables."nixos-fw".content = lib.mkForce "";
+
+  networking.firewall.trustedInterfaces = ["zt*"];
+
   swapDevices = [];
+
+  networking.nftables.ruleset = ''
+    table inet filter {
+      chain input {
+        type filter hook input priority 0;
+
+        # accept all localhost and zerotier traffic
+        iifname lo accept
+        iifname "zt*" accept
+
+        # accept traffic sent by us
+        ct state {established, related} accept
+
+        # ICMP
+        # routers may also want: mld-listener-query, nd-router-solicit
+        ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept
+
+        # allow "ping"
+        ip protocol icmp icmp type echo-request accept
+
+        # jellyfin
+        tcp dport 8096 accept
+        tcp dport 8920 accept
+        udp dport 1900 accept
+        udp dport 7359 accept
+
+        # transmission web ui
+        tcp dport 9091 accept
+
+        # zerotier
+        udp dport 9993 accept
+        tcp dport 9993 accept
+
+        # ssh
+        tcp dport 22 accept
+
+        # drop all other packets
+        #counter drop
+        accept
+      }
+
+      chain output {
+        type filter hook output priority 0;
+
+        oifname != { "lo", "tun0", "zt*" } skgid 70 counter reject
+
+        # zerotier
+        oifname "zt*" accept
+        udp dport 9993 accept
+        tcp dport 9993 accept
+
+        accept
+      }
+
+      chain forward {
+        type filter hook forward priority 0;
+        accept
+      }
+    }
+  '';
 
   networking.useDHCP = lib.mkDefault true;
 

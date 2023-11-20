@@ -24,6 +24,8 @@
 
     synaptics.enable = false;
 
+    displayManager.lightdm.enable = false;
+
     libinput = {
       enable = true;
       touchpad.tapping = true;
