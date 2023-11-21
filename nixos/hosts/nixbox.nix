@@ -43,22 +43,18 @@
     fsType = "vfat";
   };
 
-  fileSystems."/zpool" = {
-    device = "zpool";
-    fsType = "zfs";
-  };
+  boot.zfs.extraPools = ["zpool"];
 
   environment.systemPackages = [pkgs.zfs];
 
   services.jellyfin.enable = true;
-  services.jellyfin.openFirewall = true;
 
   services.transmission = {
     enable = true;
 
     settings = rec {
-      download-dir = "/zpool/torrents/complete";
-      incomplete-dir = "/zpool/torrents/incomplete";
+      download-dir = "/zpool/media/torrents";
+      incomplete-dir = "/zpool/media/torrents/.incomplete";
       incomplete-dir-enabled = true;
       rpc-enabled = true;
       rpc-bind-address = "0.0.0.0";
@@ -67,20 +63,10 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [9091];
-  networking.firewall.allowedUDPPorts = [9091];
-
-  networking.firewall.logRefusedConnections = true;
-  networking.firewall.logRefusedPackets = true;
-
   networking.nftables.enable = true;
   networking.nftables.flushRuleset = true;
 
   networking.nftables.tables."nixos-fw".content = lib.mkForce "";
-
-  networking.firewall.trustedInterfaces = ["zt*"];
-
-  swapDevices = [];
 
   networking.nftables.ruleset = ''
     table inet filter {
