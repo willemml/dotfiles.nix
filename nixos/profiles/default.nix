@@ -20,6 +20,13 @@
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
 
+  environment.systemPackages = [pkgs.parted];
+
+  services.zerotierone = {
+    joinNetworks = globals.secrets.zerotier.networks;
+    enable = true;
+  };
+
   nix.gc.dates = "daily";
 
   i18n.defaultLocale = "en_US.UTF-8";
