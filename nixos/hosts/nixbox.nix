@@ -34,18 +34,20 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9b616ca8-63fe-4d81-a13e-25c9a95a1a55";
+    device = "/dev/disk/by-uuid/24855432-019b-43d9-9b83-9135b9dc31a6";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/4FEE-904E";
+    device = "/dev/disk/by-uuid/F2E9-F515";
     fsType = "vfat";
   };
 
-  boot.zfs.extraPools = ["zpool"];
+  swapDevices = [{device = "/dev/disk/by-uuid/36bb51f0-f56d-4408-b61c-7905789a7304";}];
 
   environment.systemPackages = [pkgs.zfs];
+
+  services.zfs.autoScrub.enable = true;
 
   services.jellyfin.enable = true;
 
