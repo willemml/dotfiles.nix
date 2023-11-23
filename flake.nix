@@ -28,6 +28,10 @@
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
 
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
@@ -37,11 +41,7 @@
 
   outputs = {
     darwin,
-    flake-parts,
-    home-manager,
-    nix-github-actions,
     nixpkgs,
-    pre-commit-hooks,
     self,
     ...
   } @ inputs: let
@@ -93,18 +93,11 @@
           aarch64-darwin = {
             minimal-vm = self.nixosConfigurations.darwin-arm-minimal-vm.config.system.build.vm;
             homeconsole-vm = self.nixosConfigurations.darwin-arm-homeconsole-vm.config.system.build.vm;
+            default = self.darwinConfigurations.zeus.config.system.build.toplevel;
           };
 
           x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
           aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
-        };
-
-        githubActions = nix-github-actions.lib.mkGithubMatrix {
-          checks.x86_64-linux = {
-            nixbox = self.nixosConfigurations.nixbox.config.system.build.toplevel;
-            thinkpad = self.nixosConfigurations.thinkpad.config.system.build.toplevel;
-            pre-commit-check = self.checks.x86_64-linux.pre-commit-check;
-          };
         };
       };
 

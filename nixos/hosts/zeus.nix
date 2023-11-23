@@ -16,6 +16,9 @@
     inputs.stylix.darwinModules.stylix
   ];
 
+  # build of normal noto emoji fonts fails on darwin
+  stylix.fonts.emoji.package = pkgs.noto-fonts-emoji-blob-bin;
+
   system.activationScripts.extraActivation.text = ''
     osascript -e 'tell application "System Events" to tell every desktop to set picture to "${config.stylix.image}"'
   '';

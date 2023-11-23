@@ -48,6 +48,7 @@ in {
       htop
       jq
       mu
+      nix-tree
       nix-zsh-completions
       nixfmt
       nixpkgs-fmt

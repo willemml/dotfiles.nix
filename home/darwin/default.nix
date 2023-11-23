@@ -11,6 +11,9 @@
     ./launchd.nix
   ];
 
+  stylix.targets.gnome.enable = false;
+  stylix.targets.gtk.enable = false;
+
   programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
 
   home.file.".gnupg/gpg-agent.conf" = {

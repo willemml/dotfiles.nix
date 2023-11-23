@@ -9,7 +9,7 @@
 
     enable = true;
 
-    package = pkgs.emacs29;
+    package = pkgs.emacs29-nox;
 
     extraPackages = epkgs:
       (with epkgs; let
