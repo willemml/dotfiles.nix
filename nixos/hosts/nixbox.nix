@@ -4,7 +4,9 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}: let
+  torrent_group_id = 987;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/hyprland.nix
@@ -43,6 +45,8 @@
     fsType = "vfat";
   };
 
+  boot.zfs.extraPools = ["zpool"];
+
   swapDevices = [{device = "/dev/disk/by-uuid/36bb51f0-f56d-4408-b61c-7905789a7304";}];
 
   environment.systemPackages = [pkgs.zfs];
@@ -51,16 +55,24 @@
 
   services.jellyfin.enable = true;
 
+  users.groups.torrent.gid = torrent_group_id;
+
   services.transmission = {
     enable = true;
+
+    package = pkgs.transmission_4;
+
+    group = "torrent";
 
     settings = rec {
       download-dir = "/zpool/media/torrents";
       incomplete-dir = "/zpool/media/torrents/.incomplete";
       incomplete-dir-enabled = true;
+      peer-port = 51413;
       rpc-enabled = true;
       rpc-bind-address = "0.0.0.0";
       rpc-whitelist-enabled = false;
+      rpc-whitelist = "10.1.2.*,127.0.0.*";
       rpc-host-whitelist-enabled = false;
     };
   };
@@ -105,15 +117,27 @@
         # ssh
         tcp dport 22 accept
 
+        iifname "tun0" tcp dport 51413 accept
+        iifname "tun0" udp dport 51413 accept
+
+        iifname {lo, "zt*"} tcp dport 9091 accept
+
+        iifname "tun0" skgid ${toString torrent_group_id} accept
+
         # drop all other packets
-        #counter drop
-        accept
+        counter drop
+        #accept
       }
 
       chain output {
         type filter hook output priority 0;
 
-        oifname != { "lo", "tun0", "zt*" } skgid 70 counter reject
+        tcp dport 53 accept
+        udp dport 53 accept
+
+        oifname {"lo", "zt*"} tcp sport 9091 accept
+
+        skgid ${toString torrent_group_id} oifname != "tun0" counter drop
 
         # zerotier
         oifname "zt*" accept
@@ -125,6 +149,7 @@
 
       chain forward {
         type filter hook forward priority 0;
+
         accept
       }
     }
