@@ -26,16 +26,17 @@
   homebrew = {
     enable = true;
     casks = [
+      "UTM"
       "blackhole-16ch"
-      "zerotier-one"
       "discord"
+      "homebrew/cask-versions/firefox-esr"
       "nordvpn"
       "obs"
       "steam"
+      "thunderbird"
       "vial"
       "whisky"
-      "homebrew/cask-versions/firefox-esr"
-      "UTM"
+      "zerotier-one"
     ];
   };
 
