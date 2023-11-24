@@ -66,10 +66,10 @@ in {
     ${ctrl} - up : ${yabai} -m window --focus north
     ${ctrl} - right : ${yabai} -m window --focus east
 
-    ${ctrl} + ${cmd} - h : ${yabai} -m window --focus west
-    ${ctrl} + ${cmd} - n : ${yabai} -m window --focus south
-    ${ctrl} + ${cmd} - e : ${yabai} -m window --focus north
-    ${ctrl} + ${cmd} - i : ${yabai} -m window --focus east
+    ${ctrl} + ${cmd} - n : ${yabai} -m window --focus west
+    ${ctrl} + ${cmd} - e : ${yabai} -m window --focus south
+    ${ctrl} + ${cmd} - i : ${yabai} -m window --focus north
+    ${ctrl} + ${cmd} - o : ${yabai} -m window --focus east
 
     # Moves windows
     shift + ${ctrl} - left : ${yabai} -m window --warp west
@@ -77,10 +77,10 @@ in {
     shift + ${ctrl} - up : ${yabai} -m window --warp north
     shift + ${ctrl} - right : ${yabai} -m window --warp east
 
-    shift + ${ctrl} - h : ${yabai} -m window --warp west
-    shift + ${ctrl} - n : ${yabai} -m window --warp south
-    shift + ${ctrl} - e : ${yabai} -m window --warp north
-    shift + ${ctrl} - i : ${yabai} -m window --warp east
+    shift + ${ctrl} - n : ${yabai} -m window --warp west
+    shift + ${ctrl} - e : ${yabai} -m window --warp south
+    shift + ${ctrl} - i : ${yabai} -m window --warp north
+    shift + ${ctrl} - o : ${yabai} -m window --warp east
 
     # Warps window to space
     shift + ${ctrl} - 1 : ${yabai} -m window --space 1 && ${yabai} -m space --focus 1
