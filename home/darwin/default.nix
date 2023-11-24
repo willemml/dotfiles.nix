@@ -11,6 +11,8 @@
     ./launchd.nix
   ];
 
+  home.file.".config/karabiner/assets/complex_modifications/hyperarrows.json".source = ./hyperarrows.json;
+
   stylix.targets.gnome.enable = false;
   stylix.targets.gtk.enable = false;
 

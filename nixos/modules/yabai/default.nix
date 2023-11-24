@@ -17,6 +17,8 @@
     "mpv"
     "Software Update"
     "Set Desktop Background"
+    "Karabiner-EventViewer"
+    "Karabiner-Elements"
   ];
 
   floating-rules = lists.forEach floating-apps (

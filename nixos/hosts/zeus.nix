@@ -39,6 +39,8 @@
     ];
   };
 
+  services.karabiner-elements.enable = true;
+
   nix = {
     generateNixPathFromInputs = true;
     generateRegistryFromInputs = true;
