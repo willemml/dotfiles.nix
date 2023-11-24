@@ -5,7 +5,7 @@
 }: {
   programs.emacs = {
     orgTexConfigFile = ./org-tex-cfg.el;
-    enableOrgTex = lib.mkDefault true;
+    enableOrgTex = lib.mkDefault false;
 
     texEmacsPackages = epkgs: (let
       org-auctex = epkgs.trivialBuild rec {

@@ -35,7 +35,6 @@
     testdisk
     unzip
     usbutils
-    wget
     w3m-nographics
     zip
   ];

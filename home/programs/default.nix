@@ -84,11 +84,6 @@
       enableZshIntegration = false;
     };
 
-    java = {
-      enable = true;
-      package = pkgs.jdk;
-    };
-
     password-store = {
       enable = true;
       package = pkgs.pass.withExtensions (exts: [exts.pass-genphrase exts.pass-otp exts.pass-import]);

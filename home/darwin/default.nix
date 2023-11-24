@@ -14,8 +14,6 @@
   stylix.targets.gnome.enable = false;
   stylix.targets.gtk.enable = false;
 
-  programs.ssh.includes = ["/Users/willem/.colima/ssh_config"];
-
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
       pinentry-program "${pkgs.pinentry.out}/bin/pinentry"
@@ -43,8 +41,6 @@
           eval "$(/usr/local/bin/brew shellenv)"
       fi
     '';
-
-  home.packages = [pkgs.colima];
 
   targets.darwin = {
     defaults = {
