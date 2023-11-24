@@ -1,4 +1,5 @@
 #+title: dotfiles.nix
+#+options: author:nil date:nil toc:nil
 
 My dotfiles using Nix. System configuration done using [[https://github.com/LnL7/nix-darwin][nix-darwin]] and
 [[https://nixos.org/][NixOS]]. User configuration using [[https://github.com/nix-community/home-manager][home-manager]]. This repo is put
