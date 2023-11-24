@@ -26,13 +26,6 @@ in {
   environment.systemPackages = [pkgs.skhd];
   services.skhd.enable = true;
 
-  system.activationScripts.postUserActivation = {
-    text = ''
-      echo Reloading skhd config
-      ${config.services.skhd.package}/bin/skhd --reload
-    '';
-  };
-
   services.skhd.skhdConfig = let
     yabai = "${config.services.yabai.package}/bin/yabai";
     # Don't use nix emacs. Homebrew has a better version
@@ -46,6 +39,11 @@ in {
     cmd - h : :
     cmd - m : :
     rcmd - w : :
+
+    fn - h : skhd -k "left"
+    fn - n : skhd -k "down"
+    fn - e : skhd -k "up"
+    fn - i : skhd -k "right"
 
     ${ctrl} - return : ${alacritty} msg create-window || ${alacritty}
 
