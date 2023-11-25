@@ -35,7 +35,13 @@
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    stylix.url = "github:danth/stylix";
+    #    stylix.url = "github:danth/stylix";
+    stylix = {
+      type = "github";
+      owner = "willemml";
+      repo = "stylix";
+      ref = "feat/modules/nixvim-transparency";
+    };
     stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 

@@ -7,10 +7,13 @@
   imports = [
     ./emacs
     ./ssh.nix
+    ./vim.nix
     ./zsh.nix
   ];
 
   programs = {
+    helix.enable = true;
+
     nix-index-database.comma.enable = true;
 
     bash.enableCompletion = true;
