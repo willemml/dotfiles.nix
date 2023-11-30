@@ -42,6 +42,15 @@
       else
           eval "$(/usr/local/bin/brew shellenv)"
       fi
+
+      file-to-clipboard() {
+        filepath=$(realpath $1)
+        osascript \
+            -e 'on run args' \
+            -e "set the clipboard to POSIX file \"$filepath\"" \
+            -e end \
+            "$@"
+      }
     '';
 
   targets.darwin = {
