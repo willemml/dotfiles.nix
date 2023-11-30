@@ -25,9 +25,16 @@
 
   homebrew = {
     enable = true;
+    brews = [
+      "qmk/qmk/qmk"
+      "arm-none-eabi-gcc@8"
+      "avr-gcc@8"
+    ];
+    taps = ["qmk/qmk"];
     casks = [
       "UTM"
       "blackhole-16ch"
+      "blobsaver"
       "discord"
       "homebrew/cask-versions/firefox-esr"
       "nordvpn"
@@ -38,7 +45,14 @@
       "whisky"
       "zerotier-one"
     ];
+    onActivation.cleanup = "uninstall";
   };
+
+  environment.systemPath = [
+    "/opt/homebrew/opt/arm-none-eabi-binutils/bin"
+    "/opt/homebrew/opt/arm-none-eabi-gcc@8/bin"
+    "/opt/homebrew/opt/avr-gcc@8/bin"
+  ];
 
   services.karabiner-elements.enable = true;
 
