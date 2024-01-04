@@ -17,6 +17,7 @@
     "mpv"
     "Software Update"
     "Set Desktop Background"
+    "TI-Nspire"
     "Karabiner-EventViewer"
     "Karabiner-Elements"
   ];
@@ -42,8 +43,8 @@ in {
       active_window_border_color = "0xff$CACTV";
       normal_window_border_color = "0xff$CNORM";
       insert_window_border_color = "0xff$CINSE";
-      mouse_follows_focus = "on";
-      focus_follows_mouse = "autofocus";
+      mouse_follows_focus = "off";
+      focus_follows_mouse = "off";
       window_opacity = "off";
       window_opacity_duration = "0.0";
       active_window_opacity = "1.0";

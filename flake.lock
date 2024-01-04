@@ -763,11 +763,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700887267,
-        "narHash": "sha256-n0GJHz27h6O1fXBFGAE6hpLY3YkjxMXJ9xK8DewM9yI=",
+        "lastModified": 1701798883,
+        "narHash": "sha256-wv15ahlMEfLXPq8CW08GC7VP54INaCF8pcESXt26kNc=",
         "owner": "willemml",
         "repo": "stylix",
-        "rev": "12108f41b1fd4790d7743f0b2478bb534114b2c9",
+        "rev": "2ed2b0086b41d582aca26e083c19c0e47c8991e3",
         "type": "github"
       },
       "original": {
