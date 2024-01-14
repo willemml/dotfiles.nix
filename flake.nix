@@ -75,7 +75,7 @@
         mkDarwin = arch: (mkSystem darwin.lib.darwinSystem "${arch}-darwin");
 
         forAllSystems = nixpkgs.lib.genAttrs systems;
-      in {
+      in rec {
         overlays = {
           default = import ./packages;
           fenix = inputs.fenix.overlays.default;
@@ -105,6 +105,8 @@
           x86_64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
           aarch64-linux.live-image = self.nixosConfigurations.x86_64-live.config.system.build.isoImage;
         };
+
+        hydraJobs.x86_64-linux = packages.x86_64-linux;
       };
 
       perSystem = {

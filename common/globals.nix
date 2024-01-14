@@ -17,5 +17,5 @@
 
   sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus];
 
-  secrets = import ./secrets.nix;
+  zerotier.networks = ["17d709436ca2929d"];
 }

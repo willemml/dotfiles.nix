@@ -23,7 +23,7 @@
   environment.systemPackages = [pkgs.parted];
 
   services.zerotierone = {
-    joinNetworks = globals.secrets.zerotier.networks;
+    joinNetworks = globals.zerotier.networks;
     enable = true;
   };
 

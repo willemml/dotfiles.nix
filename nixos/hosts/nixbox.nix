@@ -13,7 +13,6 @@ in {
     ../profiles/default.nix
     ../users/willem/home/linux.nix
     ../modules/zerotier.nix
-    ../modules/nordvpn.nix
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
@@ -58,7 +57,7 @@ in {
   users.groups.torrent.gid = torrent_group_id;
 
   services.transmission = {
-    enable = true;
+    enable = false;
 
     package = pkgs.transmission_4;
 
