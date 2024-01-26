@@ -19,6 +19,7 @@ rec {
     url = "https://w.wallhaven.cc/full/z8/wallhaven-z87xmg.jpg";
     sha256 = "sha256-NklTjeU/mrPCZVYNvxGMR8KrCM/bUVoEYN4FrDnlUO8=";
   };
+  oceanmountains = ./oceanmountains.png;
 
-  current = italymountains;
+  current = oceanmountains;
 }
