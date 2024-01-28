@@ -12,7 +12,41 @@
   ];
 
   programs = {
-    helix.enable = true;
+    helix = {
+      enable = true;
+      settings.keys = {
+        normal = {
+          space.w = ":w";
+          space.q = ":q";
+
+          /*
+          remap for colemak
+          */
+          n = "move_line_down";
+          N = "keep_selections";
+          k = "search_next";
+          K = "search_prev";
+          # E <=> J (swap actions)
+          j = "move_next_word_end";
+          J = "move_next_long_word_end";
+          e = "move_line_up";
+          E = "join_selections";
+          # ILU loop
+          # I => L
+          i = "move_char_right";
+          I = "no_op";
+          # U => I (QWERTY position)
+          u = "insert_mode";
+          U = "insert_at_line_start";
+          # L => U (QWERTY position)
+          l = "undo";
+          L = "redo";
+          /*
+          end colemak remap
+          */
+        };
+      };
+    };
 
     nix-index-database.comma.enable = true;
 
