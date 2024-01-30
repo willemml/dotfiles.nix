@@ -22,6 +22,7 @@
   homebrew = {
     enable = true;
     brews = [
+      "R"
       "qmk/qmk/qmk"
       "arm-none-eabi-gcc@8"
       "avr-gcc@8"

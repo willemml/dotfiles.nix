@@ -16,8 +16,6 @@ in rec {
     inputs.nix-index-database.hmModules.nix-index
   ];
 
-  stylix.opacity.terminal = 0.72;
-
   home = {
     username = globals.username;
 
