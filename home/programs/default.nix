@@ -5,7 +5,6 @@
   ...
 }: {
   imports = [
-    ./emacs
     ./ssh.nix
     ./vim.nix
     ./zsh.nix

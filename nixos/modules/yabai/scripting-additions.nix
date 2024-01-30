@@ -6,7 +6,6 @@
 }: let
   home = config.home-manager.users.willem;
   homeDir = config.users.users.willem.home;
-  emacsCfg = home.programs.emacs;
   alacrittyCfg = home.programs.alacritty;
 in {
   services.yabai = {
@@ -126,8 +125,6 @@ in {
         ${yabai} -m window --toggle float; \
         ${yabai} -m window --toggle border
 
-    # Open Emacs
-    ${ctrl} + shift - n : ${alacritty} msg create-window -e ${emacsCfg.finalPackage}/bin/emacsclient -nw || alacritty -e ${emacsCfg.finalPackage}/bin/emacsclient -nwOA
     # Open Firefox window
     ${ctrl} + shift - b : /Applications/Firefox.app/Contents/MacOS/firefox -new-window
   '';

@@ -8,22 +8,5 @@
 in {
   launchd = {
     enable = true;
-
-    agents.emacs = {
-      enable = true;
-      config = {
-        EnvironmentVariables = {
-          TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo:/run/current-system/sw/share/terminfo:/nix/var/nix/profiles/default/share/terminfo:/usr/share/terminfo";
-        };
-        ProgramArguments = [
-          "${config.programs.emacs.finalPackage}/bin/emacs"
-          "--fg-daemon"
-        ];
-        KeepAlive = true;
-        ProcessType = "Interactive";
-        StandardOutPath = logFile "emacs";
-        StandardErrorPath = logFile "emacs";
-      };
-    };
   };
 }

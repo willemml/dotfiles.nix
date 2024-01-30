@@ -14,19 +14,6 @@
       defaultCacheTtl = 30;
       maxCacheTtl = 600;
       pinentryFlavor = "curses";
-      extraConfig = ''
-        allow-emacs-pinentry
-      '';
-    };
-
-    emacs = {
-      enable = true;
-      package =
-        if config.programs.emacs.enable
-        then config.programs.emacs.finalPackage
-        else pkgs.emacs;
-      client.enable = true;
-      startWithUserSession = true;
     };
   };
 }

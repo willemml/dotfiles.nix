@@ -20,6 +20,4 @@
   ];
 
   home.homeDirectory = "/home/willem";
-
-  programs.emacs.enableOrgTex = false;
 }

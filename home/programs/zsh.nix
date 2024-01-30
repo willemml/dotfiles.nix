@@ -62,13 +62,9 @@
       ke = "kitten edit-in-kitty";
       cd = "z";
       dotd = "cd ${config.home.sessionVariables.DOTDIR} ";
-      e = "emacsclient -c -nw";
-      em = "emacs -nw";
       l = "ls -1";
       lh = "ls --hyperlink";
       np = "nix-shell -p";
-      org = "cd ${config.home.sessionVariables.ORGDIR} ";
-      ubc = "cd ${config.home.sessionVariables.UBCDIR} ";
       hmr = "nix run home-manager -- build --flake ${config.home.sessionVariables.DOTDIR}#";
       hms = "nix run home-manager -- switch --flake ${config.home.sessionVariables.DOTDIR}#";
     };

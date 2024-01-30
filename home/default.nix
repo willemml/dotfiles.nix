@@ -4,11 +4,8 @@
   config,
   pkgs,
   ...
-}: let
-  emacsCommand = "${config.programs.emacs.finalPackage}/bin/emacsclient -nw";
-in rec {
+}: {
   imports = [
-    ./modules/emacs.nix
     ./packages.nix
     ./programs/default.nix
     ./modules/nix/pkgs-config.nix
@@ -32,10 +29,8 @@ in rec {
 
     sessionVariables = rec {
       DOTDIR = "${config.home.homeDirectory}/.config/dotfiles.nix";
-      EDITOR = emacsCommand;
-      VISUAL = emacsCommand;
-      ORGDIR = "${config.home.homeDirectory}/Documents/org";
-      UBCDIR = "${ORGDIR}/ubc";
+      EDITOR = "hx";
+      VISUAL = "hx";
       MAILDIR = "${config.home.homeDirectory}/Maildir";
     };
   };
