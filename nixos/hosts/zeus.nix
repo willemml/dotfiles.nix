@@ -27,7 +27,7 @@
       "arm-none-eabi-gcc@8"
       "avr-gcc@8"
     ];
-    taps = ["qmk/qmk"];
+    taps = ["qmk/qmk" "osx-cross/arm" "osx-cross/avr"];
     casks = [
       "UTM"
       "arduino-ide"
