@@ -7,14 +7,11 @@
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
     fenix.url = "github:nix-community/fenix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    home-manager.url = "github:willemml/home-manager?ref=feat/programs.hishtory";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
@@ -28,20 +25,10 @@
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
 
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    #    stylix.url = "github:danth/stylix";
-    stylix = {
-      type = "github";
-      owner = "willemml";
-      repo = "stylix";
-      ref = "feat/modules/nixvim-transparency";
-    };
+    stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -79,7 +66,6 @@
         overlays = {
           default = import ./packages;
           fenix = inputs.fenix.overlays.default;
-          emacs = inputs.emacs-overlay.overlays.default;
         };
 
         nixosConfigurations = {

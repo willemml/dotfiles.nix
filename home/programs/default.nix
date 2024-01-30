@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./ssh.nix
-    ./vim.nix
     ./zsh.nix
   ];
 
@@ -113,11 +112,6 @@
         use-agent = true;
         default-key = "860B5C62BF1FCE4272D26BF8C3DE5DF6198DACBD";
       };
-    };
-
-    hishtory = {
-      enable = false;
-      enableZshIntegration = false;
     };
 
     password-store = {

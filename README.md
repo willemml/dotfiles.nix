@@ -51,12 +51,6 @@ Enter the dev shell (if not using [nix-direnv](https://github.com/nix-community/
 # Tasks
 
 
-## TODO Break out emacs config
-
-Emacs configuration should be in it's own repository.
-Lisp code should be extracted into separate files or an org-babel setup.
-
-
 ## TODO Services as modules
 
 Services should be converted to modules.
