@@ -58,13 +58,6 @@
           decorations = "None";
           option_as_alt = "Both";
         };
-        key_bindings = [
-          {
-            key = "Slash";
-            mods = "Control";
-            chars = "\\x1b[47;5u";
-          }
-        ];
       };
     };
 

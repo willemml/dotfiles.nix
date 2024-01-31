@@ -35,7 +35,6 @@
       "blobsaver"
       "discord"
       "homebrew/cask-versions/firefox-esr"
-      "nordvpn"
       "rstudio"
       "obs"
       "steam"
