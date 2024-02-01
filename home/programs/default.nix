@@ -12,6 +12,7 @@
   programs = {
     helix = {
       enable = true;
+      settings.editor.line-number = "relative";
       settings.keys = {
         normal = {
           space.w = ":w";
