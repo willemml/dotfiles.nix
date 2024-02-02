@@ -74,6 +74,7 @@
 
           nixbox = mkNixos "x86_64" [./nixos/hosts/nixbox.nix];
           thinkpad = mkNixos "x86_64" [./nixos/hosts/thinkpad.nix];
+          voyager = mkNixos "aarch64" [./nixos/hosts/voyager];
 
           darwin-arm-minimal-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/minimal.nix];
           darwin-arm-homeconsole-vm = mkNixos "aarch64" [./nixos/hosts/vms/aarch64-darwin-host/home-console.nix];
