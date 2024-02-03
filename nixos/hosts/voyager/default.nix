@@ -8,9 +8,10 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../profiles/hyprland.nix
-    ../users/willem/home/linux.nix
-    ../modules/zerotier.nix
+    ../../profiles/hyprland.nix
+    ../../profiles/default.nix
+    ../../users/willem/home/linux.nix
+    ../../modules/zerotier.nix
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
@@ -35,12 +36,12 @@
   boot.loader.efi.canTouchEfiVariables = false;
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
-  
+
   hardware.asahi = {
     withRust = true;
     addEdgeKernelConfig = true;
     useExperimentalGPUDriver = true;
-    experimentalGPUInstallMode = "overlay";
+    experimentalGPUInstallMode = "replace";
   };
 
   systemd.services.limit-charge = {

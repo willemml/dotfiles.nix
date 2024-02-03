@@ -11,6 +11,7 @@
     ./launchd.nix
   ];
 
+  programs.alacritty.settings.window.option_as_alt = "Both";
   home.file.".config/karabiner/assets/complex_modifications/hyperarrows.json".source = ./hyperarrows.json;
 
   stylix.targets.gnome.enable = false;

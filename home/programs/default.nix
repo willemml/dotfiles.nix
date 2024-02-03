@@ -57,7 +57,6 @@
         font.normal.style = lib.mkForce "Book";
         window = {
           decorations = "None";
-          option_as_alt = "Both";
         };
       };
     };
