@@ -17,6 +17,8 @@
 
   programs.command-not-found.enable = false;
 
+  boot.tmp.useTmpfs = true;
+
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
 
