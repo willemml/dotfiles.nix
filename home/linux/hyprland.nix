@@ -12,7 +12,11 @@
   ];
 
   home.packages = with pkgs; [
-    firefox
+    (
+      if pkgs.stdenv.isAarch64
+      then firefox-wv
+      else firefox
+    )
     lxappearance
     pipewire
     polkit-kde-agent
@@ -22,9 +26,6 @@
     xdg-desktop-portal
     rofi-wayland
   ];
-
-  # required for firefox widevine
-  home.sessionVariables.MOZ_GMP_PATH = "${pkgs.widevine}/gmp-widevinecdm/system-installed";
 
   # notifications daemon
   services.mako.enable = true;

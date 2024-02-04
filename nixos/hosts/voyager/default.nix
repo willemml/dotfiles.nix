@@ -15,7 +15,9 @@
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
   environment.sessionVariables.MOZ_GMP_PATH = ["${pkgs.widevine}/gmp-widevinecdm/system-installed"];
-  environment.systemPackages = [pkgs.firefox];
+
+  environment.systemPackages = [pkgs.powertop];
+
   services.logind = {
     extraConfig = ''
       HandlePowerKey=suspend
@@ -23,6 +25,8 @@
     '';
     lidSwitch = "suspend";
   };
+
+  powerManagement.powertop.enable = true;
 
   boot.initrd.availableKernelModules = ["usb_storage" "sdhci_pci"];
 

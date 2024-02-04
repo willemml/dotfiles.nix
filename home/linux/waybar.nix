@@ -8,6 +8,8 @@
   networkInterface.eth =
     if osConfig.networking.hostName == "voyager"
     then "wlan0"
+    else if osConfig.networking.hostName == "nixbox"
+    then "enp6s0"
     else "";
   colors = config.lib.stylix.colors.withHashtag;
   primaryColor = colors.base04;
@@ -78,7 +80,9 @@ in {
 
         "battery" = {
           "bat" = "macsmc-battery";
-          "format" = "<span color='${primaryColor}'>Battery: {capacity}%</span>";
+          "format" = "<span color='${primaryColor}'>Battery: {capacity}% (P)</span>";
+          "format-charging" = "<span color='${primaryColor}'>Battery: {capacity}% (C)</span>";
+          "format-discharging" = "<span color='${primaryColor}'>Battery: {capacity}% (D)</span>";
         };
 
         "memory" = {
@@ -99,7 +103,7 @@ in {
           "format-wifi" = "<span color='${primaryColor}'>WiFi: Up: {bandwidthUpBits} Down: {bandwidthDownBits} ({signalStrength}%)</span>";
           "tooltip-format-wifi" = "<span color='${primaryColor}'>{essid} ({signalStrength}%)</span>";
           "format-disconnected" = "<span color='${primaryColor}'>Disconnected</span>";
-          "on-click" = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.networkmanager}/bin/nmtui";
+          "on-click" = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.iwd}/bin/iwctl";
         };
 
         "pulseaudio" = {
