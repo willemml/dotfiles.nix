@@ -15,6 +15,14 @@
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
+  services.logind = {
+    extraConfig = ''
+      HandlePowerKey=suspend
+      HandleLidSwitchDocked=suspend
+    '';
+    lidSwitch = "suspend";
+  };
+
   boot.initrd.availableKernelModules = ["usb_storage" "sdhci_pci"];
 
   fileSystems."/" = {
