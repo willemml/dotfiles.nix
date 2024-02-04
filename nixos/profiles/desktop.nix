@@ -10,6 +10,15 @@
     pulse.enable = true;
   };
 
+  services.dbus = {
+    enable = true;
+    packages = [pkgs.dconf];
+  };
+
+  programs.dconf = {
+    enable = true;
+  };
+
   services.printing.enable = true;
 
   hardware.pulseaudio.enable = false;

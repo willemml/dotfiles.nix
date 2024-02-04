@@ -23,6 +23,10 @@
     rofi-wayland
   ];
 
+  # required for firefox widevine
+  home.sessionVariables.MOZ_GMP_PATH = "${pkgs.widevine}/gmp-widevinecdm/system-installed";
+
+  # notifications daemon
   services.mako.enable = true;
 
   wayland.windowManager.hyprland = {
@@ -30,14 +34,16 @@
 
     settings = {
       decoration = {
-        #blur = false;
-        rounding = 5;
+        rounding = 10;
+
+        # save battery
         drop_shadow = false;
+        blur.enabled = false;
       };
 
       general = {
-        gaps_in = 3;
-        gaps_out = 3;
+        gaps_in = 5;
+        gaps_out = 10;
       };
 
       monitor = [
@@ -48,10 +54,13 @@
         "${pkgs.swaybg}/bin/swaybg -i ${config.stylix.image} -m fill"
       ];
       exec-once = [
-        "sleep 10 && ${pkgs.swayidle}/bin/swayidle -w timeout 10 'if ${pkgs.busybox}/bin/pgrep ${pkgs.swaylock-effects}/bin/swaylock; then hyprctl dispatch dpms off; fi' resume 'hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock-effects}/bin/swaylock -f'"
+        # Display sleep on idle
+        "sleep 60 && ${pkgs.swayidle}/bin/swayidle -w timeout 60 'if ${pkgs.busybox}/bin/pgrep ${pkgs.swaylock-effects}/bin/swaylock; then hyprctl dispatch dpms off; fi' resume 'hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock-effects}/bin/swaylock -f'"
+
         # Enables clipboard sync
         "${pkgs.wl-clipboard}/bin/wl-paste -p | ${pkgs.wl-clipboard}/bin/wl-copy"
         "${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wl-clipboard}/bin/wl-copy -p"
+
         "${pkgs.swaynotificationcenter}/bin/swaync"
       ];
 
@@ -74,14 +83,21 @@
         "$mod, SPACE, exec, rofi -modes \"ssh,drun,window\" -show drun"
         "ALT, SPACE, exec, rofi -show window"
 
+        # swaylock on suspend
         ",switch:Apple SMC power/lid events, exec, ${pkgs.swaylock-effects}/bin/swaylock"
         ",XF86Sleep, exec, ${pkgs.swaylock-effects}/bin/swaylock"
 
         "$mod, L, exec, ${pkgs.swaylock-effects}/bin/swaylock"
         "SUPER_SHIFT, 4, exec, ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy"
 
+        # brightness controls (need to use F2/3 because XF86Brightness isnt working)
         ",F2, exec, ${bright} s \"$(${bright} g | ${pkgs.busybox}/bin/awk '{ print int(($1 + .72) * 1.4) }')\""
         ",F1, exec, ${bright} s \"$(${bright} g | ${pkgs.busybox}/bin/awk '{ print int($1 / 1.4) }')\""
+
+        # volume controls
+        ",XF86AudioRaiseVolume, exec, ${pkgs.ponymix}/bin/ponymix inc 2"
+        ",XF86AudioLowerVolume, exec, ${pkgs.ponymix}/bin/ponymix dec 2"
+
         # workspace switching
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
@@ -94,6 +110,7 @@
         "$mod, 9, workspace, 9"
         "$mod, 0, workspace, 10"
 
+        # terminal
         "CONTROL, RETURN, exec, alacritty"
 
         "SUPER_SHIFT, C, killactive"
