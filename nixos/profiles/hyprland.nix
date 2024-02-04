@@ -8,6 +8,11 @@
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
+  programs.waybar.enable = true;
+  programs.waybar.package = pkgs.waybar.overrideAttrs (oldAttrs: {
+    mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+  });
+
   security.pam.services.swaylock.text = "auth include login";
 
   nix.settings = {

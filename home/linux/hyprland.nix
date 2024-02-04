@@ -6,7 +6,9 @@
   ...
 }: {
   imports = [
+    ./fonts.nix
     ./swaylock.nix
+    ./waybar.nix
   ];
 
   home.packages = with pkgs; [
@@ -27,6 +29,21 @@
     enable = true;
 
     settings = {
+      decoration = {
+        #blur = false;
+        rounding = 5;
+        drop_shadow = false;
+      };
+
+      general = {
+        gaps_in = 3;
+        gaps_out = 3;
+      };
+
+      monitor = [
+        "eDP-1, 3456x2160, 0x0, 1.2"
+      ];
+
       exec = [
         "${pkgs.swaybg}/bin/swaybg -i ${config.stylix.image} -m fill"
       ];
@@ -46,6 +63,7 @@
         force_default_wallpaper = 0;
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
+        vfr = true;
       };
 
       "$mod" = "SUPER";
