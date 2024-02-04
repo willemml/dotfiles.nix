@@ -72,6 +72,7 @@
           x86_64-live = mkNixos "x86_64" [./nixos/hosts/x86_64-live.nix];
           aarch64-live = mkNixos "aarch64" [./nixos/hosts/aarch64-live.nix];
 
+          glassbox = mkNixos "x86_64" [./nixos/hosts/glassbox.nix];
           nixbox = mkNixos "x86_64" [./nixos/hosts/nixbox.nix];
           thinkpad = mkNixos "x86_64" [./nixos/hosts/thinkpad.nix];
           voyager = mkNixos "aarch64" [./nixos/hosts/voyager];
