@@ -35,6 +35,13 @@
     {device = "/dev/disk/by-uuid/aed88966-e44e-4d2f-99ba-1fe6fb57cf89";}
   ];
 
+  hardware.opengl.enable = true;
+
+  networking.wireless.iwd = {
+    enable = true;
+    settings.General.EnableNetworkConfiguration = true;
+  };
+
   networking.useDHCP = lib.mkDefault true;
   networking.hostName = "thinkpad";
 

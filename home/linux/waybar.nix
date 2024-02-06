@@ -5,12 +5,18 @@
   osConfig,
   ...
 }: let
-  networkInterface.eth =
+  networkInterface =
     if osConfig.networking.hostName == "voyager"
     then "wlan0"
     else if osConfig.networking.hostName == "nixbox"
     then "enp6s0"
+    else if osConfig.networking.hostName == "thinkpad"
+    then "wlan0"
     else "";
+  battery =
+    if osConfig.networking.hostName == "voyager"
+    then "macsmc-battery"
+    else "BAT0";
   colors = config.lib.stylix.colors.withHashtag;
   primaryColor = colors.base04;
   altColor = colors.base0C;
@@ -79,7 +85,7 @@ in {
         };
 
         "battery" = {
-          "bat" = "macsmc-battery";
+          "bat" = battery;
           "format" = "<span color='${primaryColor}'>Battery: {capacity}% (P)</span>";
           "format-charging" = "<span color='${primaryColor}'>Battery: {capacity}% (C)</span>";
           "format-discharging" = "<span color='${primaryColor}'>Battery: {capacity}% (D)</span>";
@@ -96,7 +102,7 @@ in {
         };
 
         "network" = {
-          "interface" = "${networkInterface.eth}";
+          "interface" = "${networkInterface}";
           "interval" = 2;
           "format-ethernet" = "<span color='${primaryColor}'>Ether: Up: {bandwidthUpBits} Down: {bandwidthDownBits} </span>";
           "tooltip-format-ethernet" = "<span color='${primaryColor}'>{ifname}</span>";

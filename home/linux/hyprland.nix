@@ -3,8 +3,11 @@
   pkgs,
   lib,
   globals,
+  osConfig,
   ...
-}: {
+}: let
+  host = osConfig.networking.hostName;
+in {
   imports = [
     ./fonts.nix
     ./swaylock.nix
@@ -47,9 +50,16 @@
         gaps_out = 10;
       };
 
-      monitor = [
-        "eDP-1, 3456x2160, 0x0, 1.2"
-      ];
+      monitor =
+        if host == "voyager"
+        then [
+          "eDP-1, 3456x2160, 0x0, 1.2"
+        ]
+        else if host == "thinkpad"
+        then [
+          "eDP-1, 1920x1080, 0x0, 1.0"
+        ]
+        else [];
 
       exec = [
         "${pkgs.swaybg}/bin/swaybg -i ${config.stylix.image} -m fill"
@@ -152,7 +162,9 @@
         accel_profile = "adaptive";
         touchpad = {
           natural_scroll = true;
+          clickfinger_behavior = true;
           scroll_factor = 0.45;
+          drag_lock = true;
           tap-and-drag = true;
         };
       };
