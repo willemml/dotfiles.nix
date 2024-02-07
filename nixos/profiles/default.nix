@@ -3,6 +3,7 @@
   overlays,
   pkgs,
   globals,
+  lib,
   ...
 }: {
   imports = [
@@ -14,6 +15,9 @@
     ../users/willem/linux.nix
     inputs.stylix.nixosModules.stylix
   ];
+
+  networking.useDHCP = lib.mkDefault true;
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   programs.command-not-found.enable = false;
 

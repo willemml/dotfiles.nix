@@ -2,15 +2,10 @@
   config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../profiles/hyprland.nix
-    ../profiles/default.nix
-    ../users/willem/home/linux.nix
-    ../modules/zerotier.nix
+    ../profiles/laptop.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -42,7 +37,6 @@
     settings.General.EnableNetworkConfiguration = true;
   };
 
-  networking.useDHCP = lib.mkDefault true;
   networking.hostName = "thinkpad";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

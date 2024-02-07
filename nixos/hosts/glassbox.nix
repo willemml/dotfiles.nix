@@ -5,15 +5,10 @@
   config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../profiles/hyprland.nix
-    ../profiles/default.nix
-    ../users/willem/home/linux.nix
-    ../modules/zerotier.nix
+    ../profiles/desktop.nix
   ];
 
   boot.initrd.availableKernelModules = ["vmd" "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod"];
@@ -48,10 +43,6 @@
   swapDevices = [];
 
   networking.hostName = "glassbox";
-  networking.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -3,30 +3,13 @@
   config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../../profiles/hyprland.nix
-    ../../profiles/default.nix
-    ../../users/willem/home/linux.nix
-    ../../modules/zerotier.nix
+    ../../profiles/laptop.nix
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
   environment.sessionVariables.MOZ_GMP_PATH = ["${pkgs.widevine}/gmp-widevinecdm/system-installed"];
-
-  environment.systemPackages = [pkgs.powertop];
-
-  services.logind = {
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandleLidSwitchDocked=suspend
-    '';
-    lidSwitch = "suspend";
-  };
-
-  powerManagement.powertop.enable = true;
 
   boot.initrd.availableKernelModules = ["usb_storage" "sdhci_pci"];
 
@@ -41,8 +24,6 @@
   };
 
   swapDevices = [];
-
-  networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   boot.loader.systemd-boot.enable = true;
@@ -71,10 +52,6 @@
   };
 
   hardware.opengl.enable = true;
-  networking.wireless.iwd = {
-    enable = true;
-    settings.General.EnableNetworkConfiguration = true;
-  };
 
   networking.hostName = "voyager";
 }

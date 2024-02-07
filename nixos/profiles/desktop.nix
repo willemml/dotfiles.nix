@@ -1,49 +1,10 @@
-{
-  pkgs,
-  globals,
-  ...
-}: {
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  services.dbus = {
-    enable = true;
-    packages = [pkgs.dconf];
-  };
-
-  programs.dconf = {
-    enable = true;
-  };
-
-  services.printing.enable = true;
-
-  hardware.pulseaudio.enable = false;
-
-  security.rtkit.enable = true;
-
-  services.xserver = {
-    enable = true;
-
-    layout = globals.keyboard.layout;
-    xkbVariant = globals.keyboard.variant;
-
-    synaptics.enable = false;
-
-    displayManager.lightdm.enable = false;
-
-    libinput = {
-      enable = true;
-      touchpad.tapping = true;
-      touchpad.naturalScrolling = true;
-      touchpad.scrollMethod = "twofinger";
-      touchpad.disableWhileTyping = true;
-      touchpad.clickMethod = "clickfinger";
-    };
-  };
-
-  sound.enable = true;
+{pkgs, ...}: {
+  imports = [
+    ./hyprland.nix
+    ./default.nix
+    ../users/willem/home/linux.nix
+    ../modules/zerotier.nix
+  ];
+  powerManagement.cpuFreqGovernor = "performance";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
