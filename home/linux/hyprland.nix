@@ -14,21 +14,27 @@ in {
     ./waybar.nix
   ];
 
-  home.packages = with pkgs; [
-    (
+  home.packages = with pkgs;
+    [
+      (
+        if pkgs.stdenv.isAarch64
+        then firefox-wv
+        else firefox
+      )
+      lxappearance
+      pipewire
+      polkit-kde-agent
+      qt6.qtwayland
+      qt6ct
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal
+      rofi-wayland
+    ]
+    ++ (
       if pkgs.stdenv.isAarch64
-      then firefox-wv
-      else firefox
-    )
-    lxappearance
-    pipewire
-    polkit-kde-agent
-    qt6.qtwayland
-    qt6ct
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal
-    rofi-wayland
-  ];
+      then [firefox-wv]
+      else [firefox discord (quartus-prime-lite.override (old: {supportedDevices = ["Cyclone V"];}))]
+    );
 
   # notifications daemon
   services.mako.enable = true;
@@ -159,7 +165,7 @@ in {
         kb_layout = globals.keyboard.layout;
         kb_variant = globals.keyboard.variant;
         sensitivity = 0.4;
-        accel_profile = "adaptive";
+        accel_profile = "flat";
         touchpad = {
           natural_scroll = true;
           clickfinger_behavior = true;
@@ -167,6 +173,11 @@ in {
           drag_lock = true;
           tap-and-drag = true;
         };
+      };
+
+      "device:synaptics-tm3053-003" = {
+        accel_profile = "adaptive";
+        sensitivity = 0.3;
       };
 
       gestures = {

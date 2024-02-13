@@ -21,7 +21,7 @@
 
   programs.command-not-found.enable = false;
 
-  boot.tmp.useTmpfs = true;
+  boot.tmp.useTmpfs = lib.mkDefault true;
 
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
@@ -46,6 +46,17 @@
   '';
 
   services.udev.enable = true;
+  services.udev.extraRules = ''
+    # USB-Blaster
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6001", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6002", MODE="0666"
+
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6003", MODE="0666"
+
+    # USB-Blaster II
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6010", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6810", MODE="0666"
+  '';
 
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false;

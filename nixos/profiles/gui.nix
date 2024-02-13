@@ -3,6 +3,9 @@
   globals,
   ...
 }: {
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6001", MODE="0666"
+  '';
   services.pipewire = {
     enable = true;
     alsa.enable = true;

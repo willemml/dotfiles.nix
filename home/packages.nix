@@ -47,6 +47,7 @@ in {
       sqlite
       tealdeer
       unzip
+      vhdl-ls
       yq
       vhdl-ls
       zsh-completions
