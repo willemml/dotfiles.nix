@@ -31,8 +31,8 @@
   services.xserver = {
     enable = true;
 
-    layout = globals.keyboard.layout;
-    xkbVariant = globals.keyboard.variant;
+    xkb.layout = globals.keyboard.layout;
+    xkb.variant = globals.keyboard.variant;
 
     synaptics.enable = false;
 
