@@ -33,7 +33,7 @@ in {
     ++ (
       if pkgs.stdenv.isAarch64
       then [firefox-wv]
-      else [firefox discord (quartus-prime-lite.override (old: {supportedDevices = ["Cyclone V"];}))]
+      else [firefox discord]
     );
 
   # notifications daemon
