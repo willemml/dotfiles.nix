@@ -9,6 +9,8 @@
     if osConfig.networking.hostName == "voyager"
     then "wlan0"
     else if osConfig.networking.hostName == "nixbox"
+    then "enp0s31f6"
+    else if osConfig.networking.hostName == "glassbox"
     then "enp6s0"
     else if osConfig.networking.hostName == "thinkpad"
     then "wlan0"

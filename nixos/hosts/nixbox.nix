@@ -39,8 +39,6 @@
     fsType = "vfat";
   };
 
-  boot.zfs.extraPools = ["zpool"];
-
   swapDevices = [];
 
   environment.systemPackages = [pkgs.zfs];
