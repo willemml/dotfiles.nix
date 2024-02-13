@@ -16,8 +16,18 @@
     inputs.stylix.nixosModules.stylix
   ];
 
-  networking.useDHCP = lib.mkDefault true;
   hardware.enableRedistributableFirmware = lib.mkDefault true;
+
+  networking = {
+    useDHCP = lib.mkDefault true;
+
+    nameservers = ["1.1.1.1" "1.0.0.1" "9.9.9.9" "2620:fe::fe" "2620:fe::9" "149.112.112.112"];
+
+    dhcpcd.extraConfig = "nohook resolv.conf";
+    networkmanager.dns = "none";
+  };
+
+  services.resolved.enable = false;
 
   programs.command-not-found.enable = false;
 
