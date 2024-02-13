@@ -20,6 +20,8 @@
   boot.zfs.forceImportRoot = false;
   networking.hostId = "06818aaa";
 
+  services.xserver.videoDrivers = ["amdgpu"];
+
   hardware.opengl.driSupport = true;
   hardware.opengl.enable = true;
 
@@ -28,26 +30,22 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/24855432-019b-43d9-9b83-9135b9dc31a6";
+    device = "/dev/disk/by-uuid/fe61bc5b-3b71-4819-8083-522f2c283252";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/F2E9-F515";
+    device = "/dev/disk/by-uuid/9624-F744";
     fsType = "vfat";
   };
 
   boot.zfs.extraPools = ["zpool"];
 
-  swapDevices = [{device = "/dev/disk/by-uuid/36bb51f0-f56d-4408-b61c-7905789a7304";}];
+  swapDevices = [];
 
   environment.systemPackages = [pkgs.zfs];
 
   services.zfs.autoScrub.enable = true;
-
-  services.jellyfin.enable = true;
-
-  users.groups.torrent.gid = torrent_group_id;
 
   networking.hostName = "nixbox";
 

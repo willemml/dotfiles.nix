@@ -48,6 +48,7 @@ in {
       tealdeer
       unzip
       yq
+      vhdl-ls
       zsh-completions
     ]
     ++ node-packages;
