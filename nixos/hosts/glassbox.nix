@@ -9,6 +9,7 @@
 }: {
   imports = [
     ../profiles/desktop.nix
+    ../profiles/nvidiagpu.nix
   ];
 
   boot.initrd.availableKernelModules = ["vmd" "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod"];
@@ -16,19 +17,10 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
+  boot.kernelParams = ["iommu_intel=on"];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  hardware.opengl.driSupport = true;
-  hardware.opengl.enable = true;
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4e9a4d87-4b00-413b-84c0-62e737a012a9";

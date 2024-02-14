@@ -6,28 +6,19 @@
 }: {
   imports = [
     ../profiles/desktop.nix
+    ../profiles/amdgpu.nix
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["amdgpu"];
   boot.extraModulePackages = [];
+
+  boot.kernelParams = ["intel_iommu=on"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = ["zfs"];
-  boot.zfs.forceImportRoot = false;
   networking.hostId = "06818aaa";
-
-  services.xserver.videoDrivers = ["amdgpu"];
-
-  hardware.opengl.driSupport = true;
-  hardware.opengl.enable = true;
-
-  hardware.opengl.extraPackages = with pkgs; [
-    amdvlk
-  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/fe61bc5b-3b71-4819-8083-522f2c283252";
