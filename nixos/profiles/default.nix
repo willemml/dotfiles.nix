@@ -36,7 +36,7 @@
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
 
-  environment.systemPackages = [pkgs.parted];
+  environment.systemPackages = with pkgs; [parted usbutils pciutils];
 
   services.zerotierone = {
     joinNetworks = globals.zerotier.networks;
