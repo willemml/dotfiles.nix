@@ -7,17 +7,20 @@
   pkgs,
   ...
 }: {
+  boot.initrd.kernelModules = ["vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd"];
+
   imports = [
     ../profiles/desktop.nix
     ../profiles/nvidiagpu.nix
   ];
 
   boot.initrd.availableKernelModules = ["vmd" "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  boot.kernelParams = ["intel_iommu=on"];
+  boot.kernelParams = let vfio-pci-devs = ["10de:2482" "10de:228b"]; in ["intel_iommu=on" ("vfio-pci.ids=" + lib.concatStringsSep "," vfio-pci-devs)];
+
+  virtualisation.spiceUSBRedirection.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
