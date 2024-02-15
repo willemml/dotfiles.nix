@@ -33,6 +33,8 @@
 
   boot.tmp.useTmpfs = lib.mkDefault true;
 
+  boot.kernelParams = ["consoleblank=60"];
+
   console.keyMap = "colemak";
   console.packages = [pkgs.terminus_font];
 
