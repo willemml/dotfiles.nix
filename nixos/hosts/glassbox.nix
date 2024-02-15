@@ -17,7 +17,7 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  boot.kernelParams = ["iommu_intel=on"];
+  boot.kernelParams = ["intel_iommu=on"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
