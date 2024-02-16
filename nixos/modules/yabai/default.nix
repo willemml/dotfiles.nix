@@ -7,6 +7,8 @@
   inherit (lib) lists strings;
 
   floating-apps = [
+    "UTM"
+    "Screen Sharing"
     "System Settings"
     "Software Update"
     "Kodi"

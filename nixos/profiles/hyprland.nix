@@ -3,7 +3,10 @@
   pkgs,
   ...
 }: {
-  imports = [./gui.nix];
+  imports = [
+    ./gui.nix
+    ../modules/polkit.nix
+  ];
 
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.hyprland;
