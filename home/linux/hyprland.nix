@@ -21,6 +21,7 @@ in {
         then firefox-wv
         else firefox
       )
+      polkit-kde-agent
       lxappearance
       pipewire
       polkit-kde-agent
@@ -79,6 +80,8 @@ in {
         "${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wl-clipboard}/bin/wl-copy -p"
 
         "${pkgs.swaynotificationcenter}/bin/swaync"
+
+        "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1"
       ];
 
       xwayland.force_zero_scaling = true;

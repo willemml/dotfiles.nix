@@ -20,6 +20,21 @@
 
   boot.kernelParams = let vfio-pci-devs = ["10de:2482" "10de:228b"]; in ["intel_iommu=on" ("vfio-pci.ids=" + lib.concatStringsSep "," vfio-pci-devs)];
 
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.ovmf.enable = true;
+    qemu.swtpm.enable = true;
+    qemu.ovmf.packages = [
+      (pkgs.OVMF.override (old: {
+        secureBoot = true;
+        tpmSupport = true;
+      }))
+      .fd
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [virt-manager libvirt];
+
   virtualisation.spiceUSBRedirection.enable = true;
 
   boot.loader.systemd-boot.enable = true;
