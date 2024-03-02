@@ -50,6 +50,7 @@ in {
       vhdl-ls
       yq
       vhdl-ls
+      vscode-langservers-extracted
       zsh-completions
     ]
     ++ node-packages;

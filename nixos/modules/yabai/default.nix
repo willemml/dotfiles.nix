@@ -7,7 +7,9 @@
   inherit (lib) lists strings;
 
   floating-apps = [
+    "Preview"
     "UTM"
+    "Messages"
     "Screen Sharing"
     "System Settings"
     "Software Update"
@@ -20,6 +22,7 @@
     "Software Update"
     "Set Desktop Background"
     "TI-Nspire"
+    "KiCad"
     "Karabiner-EventViewer"
     "Karabiner-Elements"
   ];
