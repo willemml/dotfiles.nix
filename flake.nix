@@ -30,6 +30,10 @@
 
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixd.url = "github:nix-community/nixd";
+    nixd.inputs.nixpkgs.follows = "nixpkgs";
+    nixd.inputs.flake-parts.follows = "flake-parts";
   };
 
   outputs = {

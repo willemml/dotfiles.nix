@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: let
   node-packages = with pkgs.nodePackages; [
@@ -11,6 +12,7 @@
     latest.toolchain
     targets.thumbv7em-none-eabihf.latest.rust-std
   ]);
+  nixd-upstream = inputs.nixd.packages.${pkgs.system}.default;
 in {
   home.packages = with pkgs;
     [
@@ -32,6 +34,7 @@ in {
       nix-tree
       nix-zsh-completions
       nixfmt
+      nixd-upstream
       nixpkgs-fmt
       nmap
       nodejs
@@ -40,7 +43,6 @@ in {
       pinentry
       pv
       ripgrep
-      rnix-lsp
       rsync
       shellcheck
       shfmt
