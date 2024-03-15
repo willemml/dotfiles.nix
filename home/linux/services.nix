@@ -13,7 +13,7 @@
       enableZshIntegration = true;
       defaultCacheTtl = 30;
       maxCacheTtl = 600;
-      pinentryFlavor = "curses";
+      pinentryPackage = pkgs.pinentry-curses;
     };
   };
 }

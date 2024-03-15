@@ -7,8 +7,6 @@
   pkgs,
   ...
 }: {
-  boot.initrd.kernelModules = ["vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd"];
-
   imports = [
     ../profiles/desktop.nix
     ../profiles/nvidiagpu.nix
