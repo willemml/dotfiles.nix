@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   config,
   pkgs,
@@ -12,6 +13,14 @@
   programs = {
     helix = {
       enable = true;
+      languages.language = [
+        {
+          name = "nix";
+          auto-format = true;
+          language-servers = ["nixd-lsp"];
+        }
+      ];
+      languages.language-server.nixd-lsp.command = "${inputs.nixd.packages.${pkgs.system}.default}/bin/nixd";
       settings.editor.line-number = "relative";
       settings.keys = {
         normal = {
