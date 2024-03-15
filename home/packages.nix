@@ -40,7 +40,6 @@ in {
       nodejs
       openssh
       pass-git-helper
-      pinentry
       pv
       ripgrep
       rsync
