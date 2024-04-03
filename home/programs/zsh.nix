@@ -58,8 +58,6 @@
     };
 
     shellAliases = rec {
-      s = "kitten ssh";
-      ke = "kitten edit-in-kitty";
       cd = "z";
       dotd = "cd ${config.home.sessionVariables.DOTDIR} ";
       l = "ls -1";
