@@ -37,6 +37,7 @@
       "homebrew/cask-versions/firefox-esr"
       "rstudio"
       "obs"
+      "jellyfin-media-player"
       "steam"
       "thunderbird"
       "vial"
