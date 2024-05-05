@@ -13,9 +13,10 @@
     targets.thumbv7em-none-eabihf.latest.rust-std
   ]);
   nixd-upstream = inputs.nixd.packages.${pkgs.system}.default;
+  extras = [fenix-rust nixd-upstream] ++ node-packages;
 in {
-  home.packages = with pkgs;
-    [
+  home.packages =
+    (with pkgs; [
       alejandra
       bash
       bat
@@ -25,20 +26,19 @@ in {
       curl
       docker
       docker-compose
-      dotnet-sdk_8
+      dotnet-sdk
       fd
-      fenix-rust
       findutils
       gawk
       git-crypt
       jq
       nix-tree
       nix-zsh-completions
-      nixfmt
-      nixd-upstream
+      nixfmt-classic
       nixpkgs-fmt
       nmap
       nodejs
+      omnisharp-roslyn
       openssh
       pass-git-helper
       pv
@@ -54,6 +54,6 @@ in {
       vhdl-ls
       vscode-langservers-extracted
       zsh-completions
-    ]
-    ++ node-packages;
+    ])
+    ++ extras;
 }

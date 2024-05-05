@@ -9,11 +9,11 @@
     autocd = true;
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
-    # syntaxHighlighting = {
-    #   enable = true;
-    # };
+    syntaxHighlighting = {
+      enable = true;
+    };
     enableVteIntegration = true;
 
     initExtraBeforeCompInit = ''
