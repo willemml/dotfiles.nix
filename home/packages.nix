@@ -25,6 +25,7 @@ in {
       curl
       docker
       docker-compose
+      dotnet-sdk_8
       fd
       fenix-rust
       findutils

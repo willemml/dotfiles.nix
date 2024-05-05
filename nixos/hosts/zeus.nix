@@ -44,7 +44,6 @@
       "whisky"
       "zerotier-one"
     ];
-    onActivation.cleanup = "uninstall";
   };
 
   environment.systemPath = [
