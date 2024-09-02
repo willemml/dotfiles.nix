@@ -19,7 +19,7 @@
     alacritty = {
       enable = true;
       settings = {
-        font.normal.style = lib.mkForce "Book";
+        #font.normal.style = lib.mkForce "Book";
         window = {
           decorations = "None";
         };

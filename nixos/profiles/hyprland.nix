@@ -2,14 +2,22 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  hyprpkgs = inputs.hyprland.packages.${pkgs.system};
+in {
   imports = [
     ./gui.nix
     ../modules/polkit.nix
   ];
 
   programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  programs.hyprland.package = hyprpkgs.hyprland;
+  programs.hyprland.portalPackage = hyprpkgs.xdg-desktop-portal-hyprland;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [hyprpkgs.xdg-desktop-portal-hyprland];
+  };
 
   programs.waybar.enable = true;
   programs.waybar.package = pkgs.waybar.overrideAttrs (oldAttrs: {

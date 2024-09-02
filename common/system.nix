@@ -4,6 +4,7 @@
   globals,
   ...
 }: {
+  stylix.enable = true;
   stylix.image = globals.wallpapers.current;
   stylix.polarity = "dark";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
@@ -33,7 +34,7 @@
     settings.trusted-users = ["root" "willem"];
   };
 
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
   programs.bash.interactiveShellInit = ''
     export PS1=$'\n'"\e[0mbash: \e[34;1m\w"$'\n'"\e[32m\\$\e[0m "
   '';

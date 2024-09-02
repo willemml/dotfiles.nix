@@ -13,6 +13,8 @@
     inputs.nix-index-database.hmModules.nix-index
   ];
 
+  stylix.enable = true;
+
   home = {
     username = globals.username;
 

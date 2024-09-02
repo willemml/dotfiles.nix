@@ -5,5 +5,6 @@
     nerdfonts
     ubuntu_font_family
     noto-fonts-cjk-sans
+    noto-fonts
   ];
 }

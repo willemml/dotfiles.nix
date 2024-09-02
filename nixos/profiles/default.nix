@@ -18,6 +18,27 @@
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
+  stylix = {
+    fonts = rec {
+      serif = sansSerif;
+
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+
+      monospace = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans Mono";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
+  };
+
   networking = {
     useDHCP = lib.mkDefault true;
 

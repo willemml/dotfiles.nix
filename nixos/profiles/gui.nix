@@ -37,16 +37,14 @@
     synaptics.enable = false;
 
     displayManager.lightdm.enable = false;
-
-    libinput = {
-      enable = true;
-      touchpad.tapping = true;
-      touchpad.naturalScrolling = true;
-      touchpad.scrollMethod = "twofinger";
-      touchpad.disableWhileTyping = true;
-      touchpad.clickMethod = "clickfinger";
-    };
   };
 
-  sound.enable = true;
+  services.libinput = {
+    enable = true;
+    touchpad.tapping = true;
+    touchpad.naturalScrolling = true;
+    touchpad.scrollMethod = "twofinger";
+    touchpad.disableWhileTyping = true;
+    touchpad.clickMethod = "clickfinger";
+  };
 }

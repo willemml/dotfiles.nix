@@ -33,7 +33,6 @@
 
   hardware.asahi = {
     withRust = true;
-    addEdgeKernelConfig = true;
     useExperimentalGPUDriver = true;
     experimentalGPUInstallMode = "replace";
   };
@@ -51,7 +50,7 @@
     '';
   };
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   networking.hostName = "voyager";
 }

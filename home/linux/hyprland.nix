@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   lib,
   globals,
@@ -27,15 +28,40 @@ in {
       polkit-kde-agent
       qt6.qtwayland
       qt6ct
-      xdg-desktop-portal-hyprland
-      xdg-desktop-portal
       rofi-wayland
+      xdg-desktop-portal
+      inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
     ]
     ++ (
       if pkgs.stdenv.isAarch64
       then [firefox-wv]
       else [firefox discord]
     );
+
+  # home.pointerCursor = {
+  #   gtk.enable = true;
+  #   package = pkgs.bibata-cursors;
+  #   name = "Bibata-Modern-Classic";
+  #   size = 24;
+  # };
+
+  # gtk = {
+  #   enable = true;
+
+  #   theme = {
+  #     package = pkgs.flat-remix-gtk;
+  #     name = "Flat-Remix-GTK-Grey-Darkest";
+  #   };
+  #   iconTheme = {
+  #     package = pkgs.adwaita-icon-theme;
+  #     name = "Adwaita";
+  #   };
+  #   font = {
+  #     name = "Sans";
+  #     size = 12;
+  #     package = pkgs.dejavu_fonts;
+  #   };
+  # };
 
   # notifications daemon
   services.mako.enable = true;
@@ -44,6 +70,8 @@ in {
     enable = true;
 
     settings = {
+      cursor.no_hardware_cursors = true;
+      debug.disable_logs = false;
       decoration = {
         rounding = 10;
 
@@ -100,7 +128,7 @@ in {
       bind = let
         bright = "${pkgs.brightnessctl}/bin/brightnessctl";
       in [
-        "$mod, SPACE, exec, rofi -modes \"ssh,drun,window\" -show drun"
+        "$mod, SPACE, exec, rofi -modes \"ssh,drun,window\" -log ~/rofi.log -show drun"
         "ALT, SPACE, exec, rofi -show window"
 
         # swaylock on suspend
@@ -178,10 +206,10 @@ in {
         };
       };
 
-      "device:synaptics-tm3053-003" = {
-        accel_profile = "adaptive";
-        sensitivity = 0.3;
-      };
+      #      "device:synaptics-tm3053-003" = {
+      #        accel_profile = "adaptive";
+      #        sensitivity = 0.3;
+      #      };
 
       gestures = {
         workspace_swipe = true;

@@ -2,7 +2,7 @@
   description = "Willem's Nix configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=7d0d974fc21f02dfeed7ef098d8faf0195162949";
 
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
     #darwin.url = "git+file:///Users/willem/dev/nix-darwin";
@@ -15,7 +15,11 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+    };
 
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
     nix-github-actions.url = "github:nix-community/nix-github-actions";
