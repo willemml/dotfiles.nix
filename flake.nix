@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
+    #darwin.url = "git+file:///Users/willem/dev/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     fenix.url = "github:nix-community/fenix";
