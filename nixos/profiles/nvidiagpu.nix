@@ -1,8 +1,5 @@
 {...}: {
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-  };
+  hardware.graphics.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;
