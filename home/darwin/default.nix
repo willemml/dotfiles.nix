@@ -19,7 +19,7 @@
 
   home.file.".gnupg/gpg-agent.conf" = {
     text = ''
-      pinentry-program "${pkgs.pinentry-curses}/bin/curses"
+      pinentry-program "${pkgs.pinentry-curses}/bin/pinentry"
       default-cache-ttl 30
       max-cache-ttl 600
     '';

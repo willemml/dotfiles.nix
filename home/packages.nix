@@ -41,6 +41,7 @@ in {
       omnisharp-roslyn
       openssh
       pass-git-helper
+      pinentry-curses
       pv
       ripgrep
       rsync
