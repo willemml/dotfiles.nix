@@ -10,14 +10,12 @@
     ../modules/nix/optimise.nix
     ../modules/nix/use-flake-pkgs.nix
     ../modules/nix/cachix.nix
-    ../modules/comma.nix
     ../users/willem/home/darwin.nix
     ../modules/yabai
-    inputs.stylix.darwinModules.stylix
+    inputs.nix-index-database.darwinModules.nix-index
   ];
 
-  # build of normal noto emoji fonts fails on darwin
-  stylix.fonts.emoji.package = pkgs.noto-fonts-emoji-blob-bin;
+  programs.nix-index-database.comma.enable = true;
 
   homebrew = {
     enable = true;

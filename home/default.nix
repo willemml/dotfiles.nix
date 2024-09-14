@@ -10,7 +10,9 @@
     ./programs/default.nix
     ./modules/nix/pkgs-config.nix
     ./modules/nix/use-flake-pkgs.nix
+    ../common/stylix.nix
     inputs.nix-index-database.hmModules.nix-index
+    inputs.stylix.homeManagerModules.stylix
   ];
 
   stylix.enable = true;

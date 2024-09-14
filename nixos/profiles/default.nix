@@ -8,6 +8,7 @@
 }: {
   imports = [
     ../../common/system.nix
+    ../../common/stylix.nix
     ../modules/nix/use-flake-pkgs.nix
     ../modules/nix/optimise.nix
     ../modules/nix/cachix.nix
