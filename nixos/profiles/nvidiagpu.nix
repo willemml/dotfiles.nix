@@ -1,7 +1,12 @@
-{...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   hardware.graphics.enable = true;
 
   hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
@@ -9,4 +14,6 @@
     open = false;
     nvidiaSettings = true;
   };
+
+  services.xserver.videoDrivers = ["nvidia"];
 }

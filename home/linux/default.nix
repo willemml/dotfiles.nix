@@ -15,8 +15,6 @@
   };
 
   home.packages = with pkgs; [
-    gcc-arm-embedded
-    killall
   ];
 
   home.homeDirectory = "/home/willem";

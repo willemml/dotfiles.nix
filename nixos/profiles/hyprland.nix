@@ -8,6 +8,7 @@ in {
   imports = [
     ./gui.nix
     ../modules/polkit.nix
+    ../modules/lemurs.nix
   ];
 
   programs.hyprland.enable = true;

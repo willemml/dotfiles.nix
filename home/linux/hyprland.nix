@@ -22,6 +22,7 @@ in {
         then firefox-wv
         else firefox
       )
+      yarg
       polkit-kde-agent
       lxappearance
       pipewire
@@ -30,6 +31,7 @@ in {
       qt6ct
       rofi-wayland
       xdg-desktop-portal
+      xdg-desktop-portal-gtk
       inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
     ]
     ++ (
@@ -45,23 +47,23 @@ in {
   #   size = 24;
   # };
 
-  # gtk = {
-  #   enable = true;
+  gtk = {
+    #   enable = true;
 
-  #   theme = {
-  #     package = pkgs.flat-remix-gtk;
-  #     name = "Flat-Remix-GTK-Grey-Darkest";
-  #   };
-  #   iconTheme = {
-  #     package = pkgs.adwaita-icon-theme;
-  #     name = "Adwaita";
-  #   };
-  #   font = {
-  #     name = "Sans";
-  #     size = 12;
-  #     package = pkgs.dejavu_fonts;
-  #   };
-  # };
+    # theme = {
+    #   package = pkgs.flat-remix-gtk;
+    #   name = "Flat-Remix-GTK-Grey-Darkest";
+    # };
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+    #   font = {
+    #     name = "Sans";
+    #     size = 12;
+    #     package = pkgs.dejavu_fonts;
+    #   };
+  };
 
   # notifications daemon
   services.mako.enable = true;
@@ -76,7 +78,7 @@ in {
         rounding = 10;
 
         # save battery
-        drop_shadow = false;
+        # drop_shadow = false;
         blur.enabled = false;
       };
 
@@ -190,6 +192,7 @@ in {
         "$mod, right, resizeactive, 10 0"
         "$mod, up, resizeactive, 0 -10"
         "$mod, down, resizeactive, 0 10"
+        "$mod, mouse:272, movewindow"
       ];
 
       input = {

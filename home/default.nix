@@ -2,7 +2,6 @@
   inputs,
   globals,
   config,
-  pkgs,
   ...
 }: {
   imports = [
@@ -31,7 +30,7 @@
       base = globals.language;
     };
 
-    sessionVariables = rec {
+    sessionVariables = {
       DOTDIR = "${config.home.homeDirectory}/.config/dotfiles.nix";
       EDITOR = "hx";
       VISUAL = "hx";

@@ -2,7 +2,7 @@
   description = "Willem's Nix configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=7d0d974fc21f02dfeed7ef098d8faf0195162949";
+    nixpkgs.url = "github:nixos/nixpkgs";
 
     darwin.url = "github:willemml/nix-darwin?ref=feat/networking.hosts";
     #darwin.url = "git+file:///Users/willem/dev/nix-darwin";
@@ -35,10 +35,6 @@
 
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixd.url = "github:nix-community/nixd";
-    nixd.inputs.nixpkgs.follows = "nixpkgs";
-    nixd.inputs.flake-parts.follows = "flake-parts";
   };
 
   outputs = {

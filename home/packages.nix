@@ -12,8 +12,7 @@
     latest.toolchain
     targets.thumbv7em-none-eabihf.latest.rust-std
   ]);
-  nixd-upstream = inputs.nixd.packages.${pkgs.system}.default;
-  extras = [fenix-rust nixd-upstream] ++ node-packages;
+  extras = [fenix-rust] ++ node-packages;
 in {
   home.packages =
     (with pkgs; [

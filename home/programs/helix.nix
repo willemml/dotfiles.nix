@@ -9,11 +9,11 @@
       {
         name = "nix";
         auto-format = true;
-        language-servers = ["nixd-lsp"];
+        # language-servers = ["nixd-lsp"];
         formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
       }
     ];
-    languages.language-server.nixd-lsp.command = "${inputs.nixd.packages.${pkgs.system}.default}/bin/nixd";
+    # languages.language-server.nixd-lsp.command = "${inputs.nixd.packages.${pkgs.system}.default}/bin/nixd";
     settings.editor.line-number = "relative";
     settings.keys = {
       normal = {

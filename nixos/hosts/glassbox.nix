@@ -31,7 +31,7 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [virt-manager libvirt];
+  environment.systemPackages = with pkgs; [virt-manager libvirt virtiofsd];
 
   virtualisation.spiceUSBRedirection.enable = true;
 
