@@ -9,13 +9,13 @@
   zsh.prompt = "\n%B%F{cyan}%m:%F{blue}%~\n%F{green}$ %f%";
   zsh.rprompt = "%B%F{red}%*%f%b";
 
-  timezone = "America/Vancouver";
+  timezone = "America/Edmonton";
 
   username = "willem";
 
   wallpapers = import ./wallpapers.nix;
 
-  sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus];
+  sshAuthorizedKeyFiles = [./sshpubkeys/willem-nixbox ./sshpubkeys/willem-thinkpad ./sshpubkeys/willem-zeus ./sshpubkeys/willem-evrlaptop];
 
   zerotier.networks = ["17d709436ca2929d"];
 }
