@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
   programs.helix = {
@@ -9,12 +10,12 @@
       {
         name = "nix";
         auto-format = true;
-        # language-servers = ["nixd-lsp"];
         formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
       }
     ];
-    # languages.language-server.nixd-lsp.command = "${inputs.nixd.packages.${pkgs.system}.default}/bin/nixd";
     settings.editor.line-number = "relative";
+    settings.editor.true-color = true;
+    settings.theme = lib.mkForce "gruvbox_dark_hard";
     settings.keys = {
       normal = {
         space.w = ":w";
