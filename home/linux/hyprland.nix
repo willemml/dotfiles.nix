@@ -31,7 +31,6 @@ in {
       qt6ct
       rofi-wayland
       xdg-desktop-portal
-      xdg-desktop-portal-gtk
       inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
     ]
     ++ (
@@ -70,6 +69,8 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
+
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
     settings = {
       cursor.no_hardware_cursors = true;
