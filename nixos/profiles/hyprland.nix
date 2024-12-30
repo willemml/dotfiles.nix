@@ -11,8 +11,6 @@ in {
     ../modules/lemurs.nix
   ];
 
-  programs.steam.enable = true;
-
   programs.hyprland.enable = true;
   programs.hyprland.package = hyprpkgs.hyprland;
   programs.hyprland.portalPackage = hyprpkgs.xdg-desktop-portal-hyprland;

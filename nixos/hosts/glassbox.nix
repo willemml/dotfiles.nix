@@ -12,6 +12,8 @@
     ../profiles/nvidiagpu.nix
   ];
 
+  programs.steam.enable = true;
+
   boot.initrd.availableKernelModules = ["vmd" "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod"];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
